@@ -39,11 +39,11 @@ namespace Vault.Controllers
                 var result = await UserManager.CreateAsync(newUser, userModel.Password);
                 if (result.Succeeded)
                 {
-                    RedirectToAction("Index");
+                   return RedirectToAction("Index");
                 }
                 else
                 {
-                    AddModelErrors(result);    
+                    AddModelErrors(result);
                 }
             }
             return View(userModel);
