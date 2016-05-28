@@ -87,7 +87,6 @@ namespace Vault.Controllers
             {
                 return RedirectToAction("Index");
             }
-            
         }
 
         [HttpPost]
@@ -95,7 +94,56 @@ namespace Vault.Controllers
         {
             if (ModelState.IsValid)
             {
-                  
+                var user = await UserManager.FindByIdAsync(model.Id);
+                if (user != null)
+                {
+                    user.UserName = model.Name;
+                    IdentityResult validName = await UserManager.UserValidator.ValidateAsync(user);
+                    if (!validName.Succeeded)
+                    {
+                        AddModelErrors(validName);
+                    }
+
+                    user.Email = model.Email;
+                    IdentityResult validEmail = await UserManager.UserValidator.ValidateAsync(user);
+                    if (!validEmail.Succeeded)
+                    {
+                        AddModelErrors(validEmail);
+                    }
+
+                    IdentityResult validPassword = null;
+                    if (model.Password != null)
+                    {
+                        validPassword = await UserManager.PasswordValidator.ValidateAsync(model.Password);
+                        if (validPassword.Succeeded)
+                        {
+                            user.PasswordHash = UserManager.PasswordHasher.HashPassword(model.Password);
+                        }
+                        else
+                        {
+                            AddModelErrors(validPassword);
+                        }
+                    }
+
+                    if ((validPassword == null && validEmail.Succeeded && validName.Succeeded) || 
+                        (validName.Succeeded && validEmail.Succeeded && model.Password != null && 
+                        validPassword.Succeeded))
+                    {
+                        var result = await UserManager.UpdateAsync(user);
+                        if (result.Succeeded)
+                        {
+                            return RedirectToAction("Index");
+                        }
+                        else
+                        {
+                            AddModelErrors(result);
+                        }
+                    }
+                }
+                else
+                {
+                    ModelState.AddModelError("","User not found");
+                }
             }
             return View(model);
         }

@@ -1,25 +1,26 @@
 ﻿@model Vault.Models.CreateModel
 @{
-    ViewBag.Title = "Create user";
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_UserAdminLayout.cshtml";
+}
     <div class="panel panel-primary">
         <div class="panel-heading">Create new user</div>
         @using (Html.BeginForm())
         {
             @Html.ValidationSummary()
-            <div class="form-group">
-                <label>Name:</label>
-                @Html.TextBoxFor(x => x.Name, new {@class = "form-control"})
-                @Html.ValidationMessageFor(x=>x.Name)
-            </div>
-            <div class="form-group">
-                <label>Email:</label>
-                @Html.TextBoxFor(x => x.Email, new {@class = "form-control"})
-                @Html.ValidationMessageFor(x => x.Email)
-            </div>
-            <div class="form-group">
-                <label>Password:</label>
-                @Html.TextBoxFor(x => x.Password, new {@class = "form-control"})
-                @Html.ValidationMessageFor(x => x.Password)
+            <div class="panel-body">
+                <div class="form-group">
+                    <label>Name:</label>
+                    @Html.TextBoxFor(x => x.Name, new { @class = "form-control" })
+                </div>
+                <div class="form-group">
+                    <label>Email:</label>
+                    @Html.TextBoxFor(x => x.Email, new { @class = "form-control" })
+                </div>
+                <div class="form-group">
+                    <label>Password:</label>
+                    @Html.TextBoxFor(x => x.Password, new { @class = "form-control" })
+                </div>  
             </div>
             <div class="panel-footer">
                 <input type="submit" value="Create" class="btn btn-primary"/>
@@ -27,4 +28,3 @@
             </div>
         }
     </div>
-}

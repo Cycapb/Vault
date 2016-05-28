@@ -26,8 +26,7 @@ namespace Vault.Models
 
         [Required(ErrorMessage = "Field Email is empty")]
         public string Email { get; set; }
-
-        [Required(ErrorMessage = "Field Password is empty")]
+        
         public string Password { get; set; }
     }
 }
