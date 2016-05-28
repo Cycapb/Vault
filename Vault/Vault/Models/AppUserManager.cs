@@ -15,6 +15,7 @@ namespace Vault.Models
         public static AppUserManager Create(IdentityFactoryOptions<AppUserManager> options, IOwinContext context)
         {
             AppUserManager manager = new AppUserManager(new UserStore<AppUserModel>(context.Get<AppIdentityDbContext>().Users));
+            return manager;
         }
     }
 }
