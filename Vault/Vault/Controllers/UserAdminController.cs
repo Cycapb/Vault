@@ -67,7 +67,33 @@ namespace Vault.Controllers
             {
                 return View("Error", new string[] {"User not found"});
             }
-        } 
+        }
+
+        public async Task<ActionResult> Edit(string id)
+        {
+            var user = await UserManager.FindByIdAsync(id);
+            if (user != null)
+            {
+                var editModel = new EditModel()
+                {
+                    Name = user.UserName,
+                    Email = user.Email,
+                    Password = string.Empty
+                };
+                return View(editModel);
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
+            
+        }
+
+        //[HttpPost]
+        //public async Task<ActionResult> Edit(EditModel model)
+        //{
+            
+        //} 
 
         private void AddModelErrors(IdentityResult result)
         {
