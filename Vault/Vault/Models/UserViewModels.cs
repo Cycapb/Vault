@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 
 namespace Vault.Models
 {
@@ -17,6 +18,9 @@ namespace Vault.Models
 
     public class EditModel
     {
+        [HiddenInput(DisplayValue = false)]
+        public string Id { get; set; }
+
         [Required(ErrorMessage = "Field Name is empty")]
         public string Name { get; set; }
 

@@ -76,6 +76,7 @@ namespace Vault.Controllers
             {
                 var editModel = new EditModel()
                 {
+                    Id = user.Id,
                     Name = user.UserName,
                     Email = user.Email,
                     Password = string.Empty
@@ -89,11 +90,15 @@ namespace Vault.Controllers
             
         }
 
-        //[HttpPost]
-        //public async Task<ActionResult> Edit(EditModel model)
-        //{
-            
-        //} 
+        [HttpPost]
+        public async Task<ActionResult> Edit(EditModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                  
+            }
+            return View(model);
+        }
 
         private void AddModelErrors(IdentityResult result)
         {
