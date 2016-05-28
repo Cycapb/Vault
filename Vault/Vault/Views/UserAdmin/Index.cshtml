@@ -21,6 +21,13 @@
                     <td>@user.Id</td>
                     <td>@user.UserName</td>
                     <td>@user.Email</td>
+                    <td>
+                        @using (Html.BeginForm("Delete","UserAdmin", new {id = user.Id}))
+                        {
+                            @Html.ActionLink("Edit","Edit", new {id = user.Id}, new {@class="btn btn-success btn-xs"})
+                            <input type="submit" value="Delete" class="btn btn-danger btn-xs"/>
+                        }
+                    </td>
                 </tr>
             }
         }

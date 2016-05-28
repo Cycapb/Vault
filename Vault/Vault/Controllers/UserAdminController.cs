@@ -46,6 +46,29 @@ namespace Vault.Controllers
             return View(userModel);
         }
 
+        [HttpPost]
+        public async Task<ActionResult> Delete(string id)
+        {
+            var userToDel = await UserManager.FindByIdAsync(id);
+            if (userToDel != null)
+            {
+                var result = await UserManager.DeleteAsync(userToDel);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    AddModelErrors(result);
+                    return View("Error", result.Errors);
+                }
+            }
+            else
+            {
+                return View("Error", new string[] {"User not found"});
+            }
+        } 
+
         private void AddModelErrors(IdentityResult result)
         {
             foreach (var error in result.Errors)
