@@ -29,4 +29,13 @@ namespace Vault.Models
         
         public string Password { get; set; }
     }
+
+    public class LoginModel
+    {
+        [Required(ErrorMessage = "Field Login can't be empty")]
+        public string Name { get; set; }
+
+        [Required(ErrorMessage = "Field password can't be empty")]
+        public string Password { get; set; }
+    }
 }
