@@ -9,6 +9,7 @@ using Vault.Models;
 
 namespace Vault.Controllers
 {
+    [Authorize]
     public class UserAdminController : Controller
     {
         private AppUserManager UserManager => HttpContext.GetOwinContext().GetUserManager<AppUserManager>();

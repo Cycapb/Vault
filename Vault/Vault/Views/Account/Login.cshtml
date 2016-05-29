@@ -1,0 +1,29 @@
+﻿@model Vault.Models.LoginModel
+
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_UserAdminLayout.cshtml";
+}
+
+<div class="panel panel-info">
+    <div class="panel-heading"></div>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary()
+        <div class="panel-body">
+            <div class="form-group">
+                <label>Login:</label>
+                @Html.TextBoxFor(x => x.Name, new {@class = "form-control"})
+            </div>
+            <div class="form-group">
+                <label>Password:</label>
+                @Html.PasswordFor(x => x.Password, new {@class = "form-control"})
+            </div>
+        </div>
+        <div class="panel-footer">
+            <input type="submit" value="Log in" class="btn btn-success"/>
+        </div>
+    }
+</div>
+
