@@ -1,0 +1,19 @@
+﻿@model string
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_RoleAdminLayout.cshtml";
+}
+<div class="panel panel-primary">
+    @using (Html.BeginForm())
+    {
+        <div class="panel-body">
+            <div class="form-group">
+                <label>Role name:</label>
+                <input type="text" name="name" class="form-control"/>
+            </div>
+        </div>
+        <div class="panel-footer">
+            <input type="submit" value="Save" class="btn btn-success"/>
+        </div>
+    }
+</div>

@@ -220,6 +220,7 @@
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Shared\_RoleAdminLayout.cshtml" />
     <Content Include="Views\RoleAdmin\Index.cshtml" />
+    <Content Include="Views\RoleAdmin\Create.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

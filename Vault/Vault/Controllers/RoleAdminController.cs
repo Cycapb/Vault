@@ -1,7 +1,9 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using MongoDB.Driver;
 using Vault.Infrastructure;
@@ -33,6 +35,30 @@ namespace Vault.Controllers
             return View();
         }
 
+        [HttpPost]
+        public async Task<ActionResult> Create([Required(ErrorMessage = "Role name can't be empty")]string name)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await RoleManager.CreateAsync(new AppRoleModel(name));
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    AddModelErrors(result);
+                }
+            }
+            return View(name);
+        }
 
+        private void AddModelErrors(IdentityResult result)
+        {
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError("",error);
+            }
+        }
     }
 }
