@@ -16,3 +16,9 @@ textarea {
     max-width: 280px;
 }
 
+/*Default container*/
+.container {
+            width: 800px;
+            padding-top: 30px;
+        }
+

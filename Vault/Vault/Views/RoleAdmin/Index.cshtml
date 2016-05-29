@@ -1,0 +1,42 @@
+﻿@using Vault.Models
+@model IEnumerable<AppRoleModel>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_RoleAdminLayout.cshtml";
+}
+<div class="panel panel-primary">
+    <div class="panel-heading">Roles</div>
+    <div class="panel-body">
+        <table class="table table-striped">
+            <tr>
+                <th>Name</th>
+                <th>Users</th>
+                <th>Action</th>
+            </tr>
+            @if (Model.Count() != 0)
+            {
+                foreach (var role in Model)
+                {
+                    <tr>
+                        <td>@role.Id</td>
+                        <td>@role.Name</td>
+                        <td>
+                            @using (Html.BeginForm("Delete", "RoleAdmin", new {id = role.Id}))
+                            {
+                                @Html.ActionLink("Edit", "Edit", new {id = role.Id}, new {@class="btn btn-success btn-xs"})
+                                <input type="submit" value="Delete" class="btn btn-danger btn-xs"/>
+                            }
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr><td colspan="3" class="text-center">No user roles available</td></tr>
+            }
+        </table>
+    </div>
+    <div class="panel-footer">
+        @Html.ActionLink("Create","Create",null,new {@class="btn btn-primary"})
+    </div>
+</div>

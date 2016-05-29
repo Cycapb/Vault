@@ -218,6 +218,8 @@
     <Content Include="packages.config" />
     <Content Include="Scripts\jquery-1.9.1.min.map" />
     <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Shared\_RoleAdminLayout.cshtml" />
+    <Content Include="Views\RoleAdmin\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -229,7 +231,6 @@
     <Folder Include="Abstract\" />
     <Folder Include="App_Data\" />
     <Folder Include="Concrete\" />
-    <Folder Include="Views\RoleAdmin\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
