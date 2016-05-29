@@ -53,6 +53,28 @@ namespace Vault.Controllers
             return View(name);
         }
 
+        [HttpPost]
+        public async Task<ActionResult> Delete(string id)
+        {
+            var role = await RoleManager.FindByIdAsync(id);
+            if (role != null)
+            {
+                var result = await RoleManager.DeleteAsync(role);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    return View("Error",result.Errors);
+                }
+            }
+            else
+            {
+                return View("Error", new string[] {"No role with such Id"});
+            }
+        } 
+
         private void AddModelErrors(IdentityResult result)
         {
             foreach (var error in result.Errors)
