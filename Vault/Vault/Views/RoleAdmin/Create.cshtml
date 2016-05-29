@@ -6,6 +6,7 @@
 <div class="panel panel-primary">
     @using (Html.BeginForm())
     {
+        @Html.ValidationSummary()
         <div class="panel-body">
             <div class="form-group">
                 <label>Role name:</label>

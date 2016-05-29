@@ -21,8 +21,8 @@ namespace Vault.Controllers
         {
             try
             {
-                var list = await IdentityContext.Roles.Find(x => true).ToListAsync();
-                return View(list);
+                var roleList = await IdentityContext.Roles.Find(x => true).ToListAsync();
+                return View(roleList);
             }
             catch (Exception)
             {
@@ -50,7 +50,7 @@ namespace Vault.Controllers
                     AddModelErrors(result);
                 }
             }
-            return View(name);
+            return View((object)name);
         }
 
         [HttpPost]

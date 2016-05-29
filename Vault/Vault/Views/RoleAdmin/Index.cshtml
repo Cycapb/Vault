@@ -1,4 +1,5 @@
-﻿@using Vault.Models
+﻿@using Vault.Infrastructure
+@using Vault.Models
 @model IEnumerable<AppRoleModel>
 @{
     ViewBag.Title = "Index";
@@ -18,8 +19,18 @@
                 foreach (var role in Model)
                 {
                     <tr>
-                        <td>@role.Id</td>
                         <td>@role.Name</td>
+                        <td>
+                            @{ var users = Html.GetRoleUsers(role.Name);}
+                            @if (MvcHtmlString.IsNullOrEmpty(users))
+                            {
+                                @: No users in role 
+                            }
+                            else
+                            {
+                                @users
+                            }
+                        </td>
                         <td>
                             @using (Html.BeginForm("Delete", "RoleAdmin", new {id = role.Id}))
                             {
