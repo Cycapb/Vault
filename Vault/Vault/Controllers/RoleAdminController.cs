@@ -73,7 +73,12 @@ namespace Vault.Controllers
             {
                 return View("Error", new string[] {"No role with such Id"});
             }
-        } 
+        }
+
+        public async Task<ActionResult> Edit(string id)
+        {
+            
+        }
 
         private void AddModelErrors(IdentityResult result)
         {

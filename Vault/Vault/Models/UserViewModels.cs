@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 
 namespace Vault.Models
@@ -37,5 +38,19 @@ namespace Vault.Models
 
         [Required(ErrorMessage = "Field password can't be empty")]
         public string Password { get; set; }
+    }
+
+    public class EditRolemodel
+    {
+        public AppRoleModel Role { get; set; }
+        public IEnumerable<AppUserModel> Members { get; set; }
+        public IEnumerable<AppUserModel> NonMembers { get; set; }   
+    }
+
+    public class RoleModificationModel
+    {
+        public string RoleName { get; set; }
+        public string[] RolesToAdd { get; set; }
+        public string[] RolesToDelete { get; set; }
     }
 }
