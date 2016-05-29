@@ -7,6 +7,7 @@ using Vault.Models;
 
 namespace Vault.Controllers
 {
+    [Authorize]
     public class TestController : Controller
     {
         private AppUserManager UserManager => HttpContext.GetOwinContext().GetUserManager<AppUserManager>();

@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
@@ -9,7 +10,6 @@ using Vault.Models;
 
 namespace Vault.Controllers
 {
-    [Authorize]
     public class UserAdminController : Controller
     {
         private AppUserManager UserManager => HttpContext.GetOwinContext().GetUserManager<AppUserManager>();
@@ -19,8 +19,15 @@ namespace Vault.Controllers
 
         public async Task<ActionResult> Index()
         {
-            var list = await IdentityContext.Users.Find(x=>true).ToListAsync();
-            return View(list);
+            try
+            {
+                var list = await IdentityContext.Users.Find(x => true).ToListAsync();
+                return View(list);
+            }
+            catch (Exception)
+            {
+                return View("Error",new string[] {"No connection to database"});
+            }
         }
 
         public ActionResult Create()

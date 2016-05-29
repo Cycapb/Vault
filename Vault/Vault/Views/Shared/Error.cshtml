@@ -11,7 +11,7 @@
             @:Something went wrong. Please try again;
             break;
         case 1:
-            Model.First();
+            @Model.First();
             break;
         default:
             @: The following errors were encountered:
@@ -23,7 +23,7 @@
             </ul>
             break;
     }
-    @Html.ActionLink("Ok","Index",null,new {@class="btn btn-success"})
+    <p>@Html.ActionLink("Ok", "Index", null, new { @class = "btn btn-success" })</p> 
 </div>
 
 
