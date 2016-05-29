@@ -21,7 +21,7 @@
                     <tr>
                         <td>@role.Name</td>
                         <td>
-                            @{ var users = Html.GetRoleUsers(role.Name);}
+                            @{ var users = Html.GetRoleUserNames(role.Name);}
                             @if (MvcHtmlString.IsNullOrEmpty(users))
                             {
                                 @: No users in role 

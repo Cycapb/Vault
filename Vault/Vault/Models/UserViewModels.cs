@@ -50,7 +50,7 @@ namespace Vault.Models
     public class RoleModificationModel
     {
         public string RoleName { get; set; }
-        public string[] RolesToAdd { get; set; }
-        public string[] RolesToDelete { get; set; }
+        public string[] UsersToAdd { get; set; }
+        public string[] UsersToDelete { get; set; }
     }
 }

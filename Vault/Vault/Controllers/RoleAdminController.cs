@@ -14,8 +14,8 @@ namespace Vault.Controllers
     public class RoleAdminController : Controller
     {
         private AppIdentityDbContext IdentityContext => HttpContext.GetOwinContext().GetUserManager<AppIdentityDbContext>();
-
         private AppRoleManager RoleManager => HttpContext.GetOwinContext().GetUserManager<AppRoleManager>();
+        private AppUserManager UserManager => HttpContext.GetOwinContext().GetUserManager<AppUserManager>();
 
         public async Task<ActionResult> Index()
         {
@@ -62,7 +62,7 @@ namespace Vault.Controllers
                 var result = await RoleManager.DeleteAsync(role);
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("Index");
+                    return await DeleteRoleFromUsers(role.Name);
                 }
                 else
                 {
@@ -75,9 +75,69 @@ namespace Vault.Controllers
             }
         }
 
+        private async Task<ActionResult> DeleteRoleFromUsers(string roleName)
+        {
+            var users = await IdentityContext.Users.Find(x => x.Roles.Contains(roleName)).ToListAsync();
+            foreach (var user in users)
+            {
+                var result = await UserManager.RemoveFromRoleAsync(user.Id, roleName);
+                if (!result.Succeeded)
+                {
+                    return View("Error", result.Errors);
+                }
+            }
+            return RedirectToAction("Index");
+        }
+
         public async Task<ActionResult> Edit(string id)
         {
-            
+            var role = await RoleManager.FindByIdAsync(id);
+            if (role != null)
+            {
+                var usersInRole = await IdentityContext.Users.Find(x => x.Roles.Contains(role.Name)).ToListAsync();
+                var usersNotInRole = await IdentityContext.Users.Find(x => !x.Roles.Contains(role.Name)).ToListAsync();
+                var editModel = new EditRolemodel()
+                {
+                    Role = role,
+                    Members = usersInRole,
+                    NonMembers = usersNotInRole
+                };
+                return View(editModel);
+            }
+            else
+            {
+                return View("Index");
+            }
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Edit(RoleModificationModel model)
+        {
+            IdentityResult result = null;
+            if (model.UsersToAdd != null)
+            {
+                foreach (var user in model.UsersToAdd)
+                {
+                    result = await UserManager.AddToRoleAsync(user, model.RoleName);
+                    if (!result.Succeeded)
+                    {
+                        return View("Error", result.Errors);
+                    }
+                } 
+            }
+
+            if (model.UsersToDelete != null)
+            {
+                foreach (var user in model.UsersToDelete)
+                {
+                    result = await UserManager.RemoveFromRoleAsync(user, model.RoleName);
+                    if (!result.Succeeded)
+                    {
+                        return View("Error", result.Errors);
+                    }
+                }
+            }
+            return RedirectToAction("Index");
         }
 
         private void AddModelErrors(IdentityResult result)

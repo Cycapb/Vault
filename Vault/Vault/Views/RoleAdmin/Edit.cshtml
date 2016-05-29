@@ -1,0 +1,28 @@
+﻿@model Vault.Models.EditRolemodel
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_RoleAdminLayout.cshtml";
+}
+@using (Html.BeginForm())
+{
+    <input type="hidden" name="RoleName" value="@Model.Role.Name" />
+    <div class="panel panel-primary">
+        <div class="panel-heading">Add to role</div>
+        <div class="panel-body">
+            <table class="table table-striped">
+                @Html.Partial("NotRoleMembersPartial", Model.NonMembers)
+            </table>
+        </div>
+    </div>
+
+    <div class="panel panel-primary">
+        <div class="panel-heading">Delete from role</div>
+        <div class="panel-body">
+            <table class="table table-striped">
+                @Html.Partial("RoleMembersPartial", Model.Members)
+            </table>
+        </div>
+    </div>
+    <p><input type="submit" value="Save" class="btn btn-success"/></p>
+}
