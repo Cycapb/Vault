@@ -2,7 +2,6 @@
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using Owin;
-using Vault.Abstract;
 using Vault.Infrastructure;
 using Vault.Models;
 
