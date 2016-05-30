@@ -53,4 +53,20 @@ namespace Vault.Models
         public string[] UsersToAdd { get; set; }
         public string[] UsersToDelete { get; set; }
     }
+
+    public class RegisterModel
+    {
+        [Required(ErrorMessage = "Field UserName can't be empty")]
+        public string UserName { get; set; }
+
+        [Required(ErrorMessage = "Field Email can't be empty")]
+        public string Email { get; set; }
+
+        [Required(ErrorMessage = "Field Password can't be empty")]
+        public string Password { get; set; }
+
+        [Required(ErrorMessage = "Field PasswordConfirmation can't be empty")]
+        [System.ComponentModel.DataAnnotations.Compare("Password")]
+        public string PasswordConfirmation { get; set; }
+    }
 }
