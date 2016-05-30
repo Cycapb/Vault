@@ -1,7 +1,7 @@
 ﻿using System.Configuration;
-using Vault.Abstract;
+using VaultDAL.Abstract;
 
-namespace Vault.Concrete
+namespace VaultDAL.Concrete
 {
     public class MongoConnectionProvider:IConnectionProvider
     {
@@ -12,7 +12,7 @@ namespace Vault.Concrete
 
         public string GetDatabase()
         {
-            return ConfigurationManager.AppSettings["Database"];
+            return ConfigurationManager.AppSettings["VaultDatabase"];
         }
     }
 }

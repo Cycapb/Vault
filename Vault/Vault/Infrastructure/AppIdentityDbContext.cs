@@ -1,8 +1,8 @@
 ﻿using System;
 using MongoDB.Driver;
-using Vault.Abstract;
 using Vault.Concrete;
 using Vault.Models;
+using VaultDAL.Abstract;
 
 namespace Vault.Infrastructure
 {
@@ -13,7 +13,7 @@ namespace Vault.Infrastructure
 
         public static AppIdentityDbContext Create()
         {
-            IConnectionProvider provider = new MongoConnectionProvider();
+            IConnectionProvider provider = new IdentityConnectionProvider();
             var client = new MongoClient(provider.GetServer());
             var database = client.GetDatabase(provider.GetDatabase());
             var users = database.GetCollection<AppUserModel>("users");

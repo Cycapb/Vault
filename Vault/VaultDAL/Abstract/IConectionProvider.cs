@@ -1,4 +1,4 @@
-﻿namespace Vault.Abstract
+﻿namespace VaultDAL.Abstract
 {
     public interface IConnectionProvider
     {
