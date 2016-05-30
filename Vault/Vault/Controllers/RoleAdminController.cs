@@ -11,6 +11,7 @@ using Vault.Models;
 
 namespace Vault.Controllers
 {
+    [Authorize(Roles = "Administrators")]
     public class RoleAdminController : Controller
     {
         private AppIdentityDbContext IdentityContext => HttpContext.GetOwinContext().GetUserManager<AppIdentityDbContext>();

@@ -2,9 +2,9 @@
 
 namespace Vault.Controllers
 {
-    [Authorize(Roles = "Administrators")]
-    public class AdminController : Controller
+    public class HomeController : Controller
     {
+        [Authorize]
         public ActionResult Index()
         {
             return View();

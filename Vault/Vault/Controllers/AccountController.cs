@@ -46,5 +46,11 @@ namespace Vault.Controllers
             ViewBag.ReturnUrl = returnUrl;
             return View(model);
         }
+
+        public ActionResult LogOut()
+        {
+            AuthMan.SignOut();
+            return RedirectToAction("Index", "Home");
+        }
     }
 }
