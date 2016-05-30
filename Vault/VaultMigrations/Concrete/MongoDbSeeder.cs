@@ -1,11 +1,10 @@
 ﻿using AspNet.Identity.MongoDB;
 using Microsoft.AspNet.Identity;
 using MongoDB.Driver;
-using Vault.Abstract;
-using Vault.Infrastructure;
-using Vault.Models;
+using VaultMigrations.Abstract;
+using VaultMigrations.Models;
 
-namespace Vault.Concrete    
+namespace VaultMigrations.Concrete    
 {
     public class MongoDbSeeder:IDatabaseSeeder
     {

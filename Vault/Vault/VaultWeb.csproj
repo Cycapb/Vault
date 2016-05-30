@@ -194,13 +194,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Abstract\IConnectionProvider.cs" />
-    <Compile Include="Abstract\IDatabaseSeeder.cs" />
-    <Compile Include="Abstract\IExistingChecker.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Concrete\MongoConnectionProvider.cs" />
-    <Compile Include="Concrete\MongoDbExistingChecker.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -210,7 +207,6 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Infrastructure\AppIdentityDbContext.cs" />
-    <Compile Include="Concrete\MongoDbSeeder.cs" />
     <Compile Include="Infrastructure\IdentityHelpers.cs" />
     <Compile Include="Infrastructure\NinjectDependencyResolver.cs" />
     <Compile Include="Models\AppRoleManager.cs" />

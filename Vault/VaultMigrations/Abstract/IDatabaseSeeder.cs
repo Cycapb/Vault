@@ -1,4 +1,4 @@
-﻿namespace Vault.Abstract
+﻿namespace VaultMigrations.Abstract
 {
     public interface IDatabaseSeeder
     {

@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VaultWeb", "Vault\VaultWeb.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VaultDAL", "VaultDAL\VaultDAL.csproj", "{C152E679-6E9B-48D8-8B3A-2A54E3A481B0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VaultMigrations", "VaultMigrations\VaultMigrations.csproj", "{BD2B6C1C-8EF2-4222-B71C-E0EC360AE096}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{C152E679-6E9B-48D8-8B3A-2A54E3A481B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C152E679-6E9B-48D8-8B3A-2A54E3A481B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C152E679-6E9B-48D8-8B3A-2A54E3A481B0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD2B6C1C-8EF2-4222-B71C-E0EC360AE096}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD2B6C1C-8EF2-4222-B71C-E0EC360AE096}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD2B6C1C-8EF2-4222-B71C-E0EC360AE096}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD2B6C1C-8EF2-4222-B71C-E0EC360AE096}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

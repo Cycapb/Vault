@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace Vault.Abstract
+namespace VaultMigrations.Abstract
 {
     public interface IExistingChecker
     {

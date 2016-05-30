@@ -1,10 +1,9 @@
 ﻿using System;
 using MongoDB.Driver;
-using Vault.Abstract;
-using Vault.Concrete;
-using Vault.Models;
+using VaultMigrations.Abstract;
+using VaultMigrations.Concrete;
 
-namespace Vault.Infrastructure
+namespace VaultMigrations.Models
 {
     public class AppIdentityDbContext:IDisposable
     {

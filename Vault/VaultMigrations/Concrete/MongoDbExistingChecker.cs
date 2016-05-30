@@ -3,9 +3,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using MongoDB.Bson;
 using MongoDB.Driver;
-using Vault.Abstract;
+using VaultMigrations.Abstract;
 
-namespace Vault.Concrete
+namespace VaultMigrations.Concrete
 {
     public class MongoDbExistingChecker:IExistingChecker
     {
