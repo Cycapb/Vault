@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace VaultDAL.Abstract
 {
-    public interface IMongoRepository<T> where T : class
+    public interface IRepository<T> where T : class
     {
         Task<IEnumerable<T>> GetListAsync();
         Task<T> GetItemAsync(string id);

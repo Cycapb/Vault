@@ -8,7 +8,7 @@ using VaultDAL.Abstract;
 
 namespace VaultDAL.Concrete
 {
-    public class MongoRepository<T> : IMongoRepository<T> where T : class, IEntity
+    public class MongoRepository<T> : IRepository<T> where T : class, IEntity
     {
         private readonly MongoClient _mongoClient;
         private readonly IMongoDatabase _mongoDatabase;
