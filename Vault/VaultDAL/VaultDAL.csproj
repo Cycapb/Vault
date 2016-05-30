@@ -79,6 +79,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -95,6 +96,9 @@
     <Compile Include="Concrete\Entity.cs" />
     <Compile Include="Concrete\MongoConnectionProvider.cs" />
     <Compile Include="Concrete\MongoRepository.cs" />
+    <Compile Include="Models\Vault.cs" />
+    <Compile Include="Models\VaultItem.cs" />
+    <Compile Include="Models\VaultUser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
