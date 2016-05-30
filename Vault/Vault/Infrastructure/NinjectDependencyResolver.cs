@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Web.Mvc;
 using Ninject;
+using Vault.Abstract;
+using Vault.Concrete;
 
 namespace Vault.Infrastructure
 {
@@ -27,7 +29,7 @@ namespace Vault.Infrastructure
 
         private void AddBindings()
         {
-            
+            _kernel.Bind<IConnectionProvider>().To<MongoConnectionProvider>();
         }
     }
 }

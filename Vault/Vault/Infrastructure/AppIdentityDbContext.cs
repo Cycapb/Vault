@@ -1,5 +1,7 @@
 ﻿using System;
 using MongoDB.Driver;
+using Vault.Abstract;
+using Vault.Concrete;
 using Vault.Models;
 
 namespace Vault.Infrastructure
@@ -7,12 +9,15 @@ namespace Vault.Infrastructure
     public class AppIdentityDbContext:IDisposable
     {
         public IMongoCollection<AppUserModel> Users { get; set; } 
-        public IMongoCollection<AppRoleModel> Roles { get; set; } 
+        public IMongoCollection<AppRoleModel> Roles { get; set; }
 
         public static AppIdentityDbContext Create()
         {
-            var client = new MongoClient("mongodb://192.168.1.144:27017");
-            var database = client.GetDatabase("IdentityDb");
+            IConnectionProvider provider = new MongoConnectionProvider();
+            IDatabaseSeeder seeder = new MongoDbSeeder(provider);
+            seeder.Seed();
+            var client = new MongoClient(provider.GetServer());
+            var database = client.GetDatabase(provider.GetDatabase());
             var users = database.GetCollection<AppUserModel>("users");
             var roles = database.GetCollection<AppRoleModel>("roles");
             return new AppIdentityDbContext(users, roles);
@@ -29,6 +34,4 @@ namespace Vault.Infrastructure
             
         }
     }
-
-
 }
