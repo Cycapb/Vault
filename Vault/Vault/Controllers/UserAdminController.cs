@@ -106,18 +106,18 @@ namespace Vault.Controllers
                 var user = await UserManager.FindByIdAsync(model.Id);
                 if (user != null)
                 {
-                    user.UserName = model.Name;
-                    IdentityResult validName = await UserManager.UserValidator.ValidateAsync(user);
-                    if (!validName.Succeeded)
-                    {
-                        AddModelErrors(validName);
-                    }
-
                     user.Email = model.Email;
                     IdentityResult validEmail = await UserManager.UserValidator.ValidateAsync(user);
                     if (!validEmail.Succeeded)
                     {
                         AddModelErrors(validEmail);
+                    }
+
+                    user.UserName = model.Name;
+                    IdentityResult validName = await UserManager.UserValidator.ValidateAsync(user);
+                    if (!validName.Succeeded)
+                    {
+                        AddModelErrors(validName);
                     }
 
                     IdentityResult validPassword = null;
