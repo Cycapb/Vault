@@ -14,8 +14,13 @@ namespace Vault.Infrastructure
         public static AppIdentityDbContext Create()
         {
             IConnectionProvider provider = new MongoConnectionProvider();
-            IDatabaseSeeder seeder = new MongoDbSeeder(provider);
-            seeder.Seed();
+            IExistingChecker checker = new MongoDbExistingChecker(provider);
+            
+            if (!checker.Exist(provider.GetDatabase()).Result)
+            {
+                 IDatabaseSeeder seeder = new MongoDbSeeder(provider);   
+            }
+
             var client = new MongoClient(provider.GetServer());
             var database = client.GetDatabase(provider.GetDatabase());
             var users = database.GetCollection<AppUserModel>("users");

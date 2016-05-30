@@ -30,6 +30,7 @@ namespace Vault.Infrastructure
         private void AddBindings()
         {
             _kernel.Bind<IConnectionProvider>().To<MongoConnectionProvider>();
+            _kernel.Bind<IExistingChecker>().To<MongoDbExistingChecker>();
         }
     }
 }
