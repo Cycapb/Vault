@@ -18,6 +18,10 @@ namespace Vault.Controllers
         [AllowAnonymous]
         public ActionResult Login(string returnUrl  )
         {
+            if (HttpContext.User.Identity.IsAuthenticated)
+            {
+                return View("Error",new string[] {"User has already authenticated or you tried to access forbidden url"});
+            }
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }
@@ -47,6 +51,7 @@ namespace Vault.Controllers
             return View(model);
         }
 
+        [Authorize]
         public ActionResult LogOut()
         {
             AuthMan.SignOut();

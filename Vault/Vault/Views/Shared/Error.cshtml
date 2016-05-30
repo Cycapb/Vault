@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<string>
 @{
     ViewBag.Title = "Error";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_ErrorLayout.cshtml";
 }
 
 <div class="alert-danger">
@@ -23,7 +23,7 @@
             </ul>
             break;
     }
-    <p>@Html.ActionLink("Ok", "Index", null, new { @class = "btn btn-success" })</p> 
+    <p>@Html.ActionLink("Ok", "Index", "Home",null, new { @class = "btn btn-success" })</p> 
 </div>
 
 

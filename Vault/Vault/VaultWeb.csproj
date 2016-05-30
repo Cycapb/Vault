@@ -227,6 +227,7 @@
     <Content Include="Views\RoleAdmin\RoleMembersPartial.cshtml" />
     <Content Include="Views\RoleAdmin\NotRoleMembersPartial.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Shared\_ErrorLayout.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
