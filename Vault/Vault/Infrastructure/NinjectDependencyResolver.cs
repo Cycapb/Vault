@@ -30,7 +30,6 @@ namespace Vault.Infrastructure
 
         private void AddBindings()
         {
-            _kernel.Bind<IConnectionProvider>().To<IdentityConnectionProvider>().WhenInjectedInto(typeof(IdentityConnectionProvider));
             _kernel.Bind<IConnectionProvider>().To<MongoConnectionProvider>();
         }
     }
