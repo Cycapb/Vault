@@ -5,15 +5,16 @@
 }
 <div class="panel panel-primary">
     <div class="panel-heading">
-        @Html.Action("ViewCredentials")
-        @Html.ActionLink("Log out", "Logout", "Account", null, new {@class = "btn btn-success btn-xs pull-right"})
+        <div class="form">
+            @Html.Action("ViewCredentials")
+        </div>
     </div>
     <div class="panel-body">
         @if (HttpContext.Current.User.IsInRole("Users"))
         {
             <form class="form form-horizontal">
                 @Html.Action("UserVaults")
-                @*@Html.Action("AllVaults")*@
+                @Html.Action("AllVaults")
             </form>
         }
     </div>
