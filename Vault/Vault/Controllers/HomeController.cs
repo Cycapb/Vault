@@ -1,4 +1,5 @@
 ﻿using System.Web.Mvc;
+using Vault.Models;
 
 namespace Vault.Controllers
 {
@@ -13,6 +14,11 @@ namespace Vault.Controllers
                 return RedirectToAction("Index", "Admin");
             }
             return View();
+        }
+
+        public PartialViewResult ViewCredentials(WebUser user)
+        {
+            return PartialView(user);
         }
     }
 }

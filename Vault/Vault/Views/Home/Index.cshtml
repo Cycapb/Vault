@@ -1,9 +1,7 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<h2>Index</h2>
+@Html.Action("ViewCredentials")
 @Html.ActionLink("Log out","Logout","Account",null,new {@class="btn btn-success"})
 

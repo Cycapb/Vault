@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using System.Web.Routing;
+using Vault.Infrastructure.Binders;
+using Vault.Models;
 
 namespace Vault
 {
@@ -13,6 +11,7 @@ namespace Vault
         {
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
+            ModelBinders.Binders.Add(typeof(WebUser),new WebUserModelBinder());
         }
     }
 }
