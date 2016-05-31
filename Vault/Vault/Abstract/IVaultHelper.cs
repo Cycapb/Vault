@@ -1,0 +1,17 @@
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using VaultDAL.Models;
+
+namespace Vault.Abstract
+{
+    public interface IVaultHelper
+    {
+        Task<IEnumerable<UserVault>> GetVaults(string userId);
+        Task<UserVault> GetVault(string id);
+        Task CreateAsync(UserVault vault);
+        Task DeleteAsync(string id);
+        Task UpdateAsync(UserVault vault);
+        Task<IEnumerable<VaultUser>> GetReadUsers(string id);
+        Task<IEnumerable<VaultUser>> GetCreateUsers(string id);
+    }
+}

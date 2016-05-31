@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Web.Mvc;
 using Ninject;
-using Ninject.Activation;
 using Vault.Abstract;
 using Vault.Concrete;
 using VaultDAL.Abstract;
@@ -40,6 +38,7 @@ namespace Vault.Infrastructure
             _kernel.Bind<IRepository<VaultItem>>().To<MongoRepository<VaultItem>>();
             _kernel.Bind<IRepository<VaultUser>>().To<MongoRepository<VaultUser>>();
             _kernel.Bind<IVaultGetter>().To<UserVaultGetter>();
+            _kernel.Bind<IVaultHelper>().To<VaultHelper>();
         }
     }
 }

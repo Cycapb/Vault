@@ -194,17 +194,20 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Abstract\IVaultGetter.cs" />
+    <Compile Include="Abstract\IVaultHelper.cs" />
     <Compile Include="Abstract\IWebUser.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Concrete\IdentityConnectionProvider.cs" />
     <Compile Include="Concrete\UserVaultGetter.cs" />
+    <Compile Include="Concrete\VaultHelper.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\RoleAdminController.cs" />
     <Compile Include="Controllers\UserAdminController.cs" />
+    <Compile Include="Controllers\VaultController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -247,6 +250,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Vault\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\VaultDAL\VaultDAL.csproj">
