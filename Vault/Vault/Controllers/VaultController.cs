@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Vault.Abstract;
+using Vault.Models;
 
 namespace Vault.Controllers
 {
@@ -16,9 +17,12 @@ namespace Vault.Controllers
             _vaultHelper = vaultHelper;
         }
 
-
-        // GET: Vault
         public ActionResult Index()
+        {
+            return RedirectToAction("VaultList");
+        }
+
+        public ActionResult VaultList(WebUser user)
         {
             return View();
         }

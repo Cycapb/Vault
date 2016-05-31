@@ -241,6 +241,7 @@
     <Content Include="Views\Home\UserVaults.cshtml" />
     <Content Include="Views\Home\AllVaults.cshtml" />
     <Content Include="Views\Home\VaultsPartial.cshtml" />
+    <Content Include="Views\Shared\_VaultLayout.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
