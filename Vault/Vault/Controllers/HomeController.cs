@@ -7,6 +7,11 @@ namespace Vault.Controllers
         [Authorize]
         public ActionResult Index()
         {
+            var currentUser = HttpContext.User;
+            if (currentUser.IsInRole("Administrators"))
+            {
+                return RedirectToAction("Index", "Admin");
+            }
             return View();
         }
     }
