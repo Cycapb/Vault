@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 using Vault.Abstract;
 using Vault.Models;
 
 namespace Vault.Controllers
 {
+    [Authorize(Roles = "VaultAdmins")]
     public class VaultController : Controller
     {
         private readonly IVaultHelper _vaultHelper;
@@ -22,9 +21,17 @@ namespace Vault.Controllers
             return RedirectToAction("VaultList");
         }
 
-        public ActionResult VaultList(WebUser user)
+        public async Task<ActionResult> VaultList(WebUser user)
         {
-            return View();
+            var vaultList = await _vaultHelper.GetVaults(user.Id);
+            return View(vaultList.ToList());
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Delete(string id)
+        {
+            await _vaultHelper.DeleteAsync(id);
+            return RedirectToAction("Index");
         }
     }
 }

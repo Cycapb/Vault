@@ -13,8 +13,10 @@
         @if (HttpContext.Current.User.IsInRole("Users"))
         {
             <form class="form form-horizontal">
-                @Html.Action("UserVaults")
-                @Html.Action("AllVaults")
+                <div class="panel panel-info">
+                    @Html.Action("UserVaults")
+                    @Html.Action("AllVaults") 
+                </div>
             </form>
         }
     </div>

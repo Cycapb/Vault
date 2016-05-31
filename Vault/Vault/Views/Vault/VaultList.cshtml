@@ -1,0 +1,23 @@
+﻿@model IEnumerable<VaultDAL.Models.UserVault>
+@{
+    ViewBag.Title = "VaultList";
+    Layout = "~/Views/Shared/_VaultLayout.cshtml";
+}
+<div class="panel panel-primary">
+    <div class="panel-heading">My vaults</div>
+    <div class="panel-body">
+        <div class="table table-striped">
+            <table class="table table-striped">
+                <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Actions</th>
+                </tr>
+                @Html.Partial("VaultListPartial", Model)
+            </table>
+        </div>
+        <div class="panel-footer">
+            @Html.ActionLink("Back","Index", "Home",null, new {@class="btn btn-default"})
+        </div>
+    </div>
+</div>

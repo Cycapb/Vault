@@ -242,6 +242,8 @@
     <Content Include="Views\Home\AllVaults.cshtml" />
     <Content Include="Views\Home\VaultsPartial.cshtml" />
     <Content Include="Views\Shared\_VaultLayout.cshtml" />
+    <Content Include="Views\Vault\VaultList.cshtml" />
+    <Content Include="Views\Vault\VaultListPartial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -251,7 +253,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Vault\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\VaultDAL\VaultDAL.csproj">
