@@ -60,5 +60,10 @@ namespace VaultDAL.Concrete
             var filter = new BsonDocument("_id", new BsonObjectId(new ObjectId(item.Id)));
             await _collection.ReplaceOneAsync(filter, item);
         }
+
+        public void Dispose()
+        {
+            
+        }
     }
 }

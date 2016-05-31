@@ -193,10 +193,13 @@
     <Content Include="Views\UserAdmin\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Abstract\IVaultGetter.cs" />
+    <Compile Include="Abstract\IWebUser.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Concrete\IdentityConnectionProvider.cs" />
+    <Compile Include="Concrete\UserVaultGetter.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -232,6 +235,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\_ErrorLayout.cshtml" />
     <Content Include="Views\Home\ViewCredentials.cshtml" />
+    <Content Include="Views\Home\UserVaultsPartial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -240,7 +244,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Abstract\" />
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>

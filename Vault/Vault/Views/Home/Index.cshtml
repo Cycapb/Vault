@@ -1,7 +1,26 @@
-﻿@{
+﻿@using Microsoft.AspNet.Identity
+@{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@Html.Action("ViewCredentials")
-@Html.ActionLink("Log out","Logout","Account",null,new {@class="btn btn-success"})
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        @Html.Action("ViewCredentials")
+        @Html.ActionLink("Log out", "Logout", "Account", null, new {@class = "btn btn-success btn-xs pull-right"})
+    </div>
+    <div class="panel-body">
+        @if (HttpContext.Current.User.IsInRole("Users"))
+        {
+            <form class="form form-horizontal">
+                @Html.Action("UserVaults")
+                @Html.Action("AllVaults")
+            </form>
+        }
+        @if (HttpContext.Current.User.IsInRole("VaultUsers"))
+        {
+            @Html.ActionLink("My vaults","Index","Vault", new {id = HttpContext.Current.User.Identity.GetUserId()}, new {@class="btn btn-success"} )
+        }
+    </div>
+</div>
+
 

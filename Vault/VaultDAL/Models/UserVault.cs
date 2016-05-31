@@ -5,7 +5,7 @@ using VaultDAL.Concrete;
 
 namespace VaultDAL.Models
 {
-    public class Vault:Entity
+    public class UserVault:Entity
     {
         [Required(ErrorMessage = "Field Name can't be empty")]
         public string Name { get; set; }

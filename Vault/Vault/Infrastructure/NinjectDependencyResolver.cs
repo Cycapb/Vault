@@ -1,10 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 using Ninject;
+using Ninject.Activation;
+using Vault.Abstract;
+using Vault.Concrete;
 using VaultDAL.Abstract;
 using VaultDAL.Concrete;
 using VaultDAL.Models;
+
 
 namespace Vault.Infrastructure
 {
@@ -31,9 +36,10 @@ namespace Vault.Infrastructure
         private void AddBindings()
         {
             _kernel.Bind<IConnectionProvider>().To<MongoConnectionProvider>();
-            _kernel.Bind<IRepository<VaultDAL.Models.Vault>>().To<MongoRepository<VaultDAL.Models.Vault>>();
+            _kernel.Bind<IRepository<UserVault>>().To<MongoRepository<UserVault>>();
             _kernel.Bind<IRepository<VaultItem>>().To<MongoRepository<VaultItem>>();
             _kernel.Bind<IRepository<VaultUser>>().To<MongoRepository<VaultUser>>();
+            _kernel.Bind<IVaultGetter>().To<UserVaultGetter>();
         }
     }
 }
