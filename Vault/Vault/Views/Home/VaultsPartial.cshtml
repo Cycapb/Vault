@@ -1,0 +1,27 @@
+﻿@model IEnumerable<VaultDAL.Models.UserVault>
+<div class="panel panel-info">
+    <div class="panel-heading">Available for me vaults</div>
+    <div class="panel-body">
+        <table class="table table-striped">
+            <tr>
+                <th>ID</th><th>Name</th><th>Action</th>
+            </tr>
+            @if (Model.Count() != 0)
+            {
+                foreach (var vault in Model)
+                {
+                    <tr>
+                        <td>@vault.Id</td>
+                        <td>@vault.Name</td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="3" class="text-center">No available vaults</td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>

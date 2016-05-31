@@ -31,15 +31,15 @@ namespace Vault.Controllers
             return PartialView(user);
         }
 
-        public async Task<ActionResult> UserVaults(WebUser user)
+        public ActionResult UserVaults(WebUser user)
         {
-            var userVaults = (await _vaultGetter.GetAsync(user)).ToList();
+            var userVaults = _vaultGetter.Get(user).ToList();
             return PartialView(userVaults);
         }
 
-        public ActionResult AllVaults()
+        public ActionResult AllVaults(WebUser user)
         {
-            var allFreeVaults = _vaultGetter.GetAllVaultsAsync();
+            var allFreeVaults = _vaultGetter.GetAllVaults(user).ToList();
             return PartialView(allFreeVaults);
         }
     }

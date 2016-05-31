@@ -13,14 +13,14 @@
         {
             <form class="form form-horizontal">
                 @Html.Action("UserVaults")
-                @Html.Action("AllVaults")
+                @*@Html.Action("AllVaults")*@
             </form>
-        }
-        @if (HttpContext.Current.User.IsInRole("VaultUsers"))
-        {
-            @Html.ActionLink("My vaults","Index","Vault", new {id = HttpContext.Current.User.Identity.GetUserId()}, new {@class="btn btn-success"} )
         }
     </div>
 </div>
+@if (HttpContext.Current.User.IsInRole("VaultAdmins"))
+{
+    @Html.ActionLink("My vaults", "Index", "Vault", new { id = HttpContext.Current.User.Identity.GetUserId() }, new { @class = "btn btn-success" })
+}
 
 

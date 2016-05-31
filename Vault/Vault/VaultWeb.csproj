@@ -235,7 +235,9 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\_ErrorLayout.cshtml" />
     <Content Include="Views\Home\ViewCredentials.cshtml" />
-    <Content Include="Views\Home\UserVaultsPartial.cshtml" />
+    <Content Include="Views\Home\UserVaults.cshtml" />
+    <Content Include="Views\Home\AllVaults.cshtml" />
+    <Content Include="Views\Home\VaultsPartial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

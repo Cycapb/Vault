@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Vault.Abstract;
 using Vault.Models;
 using VaultDAL.Abstract;
@@ -17,26 +16,36 @@ namespace Vault.Concrete
             _vaultRepository = vaultRepository;
         }
 
-        public async Task<IEnumerable<UserVault>> GetAsync(WebUser user)
+        public IEnumerable<UserVault> Get(WebUser user)
         {
-            var vaults = await _vaultRepository.GetListAsync();
             var userVaults = new List<UserVault>();
-            foreach (var vault in vaults)
+            var awaiter = _vaultRepository.GetListAsync().GetAwaiter();
+            awaiter.OnCompleted((() =>
             {
-                var vaultusers = vault.AllowCreate.ToList();
-                userVaults.AddRange(from vaultUser in vaultusers where vaultUser.Id == user.Id select vault);
-            }
-            foreach (var vault in vaults)
-            {
-                var vaultusers = vault.AllowRead.ToList();
-                userVaults.AddRange(from vaultUser in vaultusers where vaultUser.Id == user.Id select vault);
-            }
+                var vaults = awaiter.GetResult();
+                foreach (var vault in vaults)
+                {
+                    var allowCreate = vault.AllowCreate.ToList();
+                    var allowRead = vault.AllowRead.ToList();
+                    userVaults.AddRange(from vaultUser in allowCreate where vaultUser.Id == user.Id select vault);
+                    userVaults.AddRange(from vaultUser in allowRead where vaultUser.Id == user.Id select vault);
+                }
+            }));
+            
             return userVaults.Distinct();
         }
 
-        public Task<IEnumerable<UserVault>> GetAllVaultsAsync()
+        public IEnumerable<UserVault> GetAllVaults(WebUser user)
         {
-            return null;
+            var awaiter = _vaultRepository.GetListAsync().GetAwaiter();
+            var freeVaults = new List<UserVault>();
+            awaiter.OnCompleted((() =>
+            {
+                var vaults = awaiter.GetResult();
+                freeVaults.AddRange(vaults.Where(vault => vault.AllowRead.Any(x => x.Id != user.Id) 
+                && (vault.AllowCreate.Any(x => x.Id != user.Id))));
+            }));
+            return freeVaults;
         }
     }
 }
