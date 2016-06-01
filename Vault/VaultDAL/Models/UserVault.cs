@@ -13,7 +13,6 @@ namespace VaultDAL.Models
         public int OpenTime { get; set; }
         public int CloseTime { get; set; }
         public VaultUser VaultAdmin { get; set; }
-        public IEnumerable<VaultUser> VaultUsers { get; set; }
         public IEnumerable<VaultUser> AllowRead { get; set; } 
         public IEnumerable<VaultUser> AllowCreate { get; set; } 
     }
