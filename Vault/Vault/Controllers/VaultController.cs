@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using Vault.Abstract;
@@ -28,19 +30,32 @@ namespace Vault.Controllers
             return View(vaultList.ToList());
         }
 
-        public ActionResult Create()
+        public ActionResult Create(WebUser user)
         {
-            var vault = new UserVault();
+            var vault = new UserVault()
+            {
+                VaultUsers = new List<VaultUser>(),
+                AllowRead = new List<VaultUser>(),
+                AllowCreate = new List<VaultUser>(),
+            };
             return View(vault);
         }
 
         [HttpPost]
-        public async Task<ActionResult> Create(UserVault vault)
+        public async Task<ActionResult> Create(WebUser user,UserVault vault)
         {
+            vault.VaultAdmin = new VaultUser() {Id = user.Id};
             if (ModelState.IsValid)
             {
-                //await _vaultHelper.CreateAsync(vault);
-                return RedirectToAction("Index");
+                try
+                {
+                    await _vaultHelper.CreateAsync(vault);
+                    return RedirectToAction("Index");
+                }
+                catch (Exception)
+                {
+                   return View("Error",new string[] {"Something went wrong. Please try again."});
+                }
             }
             return View(vault);
         }

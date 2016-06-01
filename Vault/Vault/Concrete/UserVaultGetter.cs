@@ -25,10 +25,16 @@ namespace Vault.Concrete
                 var vaults = awaiter.GetResult();
                 foreach (var vault in vaults)
                 {
-                    var allowCreate = vault.AllowCreate.ToList();
-                    var allowRead = vault.AllowRead.ToList();
-                    userVaults.AddRange(from vaultUser in allowCreate where vaultUser.Id == user.Id select vault);
-                    userVaults.AddRange(from vaultUser in allowRead where vaultUser.Id == user.Id select vault);
+                    var allowCreate = vault.AllowCreate?.ToList();
+                    var allowRead = vault.AllowRead?.ToList();
+                    if (allowCreate != null)
+                    {
+                        userVaults.AddRange(from vaultUser in allowCreate where vaultUser.Id == user.Id select vault);
+                    }
+                    if (allowRead != null)
+                    {
+                        userVaults.AddRange(from vaultUser in allowRead where vaultUser.Id == user.Id select vault);
+                    }
                 }
             }));
             
@@ -42,8 +48,19 @@ namespace Vault.Concrete
             awaiter.OnCompleted((() =>
             {
                 var vaults = awaiter.GetResult();
-                freeVaults.AddRange(vaults.Where(vault => vault.AllowRead.Any(x => x.Id != user.Id) 
-                && (vault.AllowCreate.Any(x => x.Id != user.Id))));
+                foreach (var vault in vaults)
+                {
+                    var allowCreate = vault.AllowCreate?.ToList();
+                    var allowRead = vault.AllowRead?.ToList();
+                    if (allowCreate != null)
+                    {
+                        freeVaults.AddRange(from vaultUser in allowCreate where vaultUser.Id != user.Id select vault);
+                    }
+                    if (allowRead != null)
+                    {
+                        freeVaults.AddRange(from vaultUser in allowRead where vaultUser.Id != user.Id select vault);
+                    }
+                }
             }));
             return freeVaults;
         }

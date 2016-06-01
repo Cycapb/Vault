@@ -8,6 +8,8 @@
     <div class="panel-heading">New vault</div>
     @using (Html.BeginForm())
     {
+        @Html.HiddenFor(x=>x.VaultAdmin)
+        @*<input type="hidden" name="VaultAdmin" value="@Model.VaultAdmin"/>*@
         <div class="panel-body">
             @Html.ValidationSummary()
             <div class="form-group">
