@@ -39,7 +39,7 @@ namespace Vault.Controllers
         {
             if (ModelState.IsValid)
             {
-                await _vaultHelper.CreateAsync(vault);
+                //await _vaultHelper.CreateAsync(vault);
                 return RedirectToAction("Index");
             }
             return View(vault);

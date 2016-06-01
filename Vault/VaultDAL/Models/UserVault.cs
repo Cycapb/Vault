@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using VaultDAL.Concrete;
 
 namespace VaultDAL.Models
 {
+    [CustomTimeComparator]
     public class UserVault:Entity
     {
         [Required(ErrorMessage = "Field Name can't be empty")]
