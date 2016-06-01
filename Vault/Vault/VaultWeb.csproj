@@ -306,6 +306,7 @@
     <Compile Include="Models\AppUserManager.cs" />
     <Compile Include="Models\AppUserModel.cs" />
     <Compile Include="Models\UserViewModels.cs" />
+    <Compile Include="Models\VaultViewModels.cs" />
     <Compile Include="Models\WebUser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -332,6 +333,8 @@
     <Content Include="Views\Vault\VaultListPartial.cshtml" />
     <Content Include="Views\Vault\Create.cshtml" />
     <Content Include="Scripts\jquery-2.2.3.min.map" />
+    <Content Include="Views\Vault\EditUsersRights.cshtml" />
+    <Content Include="Views\Vault\AddUsers.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -73,5 +73,29 @@ namespace Vault.Controllers
                 return View("Error",new string[] {"Something went wrong. Please try again"});
             }
         }
+
+        public async Task<ActionResult> EditUsersRights(string id)
+        {
+            var vault = await _vaultHelper.GetVault(id);
+            if (vault != null)
+            {
+                var editModel = new EditVaultModel()
+                {
+                    Id = vault.Id,
+                    AllowCreateUsers = vault.AllowCreate,
+                    AllowReadUsers = vault.AllowRead
+                };
+                return View(editModel);
+            }
+            else
+            {
+                return View("VaultList");
+            }
+        }
+
+        public ActionResult AddUsers(string id)
+        {
+            return View();
+        }
     }
 }
