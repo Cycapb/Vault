@@ -9,8 +9,15 @@
     @using (Html.BeginForm())
     {
         @Html.HiddenFor(x => x.VaultAdmin.Id)
-        @Html.HiddenFor(x=>x.AllowCreate)
-        @Html.HiddenFor(x=>x.AllowRead)
+        @Html.HiddenFor(x=>x.VaultAdmin.UserName)
+        if (Model.AllowCreate != null)
+         {
+            @Html.HiddenFor(x => x.AllowCreate)
+         }
+        if (Model.AllowRead != null)
+        {
+            @Html.HiddenFor(x => x.AllowRead)
+        }
         <div class="panel-body">
             @Html.ValidationSummary()
             <div class="form-group">
