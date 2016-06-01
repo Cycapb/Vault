@@ -45,13 +45,13 @@ namespace Vault.Concrete
         public async Task<IEnumerable<VaultUser>> GetReadUsers(string id)
         {
             var vault = await _userVaultRepository.GetItemAsync(id);
-            return vault.AllowRead.ToList();
+            return vault.AllowRead?.ToList();
         }
 
         public async Task<IEnumerable<VaultUser>> GetCreateUsers(string id)
         {
             var vault = await _userVaultRepository.GetItemAsync(id);
-            return vault.AllowCreate.ToList();
+            return vault.AllowCreate?.ToList();
         }
     }
 }
