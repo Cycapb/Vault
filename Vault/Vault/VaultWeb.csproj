@@ -336,6 +336,7 @@
     <Content Include="Views\Vault\EditUsers.cshtml" />
     <Content Include="Views\Vault\AddUsers.cshtml" />
     <Content Include="Views\Vault\EditUsersPartial.cshtml" />
+    <Content Include="Views\Vault\Edit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
