@@ -51,7 +51,7 @@ namespace VaultDAL.Concrete
 
         public async Task DeleteAsync(string id)
         {
-            var filter = new BsonDocument("_id", id);
+            var filter = new BsonDocument("_id", new BsonObjectId(new ObjectId(id)));
             await _collection.FindOneAndDeleteAsync(filter);
         }
 

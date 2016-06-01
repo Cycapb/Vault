@@ -7,6 +7,9 @@
                 <td>@vault.Name</td>
                 <td>@vault.Description</td>
                 <td>
+                    Open from @vault.OpenTime till @vault.CloseTime  
+                </td>
+                <td>
                     @using (Html.BeginForm("Delete", "Vault",new {id=vault.Id}))
                     {
                         @Html.ActionLink("Edit","Edit",new {id=vault.Id}, new {@class="btn btn-primary btn-xs"})
@@ -19,6 +22,6 @@
     else
     {
         <tr>
-            <td colspan="3" class="text-center">No vaults</td>
+            <td colspan="4" class="text-center">No vaults</td>
         </tr>
     }

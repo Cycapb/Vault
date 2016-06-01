@@ -63,8 +63,15 @@ namespace Vault.Controllers
         [HttpPost]
         public async Task<ActionResult> Delete(string id)
         {
-            await _vaultHelper.DeleteAsync(id);
-            return RedirectToAction("Index");
+            try
+            {
+                await _vaultHelper.DeleteAsync(id);
+                return RedirectToAction("Index");
+            }
+            catch (Exception)
+            {
+                return View("Error",new string[] {"Something went wrong. Please try again"});
+            }
         }
     }
 }
