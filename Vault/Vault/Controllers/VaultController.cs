@@ -34,7 +34,6 @@ namespace Vault.Controllers
         {
             var vault = new UserVault()
             {
-                VaultUsers = new List<VaultUser>(),
                 AllowRead = new List<VaultUser>(),
                 AllowCreate = new List<VaultUser>(),
             };
@@ -44,7 +43,7 @@ namespace Vault.Controllers
         [HttpPost]
         public async Task<ActionResult> Create(WebUser user,UserVault vault)
         {
-            vault.VaultAdmin = new VaultUser() {Id = user.Id};
+            vault.VaultAdmin = new VaultUser() {Id = user.Id,UserName = user.UserName};
             if (ModelState.IsValid)
             {
                 try
@@ -80,6 +79,17 @@ namespace Vault.Controllers
             return View(vault);
         }
 
+        [HttpPost]
+        public async Task<ActionResult> Edit(UserVault vault)
+        {
+            if (ModelState.IsValid)
+            {
+                await _vaultHelper.UpdateAsync(vault);
+                return RedirectToAction("Index");
+            }
+            return View(vault);
+        }
+
         public async Task<ActionResult> EditUsers(string id)
         {
             var vault = await _vaultHelper.GetVault(id);
@@ -96,7 +106,7 @@ namespace Vault.Controllers
             }
             else
             {
-                return View("VaultList");
+                return RedirectToAction("Index");
             }
         }
 

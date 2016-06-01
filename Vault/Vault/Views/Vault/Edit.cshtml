@@ -4,6 +4,54 @@
     ViewBag.Title = "Edit";
     Layout = "~/Views/Shared/_VaultLayout.cshtml";
 }
-
-<h2>Edit</h2>
-
+<div class="panel panel-primary">
+    <div class="panel-heading">New vault</div>
+    @using (Html.BeginForm())
+    {
+        @Html.HiddenFor(x => x.VaultAdmin.Id)
+        @Html.HiddenFor(x=>x.AllowCreate)
+        @Html.HiddenFor(x=>x.AllowRead)
+        <div class="panel-body">
+            @Html.ValidationSummary()
+            <div class="form-group">
+                <label>Name:</label>
+                @Html.TextBoxFor(x => x.Name, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label>Description:</label>
+                @Html.TextAreaFor(x => x.Description, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label>Opened hours:</label>
+                @Html.TextBoxFor(x=>x.OpenTime, new {@class="form-control"})
+            </div>
+            <div class="form-group">
+                <label>Closed hours</label>
+                @Html.TextBoxFor(x=>x.CloseTime, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="panel-footer">
+            <input type="submit" class="btn btn-success" value="Save" />
+            @Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-default" })
+        </div>
+    }
+</div>
+@section calendarScripts
+{
+    <script type="text/javascript">
+        $(function() {
+            $('#OpenTime').datetimepicker({
+                locale: 'ru',
+                format: 'H'
+            });
+        });
+    </script>
+    <script type="text/javascript">
+        $(function() {
+            $('#CloseTime').datetimepicker({
+                locale: 'ru',
+                format: 'H'
+            });
+        });
+    </script>
+}
