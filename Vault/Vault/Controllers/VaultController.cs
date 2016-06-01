@@ -74,7 +74,12 @@ namespace Vault.Controllers
             }
         }
 
-        public async Task<ActionResult> EditUsersRights(string id)
+        public ActionResult Edit(string id)
+        {
+            return View();
+        }
+
+        public async Task<ActionResult> EditUsers(string id)
         {
             var vault = await _vaultHelper.GetVault(id);
             if (vault != null)
@@ -93,6 +98,14 @@ namespace Vault.Controllers
             }
         }
 
+        [HttpPost]
+        public async Task<ActionResult> EditUsers(VaultModificationModel model)
+        {
+            return View();
+        }
+
+        //ToDo When adding users to vaults i have to ckeck if user has both create and read rights/ If so then i must remove read rights from user
+        
         public ActionResult AddUsers(string id)
         {
             return View();
