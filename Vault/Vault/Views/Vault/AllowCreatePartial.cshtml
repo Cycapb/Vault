@@ -1,0 +1,19 @@
+﻿@model Vault.Models.EditVaultModel
+@if (Model.AllowCreateUsers != null && Model.AllowCreateUsers.Count() != 0)
+{
+    foreach (var user in Model.AllowCreateUsers)
+    {
+        <tr>
+            <td><input type="checkbox" name="CreateUsers" value="@user.Id" /></td>
+            <td>@user.Id</td>
+            <td>@user.UserName</td>
+        </tr>
+    }
+}
+else
+{
+    <tr>
+        <td colspan="3" class="text-center">No users</td>
+    </tr>
+}
+

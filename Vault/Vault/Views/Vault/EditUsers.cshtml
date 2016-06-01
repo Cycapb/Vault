@@ -6,7 +6,7 @@
 }
 @using (Html.BeginForm())
 {
-    <input type="hidden" name="Id" value="@Model.Id" />
+    <input type="hidden" name="VaultId" value="@Model.Id" />
     <div class="panel panel-primary">
         <div class="panel-heading">Grant full access</div>
         <div class="panel-body">
@@ -16,7 +16,7 @@
                     <th>Id</th>
                     <td>Name</td>
                 </tr>
-                @*@Html.Partial("EditUsersPartial", Model.AllowReadUsers)*@
+                @Html.Partial("AllowReadPartial", Model)
             </table>
         </div>
     </div>
@@ -25,12 +25,12 @@
         <div class="panel-heading">Grant read access</div>
         <div class="panel-body">
             <table class="table table-striped">
-                @*<tr>
+                <tr>
                     <td></td>
                     <th>Id</th>
                     <td>Name</td>
-                </tr>*@
-                @Html.Partial("EditUsersPartial", Model.AllowCreateUsers)
+                </tr>
+                @Html.Partial("AllowCreatePartial", Model)
             </table>
         </div>
     </div>
