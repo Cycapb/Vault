@@ -20,6 +20,7 @@ textarea {
 .container {
             width: 800px;
             padding-top: 30px;
+    position: relative;
         }
 /*Container for Home view*/
 .homeContainer {

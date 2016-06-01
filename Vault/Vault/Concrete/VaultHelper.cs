@@ -27,9 +27,9 @@ namespace Vault.Concrete
             return await _userVaultRepository.GetItemAsync(id);
         }
 
-        public async Task CreateAsync(UserVault vault)
+        public async Task<UserVault> CreateAsync(UserVault vault)
         {
-            await _userVaultRepository.CreateAsync(vault);
+            return await _userVaultRepository.CreateAsync(vault);
         }
 
         public async Task DeleteAsync(string id)

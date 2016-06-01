@@ -8,7 +8,7 @@ namespace Vault.Abstract
     {
         Task<IEnumerable<UserVault>> GetVaults(string userId);
         Task<UserVault> GetVault(string id);
-        Task CreateAsync(UserVault vault);
+        Task<UserVault> CreateAsync(UserVault vault);
         Task DeleteAsync(string id);
         Task UpdateAsync(UserVault vault);
         Task<IEnumerable<VaultUser>> GetReadUsers(string id);
