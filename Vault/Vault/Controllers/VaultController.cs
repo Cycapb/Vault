@@ -141,9 +141,9 @@ namespace Vault.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> AddUsers()
+        public async Task<ActionResult> AddUsers(UserToAddModel user)
         {
-
+            var u = user;
             return RedirectToAction("EditUsers");
         }
     }

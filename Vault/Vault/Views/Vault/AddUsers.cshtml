@@ -1,21 +1,31 @@
 ﻿@model Vault.Models.AddUsersModel
 <div class="panel panel-primary">
     <div class="panel-heading">Add new user to the vault</div>
-    <div class="panel-body">
-        @using (Html.BeginForm())
-        {
-            <div class="form-group">
-            <label>Users that can be added to vault</label>
-            @Html.DropDownListFor(x => x.FreeUsers, Model.FreeUsers.Select(x => new SelectListItem()
-            {
-                Text = x.UserName,
-                Value = x.Id
-            }), new {@class = "form-control"})
 
+    @using (Html.BeginForm("AddUsers","Vault"))
+    {
+        <div class="panel-body">
+            <input type="hidden" name="VaultId" value="@Model.VaultId"/>
+            <div class="form-group">
+                <label>Select user to add to the vault</label>
+                @Html.DropDownList("UserId", Model.FreeUsers.Select(x => new SelectListItem()
+                {
+                    Text = x.UserName,
+                    Value = x.Id
+                }), new {@class = "form-control"})
+            </div>
+            <div class="form-group">
+                <label>Select user's access rights</label>
+                @Html.DropDownList("AccessRight", Model.AccessRights.Select(x => new SelectListItem()
+                {
+                    Text = x,
+                    Value = x
+                }), new {@class = "form-control"})
+            </div>
+            <div class="panel-footer">
+                <input type="submit" value="Save" class="btn btn-success"/>
+                @Html.ActionLink("Back", "Index", null, new {@class = "btn btn-default"})
+            </div>
         </div>
-        }
-    </div>
-    <div class="panel-footer">
-        <input type="submit" value="Save"/>
-    </div>
+    }
 </div>

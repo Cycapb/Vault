@@ -10,7 +10,7 @@ using VaultDAL.Models;
 
 namespace Vault.Concrete
 {
-    public class UserGetter:IUserGetter<VaultUser>
+    public class FreeUsersGetter:IUserGetter<VaultUser>
     {
         private AppIdentityDbContext UserManager => HttpContext.Current.GetOwinContext().GetUserManager<AppIdentityDbContext>();
         private string UserId => HttpContext.Current.User.Identity.GetUserId();

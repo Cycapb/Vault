@@ -28,7 +28,8 @@ namespace Vault.Models
 
     public class UserToAddModel
     {
-        public string Id { get; set; }
+        public string VaultId { get; set; }
+        public string UserId { get; set; }
         public string AccessRight { get; set; }
     }
 }
