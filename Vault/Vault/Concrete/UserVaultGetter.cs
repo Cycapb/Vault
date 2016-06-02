@@ -19,10 +19,9 @@ namespace Vault.Concrete
         public IEnumerable<UserVault> GetUserVaults(WebUser user)
         {
             var userVaults = new List<UserVault>();
-            var vaults = _vaultRepository.GetList();
+            var vaults = _vaultRepository.GetList().Where(x=>x.VaultAdmin.Id != user.Id);
             foreach (var vault in vaults)
             {
-                if (vault.VaultAdmin.Id == user.Id) { continue; }
                 if (vault.AllowCreate != null)
                 {
                     if (vault.AllowCreate.All(x => x.Id == user.Id))
@@ -44,11 +43,10 @@ namespace Vault.Concrete
 
         public IEnumerable<UserVault> GetAllVaults(WebUser user)
         {
-            var vaults = _vaultRepository.GetList();
+            var vaults = _vaultRepository.GetList().Where(x=>x.VaultAdmin.Id != user.Id);
             var freeVaults = new List<UserVault>();
             foreach (var vault in vaults)
             {
-                if (vault.VaultAdmin.Id == user.Id){ continue; }
                 if (vault.AllowCreate != null)
                 {
                     if (vault.AllowCreate.All(x => x.Id != user.Id))
@@ -72,6 +70,16 @@ namespace Vault.Concrete
                     else
                     {
                         continue;
+                    }
+                }
+                else
+                {
+                    if (vault.AllowRead != null)
+                    {
+                        if (vault.AllowRead.All(x => x.Id != user.Id))
+                        {
+                            freeVaults.Add(vault);
+                        }
                     }
                 }
             }

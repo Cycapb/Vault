@@ -133,7 +133,7 @@ namespace Vault.Controllers
             {
                 readUsers?.AddRange(model.CreateUsers.Select(id => new VaultUser() {Id = id}));
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("EditUsers");
         }
 
         //ToDo When adding users to vaults i have to ckeck if user has both create and read rights/ If so then i must remove read rights from user
