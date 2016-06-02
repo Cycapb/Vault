@@ -28,6 +28,7 @@ namespace Vault.Concrete
                     if (vault.AllowCreate.All(x => x.Id == user.Id))
                     {
                         userVaults.Add(vault);
+                        continue;
                     }
                 }
                 if (vault.AllowRead != null)
@@ -52,14 +53,25 @@ namespace Vault.Concrete
                 {
                     if (vault.AllowCreate.All(x => x.Id != user.Id))
                     {
-                        freeVaults.Add(vault);
+                       if (vault.AllowRead != null)
+                        {
+                            if (vault.AllowRead.All(x => x.Id != user.Id))
+                            {
+                                freeVaults.Add(vault);
+                            }
+                            else
+                            {
+                                continue;
+                            }
+                        }
+                        else
+                        {
+                            freeVaults.Add(vault);
+                        }
                     }
-                }
-                if (vault.AllowRead != null)
-                {
-                    if (vault.AllowRead.All(x => x.Id != user.Id))
+                    else
                     {
-                        freeVaults.Add(vault);
+                        continue;
                     }
                 }
             }
