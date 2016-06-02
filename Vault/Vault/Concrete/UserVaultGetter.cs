@@ -7,7 +7,6 @@ using VaultDAL.Models;
 
 namespace Vault.Concrete
 {
-    //ToDo Review recieving freevaults
     public class UserVaultGetter:IVaultGetter
     {
         private readonly IRepository<UserVault> _vaultRepository;
