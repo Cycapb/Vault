@@ -18,4 +18,17 @@ namespace Vault.Models
         public string[] ReadUsers { get; set; }
         public string[] CreateUsers { get; set; }
     }
+
+    public class AddUsersModel
+    {
+        public string VaultId { get; set; }
+        public IEnumerable<VaultUser> FreeUsers { get; set; }
+        public string[] AccessRights => new string[] {"Read","Create"};
+    }
+
+    public class UserToAddModel
+    {
+        public string Id { get; set; }
+        public string AccessRight { get; set; }
+    }
 }

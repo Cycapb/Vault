@@ -4,35 +4,41 @@
     ViewBag.Title = "Edit rights";
     Layout = "~/Views/Shared/_VaultLayout.cshtml";
 }
-@using (Html.BeginForm())
-{
-    <input type="hidden" name="VaultId" value="@Model.Id" />
-    <div class="panel panel-primary">
-        <div class="panel-heading">Grant full access</div>
-        <div class="panel-body">
-            <table class="table table-striped">
-                <tr>
-                    <td></td>
-                    <th>Id</th>
-                    <td>Name</td>
-                </tr>
-                @Html.Partial("AllowReadPartial", Model)
-            </table>
-        </div>
-    </div>
+<div class="panel panel-primary">
+    <div class="panel-heading">Managing access rights of current users in the vault</div>
+    <div class="panel-body">
+        @using (Html.BeginForm())
+        {
+            <input type="hidden" name="VaultId" value="@Model.Id"/>
+            <div class="panel panel-primary">
+                <div class="panel-heading">Grant full access</div>
+                <div class="panel-body">
+                    <table class="table table-striped">
+                        <tr>
+                            <td></td>
+                            <th>Id</th>
+                            <td>Name</td>
+                        </tr>
+                        @Html.Partial("AllowReadPartial", Model)
+                    </table>
+                </div>
+            </div>
 
-    <div class="panel panel-primary">
-        <div class="panel-heading">Grant read access</div>
-        <div class="panel-body">
-            <table class="table table-striped">
-                <tr>
-                    <td></td>
-                    <th>Id</th>
-                    <td>Name</td>
-                </tr>
-                @Html.Partial("AllowCreatePartial", Model)
-            </table>
-        </div>
+            <div class="panel panel-primary">
+                <div class="panel-heading">Grant read access</div>
+                <div class="panel-body">
+                    <table class="table table-striped">
+                        <tr>
+                            <td></td>
+                            <th>Id</th>
+                            <td>Name</td>
+                        </tr>
+                        @Html.Partial("AllowCreatePartial", Model)
+                    </table>
+                </div>
+            </div>
+            <p><input type="submit" value="Save" class="btn btn-success"/> @Html.ActionLink("Cancel", "Index", null, new {@class = "btn btn-default"})</p>
+        }
     </div>
-    <p><input type="submit" value="Save" class="btn btn-success"/> @Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-default" })</p>
-}
+</div>
+@Html.Action("AddUsers",new {id = Model.Id})
