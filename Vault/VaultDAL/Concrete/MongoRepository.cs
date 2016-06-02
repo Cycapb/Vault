@@ -26,6 +26,11 @@ namespace VaultDAL.Concrete
             return entitytype.Name.ToLower();
         }
 
+        public IEnumerable<T> GetList()
+        {
+            return _collection.AsQueryable().ToList();
+        }
+
         public async Task<IEnumerable<T>> GetListAsync()
         {
             return await _collection.AsQueryable().ToListAsync();

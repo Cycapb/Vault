@@ -6,7 +6,7 @@ namespace Vault.Abstract
 {
     public interface IVaultGetter
     {
-        IEnumerable<UserVault> Get(WebUser user);
+        IEnumerable<UserVault> GetUserVaults(WebUser user);
         IEnumerable<UserVault> GetAllVaults(WebUser user);    
     }
 }

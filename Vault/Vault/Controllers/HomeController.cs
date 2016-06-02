@@ -32,7 +32,7 @@ namespace Vault.Controllers
 
         public ActionResult UserVaults(WebUser user)
         {
-            var userVaults = _vaultGetter.Get(user).ToList();
+            var userVaults = _vaultGetter.GetUserVaults(user).ToList();
             return PartialView(userVaults);
         }
 

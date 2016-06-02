@@ -7,6 +7,7 @@ using VaultDAL.Models;
 
 namespace Vault.Concrete
 {
+    //ToDo Review recieving freevaults
     public class UserVaultGetter:IVaultGetter
     {
         private readonly IRepository<UserVault> _vaultRepository;
@@ -16,13 +17,11 @@ namespace Vault.Concrete
             _vaultRepository = vaultRepository;
         }
 
-        public IEnumerable<UserVault> Get(WebUser user)
+        public IEnumerable<UserVault> GetUserVaults(WebUser user)
         {
             var userVaults = new List<UserVault>();
-            var awaiter = _vaultRepository.GetListAsync().GetAwaiter();
-            awaiter.OnCompleted((() =>
-            {
-                var vaults = awaiter.GetResult();
+
+                var vaults = _vaultRepository.GetList();
                 foreach (var vault in vaults)
                 {
                     var allowCreate = vault.AllowCreate?.ToList();
@@ -36,33 +35,33 @@ namespace Vault.Concrete
                         userVaults.AddRange(from vaultUser in allowRead where vaultUser.Id == user.Id select vault);
                     }
                 }
-            }));
-            
             return userVaults.Distinct();
         }
 
         public IEnumerable<UserVault> GetAllVaults(WebUser user)
         {
-            var awaiter = _vaultRepository.GetListAsync().GetAwaiter();
+            var vaults = _vaultRepository.GetList();
             var freeVaults = new List<UserVault>();
-            awaiter.OnCompleted((() =>
+            foreach (var vault in vaults)
             {
-                var vaults = awaiter.GetResult();
-                foreach (var vault in vaults)
+                var allowCreate = vault.AllowCreate?.ToList();
+                var allowRead = vault.AllowRead?.ToList();
+                if (allowCreate != null)
                 {
-                    var allowCreate = vault.AllowCreate?.ToList();
-                    var allowRead = vault.AllowRead?.ToList();
-                    if (allowCreate != null)
+                    if (vault.AllowCreate.All(x => x.Id != user.Id))
                     {
-                        freeVaults.AddRange(from vaultUser in allowCreate where vaultUser.Id != user.Id select vault);
-                    }
-                    if (allowRead != null)
-                    {
-                        freeVaults.AddRange(from vaultUser in allowRead where vaultUser.Id != user.Id select vault);
+                        freeVaults.Add(vault);
                     }
                 }
-            }));
-            return freeVaults;
+                if (allowRead != null)
+                {
+                    if (vault.AllowRead.All(x => x.Id != user.Id))
+                    {
+                        freeVaults.Add(vault);
+                    }
+                }
+            }
+            return freeVaults.Distinct();
         }
     }
 }
