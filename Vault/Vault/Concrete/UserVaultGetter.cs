@@ -19,22 +19,26 @@ namespace Vault.Concrete
         public IEnumerable<UserVault> GetUserVaults(WebUser user)
         {
             var userVaults = new List<UserVault>();
-
-                var vaults = _vaultRepository.GetList();
-                foreach (var vault in vaults)
+            var vaults = _vaultRepository.GetList();
+            foreach (var vault in vaults)
+            {
+                if (vault.VaultAdmin.Id == user.Id) { continue; }
+                if (vault.AllowCreate != null)
                 {
-                    var allowCreate = vault.AllowCreate?.ToList();
-                    var allowRead = vault.AllowRead?.ToList();
-                    if (allowCreate != null)
+                    if (vault.AllowCreate.All(x => x.Id == user.Id))
                     {
-                        userVaults.AddRange(from vaultUser in allowCreate where vaultUser.Id == user.Id select vault);
-                    }
-                    if (allowRead != null)
-                    {
-                        userVaults.AddRange(from vaultUser in allowRead where vaultUser.Id == user.Id select vault);
+                        userVaults.Add(vault);
                     }
                 }
-            return userVaults.Distinct();
+                if (vault.AllowRead != null)
+                {
+                    if (vault.AllowRead.All(x => x.Id == user.Id))
+                    {
+                        userVaults.Add(vault);
+                    }
+                }
+            }
+            return userVaults;
         }
 
         public IEnumerable<UserVault> GetAllVaults(WebUser user)
@@ -43,16 +47,15 @@ namespace Vault.Concrete
             var freeVaults = new List<UserVault>();
             foreach (var vault in vaults)
             {
-                var allowCreate = vault.AllowCreate?.ToList();
-                var allowRead = vault.AllowRead?.ToList();
-                if (allowCreate != null)
+                if (vault.VaultAdmin.Id == user.Id){ continue; }
+                if (vault.AllowCreate != null)
                 {
                     if (vault.AllowCreate.All(x => x.Id != user.Id))
                     {
                         freeVaults.Add(vault);
                     }
                 }
-                if (allowRead != null)
+                if (vault.AllowRead != null)
                 {
                     if (vault.AllowRead.All(x => x.Id != user.Id))
                     {
