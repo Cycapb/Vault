@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Vault.Abstract;
 using VaultDAL.Abstract;
@@ -25,7 +26,10 @@ namespace Vault.Concrete
             }
             else
             {
-                vault.AllowRead.Add(vaultUser);
+                if (!vault.AllowRead.Any(x=>x.Id == vaultUser.Id))
+                {
+                    vault.AllowRead.Add(vaultUser);
+                }
             }
             await _userVaultRepository.UpdateAsync(vault);
         }
@@ -40,7 +44,10 @@ namespace Vault.Concrete
             }
             else
             {
-                vault.AllowCreate.Add(vaultUser);
+                if (!vault.AllowCreate.Any(x=>x.Id == vaultUser.Id))
+                {
+                    vault.AllowCreate.Add(vaultUser);
+                }
             }
             await _userVaultRepository.UpdateAsync(vault);
         }
