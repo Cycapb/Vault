@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity.Owin;
 using Vault.Abstract;
 using Vault.Models;
 using VaultDAL.Models;
@@ -14,11 +16,16 @@ namespace Vault.Controllers
     {
         private readonly IVaultHelper _vaultHelper;
         private readonly IUserGetter<VaultUser> _userGetter;
+        private readonly IAccessManager _accessManager;
 
-        public VaultController(IVaultHelper vaultHelper, IUserGetter<VaultUser> getter )
+        private AppUserManager UserManager =>
+            System.Web.HttpContext.Current.GetOwinContext().GetUserManager<AppUserManager>();
+
+        public VaultController(IVaultHelper vaultHelper, IUserGetter<VaultUser> getter, IAccessManager accessManager )
         {
             _vaultHelper = vaultHelper;
             _userGetter = getter;
+            _accessManager = accessManager;
         }
 
         public ActionResult Index()
@@ -143,7 +150,19 @@ namespace Vault.Controllers
         [HttpPost]
         public async Task<ActionResult> AddUsers(UserToAddModel user)
         {
-            var u = user;
+            var vaultUser = new VaultUser()
+            {
+                Id = user.UserId,
+                UserName = (await UserManager.FindByIdAsync(user.UserId)).UserName
+            };
+            if (user.AccessRight == "Read")
+            {
+                await _accessManager.GrantReadAccess(vaultUser, user.VaultId);
+            }
+            if (user.AccessRight == "Create")
+            {
+                await _accessManager.GrantCreateAccess(vaultUser, user.VaultId);
+            }
             return RedirectToAction("EditUsers");
         }
     }

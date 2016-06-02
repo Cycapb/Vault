@@ -1,8 +1,11 @@
-﻿namespace Vault.Abstract
+﻿using System.Threading.Tasks;
+using VaultDAL.Models;
+
+namespace Vault.Abstract
 {
     public interface IAccessManager
     {
-        void GrantReadAccess(string userId);
-        void GrantCreateAccess(string userId);
+        Task GrantReadAccess(VaultUser vaultUser, string vaultId);
+        Task GrantCreateAccess(VaultUser vaultUser, string vaultId);
     }
 }
