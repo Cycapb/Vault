@@ -26,7 +26,7 @@ namespace Vault.Concrete
             }
             else
             {
-                vault.AllowRead.ToList().Add(vaultUser);
+                vault.AllowRead.Add(vaultUser);
             }
             await _userVaultRepository.UpdateAsync(vault);
         }
@@ -41,7 +41,7 @@ namespace Vault.Concrete
             }
             else
             {
-                vault.AllowCreate.ToList().Add(vaultUser);
+                vault.AllowCreate.Add(vaultUser);
             }
             await _userVaultRepository.UpdateAsync(vault);
         }

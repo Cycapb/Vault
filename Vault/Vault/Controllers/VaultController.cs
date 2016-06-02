@@ -163,7 +163,7 @@ namespace Vault.Controllers
             {
                 await _accessManager.GrantCreateAccess(vaultUser, user.VaultId);
             }
-            return RedirectToAction("EditUsers");
+            return RedirectToAction("EditUsers",new {id = user.VaultId});
         }
     }
 }
