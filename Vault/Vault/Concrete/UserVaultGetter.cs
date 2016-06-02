@@ -38,7 +38,7 @@ namespace Vault.Concrete
                     }
                 }
             }
-            return userVaults;
+            return userVaults.Distinct();
         }
 
         public IEnumerable<UserVault> GetAllVaults(WebUser user)
