@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 using VaultDAL.Models;
 
 namespace Vault.Models
 {
-    public class EditVaultModel
+    public class EditUsersModel
     {
         [HiddenInput(DisplayValue = false)]
         public string Id { get; set; }
@@ -12,7 +13,17 @@ namespace Vault.Models
         public IList<VaultUser> AllowCreateUsers { get; set; } 
     }
 
-    public class VaultModificationModel
+    public class EditVaultModel
+    {
+        public string Id { get; set; }
+        [Required(ErrorMessage = "Field Name can't be empty")]
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public int OpenTime { get; set; }
+        public int CloseTime { get; set; }
+    }
+
+    public class UsersModificationModel
     {
         public string VaultId { get; set; }
         public IList<VaultUser> ReadUsers { get; set; } 

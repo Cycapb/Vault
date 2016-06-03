@@ -1,4 +1,4 @@
-﻿@model VaultDAL.Models.UserVault
+﻿@model Vault.Models.EditVaultModel
 
 @{
     ViewBag.Title = "Edit";
@@ -8,16 +8,7 @@
     <div class="panel-heading">New vault</div>
     @using (Html.BeginForm())
     {
-        @Html.HiddenFor(x => x.VaultAdmin.Id)
-        @Html.HiddenFor(x=>x.VaultAdmin.UserName)
-        if (Model.AllowCreate != null)
-         {
-            @Html.HiddenFor(x => x.AllowCreate)
-         }
-        if (Model.AllowRead != null)
-        {
-            @Html.HiddenFor(x => x.AllowRead)
-        }
+        @Html.HiddenFor(x=>x.Id)
         <div class="panel-body">
             @Html.ValidationSummary()
             <div class="form-group">

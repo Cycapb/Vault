@@ -85,15 +85,27 @@ namespace Vault.Controllers
         public async Task<ActionResult> Edit(string id)
         {
             var vault = await _vaultHelper.GetVault(id);
-            return View(vault);
+            var editModel = new EditVaultModel()
+            {
+                Name = vault.Name,
+                Description = vault.Description,
+                OpenTime = vault.OpenTime,
+                CloseTime = vault.CloseTime
+            };
+            return View(editModel);
         }
 
         [HttpPost]
-        public async Task<ActionResult> Edit(UserVault vault)
+        public async Task<ActionResult> Edit(EditVaultModel vault)
         {
             if (ModelState.IsValid)
             {
-                await _vaultHelper.UpdateAsync(vault);
+                var vaultToEdit = await _vaultHelper.GetVault(vault.Id);
+                vaultToEdit.Name = vault.Name;
+                vaultToEdit.Description = vault.Description;
+                vaultToEdit.OpenTime = vault.OpenTime;
+                vaultToEdit.CloseTime = vault.CloseTime;
+                await _vaultHelper.UpdateAsync(vaultToEdit);
                 return RedirectToAction("Index");
             }
             return View(vault);
@@ -104,7 +116,7 @@ namespace Vault.Controllers
             var vault = await _vaultHelper.GetVault(id);
             if (vault != null)
             {
-                var editModel = new EditVaultModel()
+                var editModel = new EditUsersModel()
                 {
                     Id = vault.Id,
                     AllowCreateUsers = vault.AllowCreate,
@@ -120,7 +132,7 @@ namespace Vault.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> EditUsers(VaultModificationModel model)
+        public async Task<ActionResult> EditUsers(UsersModificationModel model)
         {
             if (model.ReadUsers != null)
             {

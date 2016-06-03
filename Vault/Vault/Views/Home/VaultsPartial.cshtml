@@ -2,15 +2,18 @@
 <div class="panel-body">
     <table class="table table-striped">
         <tr>
-            <th>ID</th><th>Name</th><th>Action</th>
+            <th>Name</th><th>Description</th><th>Open hours</th>
         </tr>
         @if (Model.Count() != 0)
         {
             foreach (var vault in Model)
             {
                 <tr>
-                    <td>@vault.Id</td>
                     <td>@vault.Name</td>
+                    <td>@vault.Description</td>
+                    <td>
+                        @vault.OpenTime:00 - @vault.CloseTime:00
+                    </td>
                 </tr>
             }
         }
