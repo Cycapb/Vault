@@ -11,12 +11,10 @@ namespace Vault.Concrete
     public class VaultManager:IVaultManager
     {
         private readonly IRepository<UserVault> _userVaultRepository;
-        private readonly IAccessManager _accessManager;
-
-        public VaultManager(IRepository<UserVault> repository, IAccessManager accessManager)
+        
+        public VaultManager(IRepository<UserVault> repository)
         {
             _userVaultRepository = repository;
-            _accessManager = accessManager;
         }
 
         public async Task<IEnumerable<UserVault>> GetVaults(string userId)
@@ -69,14 +67,5 @@ namespace Vault.Concrete
                 return vault.AllowRead?.ToList();
             }
         }
-
-        public async Task DeleteUserAsync(string userId, string vaultId)
-        {
-            var userToDel = new VaultUser() {Id = userId};
-            await _accessManager.RevokeReadAccess(userToDel, vaultId);
-            await _accessManager.RevokeCreateAccess(userToDel, vaultId);
-        }
-
-
     }
 }

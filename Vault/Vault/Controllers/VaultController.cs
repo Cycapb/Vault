@@ -14,7 +14,7 @@ namespace Vault.Controllers
     [Authorize(Roles = "VaultAdmins")]
     public class VaultController : Controller
     {
-        private readonly IVaultManager _vaultHelper;
+        private readonly IVaultManager _vaultManager;
         private readonly IUserGetter<VaultUser> _userGetter;
         private readonly IAccessManager _accessManager;
 
@@ -23,7 +23,7 @@ namespace Vault.Controllers
 
         public VaultController(IVaultManager vaultHelper, IUserGetter<VaultUser> getter, IAccessManager accessManager )
         {
-            _vaultHelper = vaultHelper;
+            _vaultManager = vaultHelper;
             _userGetter = getter;
             _accessManager = accessManager;
         }
@@ -35,7 +35,7 @@ namespace Vault.Controllers
 
         public async Task<ActionResult> VaultList(WebUser user)
         {
-            var vaultList = await _vaultHelper.GetVaults(user.Id);
+            var vaultList = await _vaultManager.GetVaults(user.Id);
             return View(vaultList.ToList());
         }
 
@@ -57,7 +57,7 @@ namespace Vault.Controllers
             {
                 try
                 {
-                    await _vaultHelper.CreateAsync(vault);
+                    await _vaultManager.CreateAsync(vault);
                     return RedirectToAction("Index");
                 }
                 catch (Exception)
@@ -73,7 +73,7 @@ namespace Vault.Controllers
         {
             try
             {
-                await _vaultHelper.DeleteAsync(id);
+                await _vaultManager.DeleteAsync(id);
                 return RedirectToAction("Index");
             }
             catch (Exception)
@@ -84,7 +84,7 @@ namespace Vault.Controllers
 
         public async Task<ActionResult> Edit(string id)
         {
-            var vault = await _vaultHelper.GetVault(id);
+            var vault = await _vaultManager.GetVault(id);
             var editModel = new EditVaultModel()
             {
                 Name = vault.Name,
@@ -100,12 +100,12 @@ namespace Vault.Controllers
         {
             if (ModelState.IsValid)
             {
-                var vaultToEdit = await _vaultHelper.GetVault(vault.Id);
+                var vaultToEdit = await _vaultManager.GetVault(vault.Id);
                 vaultToEdit.Name = vault.Name;
                 vaultToEdit.Description = vault.Description;
                 vaultToEdit.OpenTime = vault.OpenTime;
                 vaultToEdit.CloseTime = vault.CloseTime;
-                await _vaultHelper.UpdateAsync(vaultToEdit);
+                await _vaultManager.UpdateAsync(vaultToEdit);
                 return RedirectToAction("Index");
             }
             return View(vault);
@@ -113,7 +113,7 @@ namespace Vault.Controllers
 
         public async Task<ActionResult> EditUsers(string id)
         {
-            var vault = await _vaultHelper.GetVault(id);
+            var vault = await _vaultManager.GetVault(id);
             if (vault != null)
             {
                 var editModel = new EditUsersModel()
@@ -187,7 +187,7 @@ namespace Vault.Controllers
         [ChildActionOnly]
         public ActionResult VaultUsers(string id)
         {
-            var users = _vaultHelper.GetAllUsers(id);
+            var users = _vaultManager.GetAllUsers(id);
             ViewBag.VaultId = id;
             return PartialView("VaultUsersPartial",users);
         }
@@ -195,7 +195,9 @@ namespace Vault.Controllers
         [HttpPost]
         public async Task<ActionResult> DeleteUser(string id, string vaultId)
         {
-            await _vaultHelper.DeleteUserAsync(id, vaultId);
+            var userToDel = new VaultUser() { Id = id };
+            await _accessManager.RevokeReadAccess(userToDel, vaultId);
+            await _accessManager.RevokeCreateAccess(userToDel, vaultId);
             return RedirectToAction("EditUsers", new {id = vaultId});
         }
 
