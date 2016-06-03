@@ -7,7 +7,7 @@
                 <td>@vault.Name</td>
                 <td>@vault.Description</td>
                 <td>
-                    Open from @vault.OpenTime till @vault.CloseTime  
+                    @vault.OpenTime:00 - @vault.CloseTime:00  
                 </td>
                 <td>
                     @using (Html.BeginForm("Delete", "Vault",new {id=vault.Id}))
