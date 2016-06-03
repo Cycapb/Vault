@@ -305,6 +305,7 @@
     <Compile Include="Infrastructure\Binders\WebUserModelBinder.cs" />
     <Compile Include="Infrastructure\IdentityHelpers.cs" />
     <Compile Include="Infrastructure\NinjectDependencyResolver.cs" />
+    <Compile Include="Infrastructure\VaultUserEqualityComparer.cs" />
     <Compile Include="Models\AppRoleManager.cs" />
     <Compile Include="Models\AppRoleModel.cs" />
     <Compile Include="Models\AppUserManager.cs" />
@@ -342,6 +343,7 @@
     <Content Include="Views\Vault\Edit.cshtml" />
     <Content Include="Views\Vault\AllowReadPartial.cshtml" />
     <Content Include="Views\Vault\AllowCreatePartial.cshtml" />
+    <Content Include="Views\Vault\VaultUsersPartial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

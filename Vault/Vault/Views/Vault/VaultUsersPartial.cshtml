@@ -1,0 +1,37 @@
+﻿@model IEnumerable<VaultDAL.Models.VaultUser>
+    @{
+        var vaultId = (string) ViewBag.VaultId;
+    }
+<div class="panel panel-primary">
+    <div class="panel-heading">All users of the vault</div>
+    <div class="panel-body">
+        <table class="table table-striped">
+            <tr>
+                <th>Name</th>
+                <th>Action</th>
+            </tr>
+            @if (Model != null && Model.Count() != 0)
+                {
+                    foreach (var user in Model)
+                    {
+                        <tr>
+                            <td>@user.UserName</td>
+                            <td>
+                                @using (Html.BeginForm("DeleteUser","Vault", new {id = vaultId}))
+                                {
+                                    <input type="submit" class="btn btn-xs btn-danger" value="Delete"/>
+                                }
+                            </td>
+                        </tr>
+                    }  
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="2">No users</td>
+                    </tr>
+                 }
+            
+        </table>
+    </div>
+</div>

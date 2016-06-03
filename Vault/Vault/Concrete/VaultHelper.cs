@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using Vault.Abstract;
+using Vault.Infrastructure;
 using VaultDAL.Abstract;
 using VaultDAL.Models;
 
@@ -58,10 +58,7 @@ namespace Vault.Concrete
         public IEnumerable<VaultUser> GetAllUsers(string id)
         {
             var vault = _userVaultRepository.GetItem(id);
-            //var allowRead = vault.AllowRead.ToList();
-            //var allowCreate = vault.AllowCreate.ToList();
-            //var users = allowRead.Except(allowCreate).ToList();
-            return vault.AllowCreate.Except(vault.AllowRead).ToList();
+            return vault.AllowRead.Union(vault.AllowCreate).Distinct(new VaultUserEqualityComparer()).ToList();
         }
     }
 }

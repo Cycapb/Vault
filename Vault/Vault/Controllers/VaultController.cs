@@ -192,7 +192,8 @@ namespace Vault.Controllers
         public ActionResult VaultUsers(string id)
         {
             var users = _vaultHelper.GetAllUsers(id);
-            return PartialView(users);
+            ViewBag.VaultId = id;
+            return PartialView("VaultUsersPartial",users);
         }
 
         [HttpPost]
