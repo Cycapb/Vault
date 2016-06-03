@@ -11,10 +11,12 @@ namespace Vault.Concrete
     public class VaultManager:IVaultManager
     {
         private readonly IRepository<UserVault> _userVaultRepository;
-        
-        public VaultManager(IRepository<UserVault> repository)
+        private readonly IRepository<VaultItem> _vaultItemRepository; 
+
+        public VaultManager(IRepository<UserVault> repository, IRepository<VaultItem> vaultItemRepository)
         {
             _userVaultRepository = repository;
+            _vaultItemRepository = vaultItemRepository;
         }
 
         public async Task<IEnumerable<UserVault>> GetVaults(string userId)
@@ -66,6 +68,17 @@ namespace Vault.Concrete
             {
                 return vault.AllowRead?.ToList();
             }
+        }
+
+        public async Task<IEnumerable<VaultItem>> GetAllItems(string id)
+        {
+            var vault = await _userVaultRepository.GetItemAsync(id);
+            var items = new List<VaultItem>();
+            if (vault.VaultItems != null)
+            {
+                items = (await _vaultItemRepository.GetListAsync())?.Where(x => vault.VaultItems.Contains(x.Id)).ToList();
+            }
+            return items;
         }
     }
 }

@@ -201,6 +201,12 @@ namespace Vault.Controllers
             return RedirectToAction("EditUsers", new {id = vaultId});
         }
 
+        public async Task<ActionResult> Items(string vaultId)
+        {
+            var items = await _vaultManager.GetAllItems(vaultId);
+            return View(items);
+        }
+
         private IList<VaultUser> GetUserAccessRights(IList<VaultUser> accessRights)
         {
             return accessRights.Where(accessRight => accessRight.Id != null).ToList();
