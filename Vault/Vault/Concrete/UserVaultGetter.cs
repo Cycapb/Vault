@@ -24,7 +24,7 @@ namespace Vault.Concrete
             {
                 if (vault.AllowCreate != null)
                 {
-                    if (vault.AllowCreate.All(x => x.Id == user.Id))
+                    if (vault.AllowCreate.Any(x => x.Id == user.Id))
                     {
                         userVaults.Add(vault);
                         continue;
@@ -32,7 +32,7 @@ namespace Vault.Concrete
                 }
                 if (vault.AllowRead != null)
                 {
-                    if (vault.AllowRead.All(x => x.Id == user.Id))
+                    if (vault.AllowRead.Any(x => x.Id == user.Id))
                     {
                         userVaults.Add(vault);
                     }
