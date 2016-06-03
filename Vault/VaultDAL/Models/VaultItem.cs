@@ -8,6 +8,6 @@ namespace VaultDAL.Models
     {
         [Required(ErrorMessage = "Field name can't be empty")]
         public string Name { get; set; }
-        public string Description { get; set; }
+        public string Content { get; set; }
     }
 }

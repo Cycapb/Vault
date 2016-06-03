@@ -4,7 +4,7 @@ using VaultDAL.Models;
 
 namespace Vault.Abstract
 {
-    public interface IVaultHelper
+    public interface IVaultManager
     {
         Task<IEnumerable<UserVault>> GetVaults(string userId);
         Task<UserVault> GetVault(string id);

@@ -14,14 +14,14 @@ namespace Vault.Controllers
     [Authorize(Roles = "VaultAdmins")]
     public class VaultController : Controller
     {
-        private readonly IVaultHelper _vaultHelper;
+        private readonly IVaultManager _vaultHelper;
         private readonly IUserGetter<VaultUser> _userGetter;
         private readonly IAccessManager _accessManager;
 
         private AppUserManager UserManager =>
             System.Web.HttpContext.Current.GetOwinContext().GetUserManager<AppUserManager>();
 
-        public VaultController(IVaultHelper vaultHelper, IUserGetter<VaultUser> getter, IAccessManager accessManager )
+        public VaultController(IVaultManager vaultHelper, IUserGetter<VaultUser> getter, IAccessManager accessManager )
         {
             _vaultHelper = vaultHelper;
             _userGetter = getter;
@@ -184,11 +184,6 @@ namespace Vault.Controllers
             return RedirectToAction("EditUsers",new {id = user.VaultId});
         }
 
-        private IList<VaultUser> GetUserAccessRights(IList<VaultUser> accessRights)
-        {
-            return accessRights.Where(accessRight => accessRight.Id != null).ToList();
-        }
-
         [ChildActionOnly]
         public ActionResult VaultUsers(string id)
         {
@@ -202,6 +197,11 @@ namespace Vault.Controllers
         {
             await _vaultHelper.DeleteUserAsync(id, vaultId);
             return RedirectToAction("EditUsers", new {id = vaultId});
+        }
+
+        private IList<VaultUser> GetUserAccessRights(IList<VaultUser> accessRights)
+        {
+            return accessRights.Where(accessRight => accessRight.Id != null).ToList();
         }
     }
 }

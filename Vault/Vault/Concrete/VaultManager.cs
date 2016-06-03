@@ -8,12 +8,12 @@ using VaultDAL.Models;
 
 namespace Vault.Concrete
 {
-    public class VaultHelper:IVaultHelper
+    public class VaultManager:IVaultManager
     {
         private readonly IRepository<UserVault> _userVaultRepository;
         private readonly IAccessManager _accessManager;
 
-        public VaultHelper(IRepository<UserVault> repository, IAccessManager accessManager)
+        public VaultManager(IRepository<UserVault> repository, IAccessManager accessManager)
         {
             _userVaultRepository = repository;
             _accessManager = accessManager;
@@ -68,7 +68,6 @@ namespace Vault.Concrete
             {
                 return vault.AllowRead?.ToList();
             }
-            
         }
 
         public async Task DeleteUserAsync(string userId, string vaultId)
