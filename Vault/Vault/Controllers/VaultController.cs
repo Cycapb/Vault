@@ -188,5 +188,17 @@ namespace Vault.Controllers
         {
             return accessRights.Where(accessRight => accessRight.Id != null).ToList();
         }
+
+        public ActionResult VaultUsers(string id)
+        {
+            var users = _vaultHelper.GetAllUsers(id);
+            return PartialView(users);
+        }
+
+        [HttpPost]
+        public ActionResult DeleteUser(string id, string vaultId)
+        {
+            return RedirectToAction("EditUsers", new {id = vaultId});
+        }
     }
 }

@@ -8,6 +8,7 @@ namespace VaultDAL.Abstract
     {
         IEnumerable<T> GetList();
         Task<IEnumerable<T>> GetListAsync();
+        T GetItem(string id);
         Task<T> GetItemAsync(string id);
         Task<T> CreateAsync(T item);
         Task DeleteAsync(string id);

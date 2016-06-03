@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using Vault.Abstract;
@@ -52,6 +53,15 @@ namespace Vault.Concrete
         {
             var vault = await _userVaultRepository.GetItemAsync(id);
             return vault.AllowCreate?.ToList();
+        }
+
+        public IEnumerable<VaultUser> GetAllUsers(string id)
+        {
+            var vault = _userVaultRepository.GetItem(id);
+            //var allowRead = vault.AllowRead.ToList();
+            //var allowCreate = vault.AllowCreate.ToList();
+            //var users = allowRead.Except(allowCreate).ToList();
+            return vault.AllowCreate.Except(vault.AllowRead).ToList();
         }
     }
 }

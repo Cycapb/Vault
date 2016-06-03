@@ -13,5 +13,6 @@ namespace Vault.Abstract
         Task UpdateAsync(UserVault vault);
         Task<IEnumerable<VaultUser>> GetReadUsers(string id);
         Task<IEnumerable<VaultUser>> GetCreateUsers(string id);
+        IEnumerable<VaultUser> GetAllUsers(string id);
     }
 }

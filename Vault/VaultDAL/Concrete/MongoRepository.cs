@@ -36,6 +36,11 @@ namespace VaultDAL.Concrete
             return await _collection.AsQueryable().ToListAsync();
         }
 
+        public T GetItem(string id)
+        {
+            return _collection.AsQueryable().Where(x => x.Id == id).SingleOrDefault();
+        }
+
         public async Task<T> GetItemAsync(string id)
         {
             try
