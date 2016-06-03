@@ -60,7 +60,15 @@ namespace Vault.Concrete
         public IEnumerable<VaultUser> GetAllUsers(string id)
         {
             var vault = _userVaultRepository.GetItem(id);
-            return vault.AllowRead.Union(vault.AllowCreate).Distinct(new VaultUserEqualityComparer()).ToList();
+            if (vault.AllowCreate != null)
+            {
+                return vault.AllowRead?.Union(vault.AllowCreate).Distinct(new VaultUserEqualityComparer()).ToList();
+            }
+            else
+            {
+                return vault.AllowRead?.ToList();
+            }
+            
         }
 
         public async Task DeleteUserAsync(string userId, string vaultId)
