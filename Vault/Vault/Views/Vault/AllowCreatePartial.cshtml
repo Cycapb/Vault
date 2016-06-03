@@ -1,12 +1,15 @@
 ﻿@model Vault.Models.EditVaultModel
 @if (Model.AllowCreateUsers != null && Model.AllowCreateUsers.Count() != 0)
 {
-    foreach (var user in Model.AllowCreateUsers)
+    for (int i = 0; i < Model.AllowCreateUsers.Count(); i++)
     {
         <tr>
-            <td><input type="checkbox" name="CreateUsers" value="@user.Id" /></td>
-            <td>@user.Id</td>
-            <td>@user.UserName</td>
+            <td>
+                <input type="checkbox" name="ReadUsers[@i].Id" value="@Model.AllowCreateUsers[i].Id"/>
+                <input type="hidden" name="ReadUsers[@i].UserName" value="@Model.AllowCreateUsers[i].UserName" />
+            </td>
+            <td>@Model.AllowCreateUsers[i].Id</td>
+            <td>@Model.AllowCreateUsers[i].UserName</td>
         </tr>
     }
 }

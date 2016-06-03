@@ -7,5 +7,7 @@ namespace Vault.Abstract
     {
         Task GrantReadAccess(VaultUser vaultUser, string vaultId);
         Task GrantCreateAccess(VaultUser vaultUser, string vaultId);
+        Task RevokeReadAccess(VaultUser vaultUser, string vaultId);
+        Task RevokeCreateAccess(VaultUser vaultUser, string vaultId);
     }
 }

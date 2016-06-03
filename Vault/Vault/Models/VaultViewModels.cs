@@ -8,15 +8,15 @@ namespace Vault.Models
     {
         [HiddenInput(DisplayValue = false)]
         public string Id { get; set; }
-        public IEnumerable<VaultUser> AllowReadUsers { get; set; } 
-        public IEnumerable<VaultUser> AllowCreateUsers { get; set; } 
+        public IList<VaultUser> AllowReadUsers { get; set; } 
+        public IList<VaultUser> AllowCreateUsers { get; set; } 
     }
 
     public class VaultModificationModel
     {
         public string VaultId { get; set; }
-        public string[] ReadUsers { get; set; }
-        public string[] CreateUsers { get; set; }
+        public IList<VaultUser> ReadUsers { get; set; } 
+        public IList<VaultUser> CreateUsers { get; set; } 
     }
 
     public class AddUsersModel

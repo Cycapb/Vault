@@ -122,21 +122,27 @@ namespace Vault.Controllers
         [HttpPost]
         public async Task<ActionResult> EditUsers(VaultModificationModel model)
         {
-            var readUsers = (await _vaultHelper.GetReadUsers(model.VaultId))?.ToList();
-            var createUsers = (await _vaultHelper.GetCreateUsers(model.VaultId))?.ToList();
-            
             if (model.ReadUsers != null)
             {
-                createUsers?.AddRange(model.ReadUsers.Select(user => new VaultUser() {Id = user}));
+                var accessRights = GetUserAccessRights(model.ReadUsers);
+                foreach (var user in accessRights)
+                {
+                    await _accessManager.RevokeCreateAccess(user, model.VaultId);
+                    await _accessManager.GrantReadAccess(user, model.VaultId);
+                }
             }
             if (model.CreateUsers != null)
             {
-                readUsers?.AddRange(model.CreateUsers.Select(id => new VaultUser() {Id = id}));
+                var accessRights = GetUserAccessRights(model.CreateUsers);
+                foreach (var user in accessRights)
+                {
+                    await _accessManager.RevokeReadAccess(user, model.VaultId);
+                    await _accessManager.GrantCreateAccess(user, model.VaultId);
+                }
             }
             return RedirectToAction("EditUsers");
         }
 
-        //ToDo When adding users to vaults i have to ckeck if user has both create and read rights/ If so then i must remove read rights from user
         public ActionResult AddUsers(string id)
         {
             var addUserModel = new AddUsersModel()
@@ -164,6 +170,11 @@ namespace Vault.Controllers
                 await _accessManager.GrantCreateAccess(vaultUser, user.VaultId);
             }
             return RedirectToAction("EditUsers",new {id = user.VaultId});
+        }
+
+        private IList<VaultUser> GetUserAccessRights(IList<VaultUser> accessRights)
+        {
+            return accessRights.Where(accessRight => accessRight.Id != null).ToList();
         }
     }
 }
