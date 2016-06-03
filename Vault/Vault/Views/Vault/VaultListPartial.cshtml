@@ -13,7 +13,7 @@
                     @using (Html.BeginForm("Delete", "Vault",new {id=vault.Id}))
                     {
                         @Html.ActionLink("Edit", "Edit", new { id = vault.Id }, new { @class = "btn btn-primary btn-xs" })
-                        @Html.ActionLink("Edit rights","EditUsers",new {id=vault.Id}, new {@class="btn btn-primary btn-xs"})
+                        @Html.ActionLink("Manage users","EditUsers",new {id=vault.Id}, new {@class="btn btn-primary btn-xs"})
                         <input type="submit" value="Delete" class="btn btn-danger btn-xs pull-right"/>
                     }
                 </td>

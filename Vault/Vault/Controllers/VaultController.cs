@@ -189,6 +189,7 @@ namespace Vault.Controllers
             return accessRights.Where(accessRight => accessRight.Id != null).ToList();
         }
 
+        [ChildActionOnly]
         public ActionResult VaultUsers(string id)
         {
             var users = _vaultHelper.GetAllUsers(id);
@@ -197,8 +198,9 @@ namespace Vault.Controllers
         }
 
         [HttpPost]
-        public ActionResult DeleteUser(string id, string vaultId)
+        public async Task<ActionResult> DeleteUser(string id, string vaultId)
         {
+            await _vaultHelper.DeleteUserAsync(id, vaultId);
             return RedirectToAction("EditUsers", new {id = vaultId});
         }
     }

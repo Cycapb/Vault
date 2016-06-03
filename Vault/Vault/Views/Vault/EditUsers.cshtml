@@ -4,12 +4,12 @@
     ViewBag.Title = "Edit rights";
     Layout = "~/Views/Shared/_VaultLayout.cshtml";
 }
-<div class="panel panel-primary">
+   <div class="panel panel-primary">
     <div class="panel-heading">Managing access rights of current users in the vault</div>
     <div class="panel-body">
         @using (Html.BeginForm())
         {
-            <input type="hidden" name="VaultId" value="@Model.Id"/>
+            <input type="hidden" name="VaultId" value="@Model.Id" />
             <div class="panel panel-primary">
                 <div class="panel-heading">Grant full access</div>
                 <div class="panel-body">
@@ -37,8 +37,10 @@
                     </table>
                 </div>
             </div>
-            <p><input type="submit" value="Save" class="btn btn-success"/> @Html.ActionLink("Back", "Index", null, new {@class = "btn btn-default"})</p>
+            <p><input type="submit" value="Save" class="btn btn-success" /> @Html.ActionLink("Back", "Index", null, new { @class = "btn btn-default" })</p>
         }
     </div>
-</div>
-@Html.Action("AddUsers",new {id = Model.Id})
+</div> 
+
+@Html.Action("AddUsers", new { id = Model.Id })
+@Html.Action("VaultUsers", "Vault", new { id = Model.Id })

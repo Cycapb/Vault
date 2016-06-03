@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<VaultDAL.Models.VaultUser>
     @{
-        var vaultId = (string) ViewBag.VaultId;
+        var vId = (string) ViewBag.VaultId;
     }
 <div class="panel panel-primary">
     <div class="panel-heading">All users of the vault</div>
@@ -17,7 +17,7 @@
                         <tr>
                             <td>@user.UserName</td>
                             <td>
-                                @using (Html.BeginForm("DeleteUser","Vault", new {id = vaultId}))
+                                @using (Html.BeginForm("DeleteUser","Vault", new {id = user.Id, vaultId = vId}))
                                 {
                                     <input type="submit" class="btn btn-xs btn-danger" value="Delete"/>
                                 }

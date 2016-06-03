@@ -11,10 +11,12 @@ namespace Vault.Concrete
     public class VaultHelper:IVaultHelper
     {
         private readonly IRepository<UserVault> _userVaultRepository;
+        private readonly IAccessManager _accessManager;
 
-        public VaultHelper(IRepository<UserVault> repository)
+        public VaultHelper(IRepository<UserVault> repository, IAccessManager accessManager)
         {
             _userVaultRepository = repository;
+            _accessManager = accessManager;
         }
 
         public async Task<IEnumerable<UserVault>> GetVaults(string userId)
@@ -60,5 +62,14 @@ namespace Vault.Concrete
             var vault = _userVaultRepository.GetItem(id);
             return vault.AllowRead.Union(vault.AllowCreate).Distinct(new VaultUserEqualityComparer()).ToList();
         }
+
+        public async Task DeleteUserAsync(string userId, string vaultId)
+        {
+            var userToDel = new VaultUser() {Id = userId};
+            await _accessManager.RevokeReadAccess(userToDel, vaultId);
+            await _accessManager.RevokeCreateAccess(userToDel, vaultId);
+        }
+
+
     }
 }

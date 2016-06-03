@@ -55,17 +55,23 @@ namespace Vault.Concrete
         public async Task RevokeReadAccess(VaultUser vaultUser, string vaultId)
         {
             var vault = await _userVaultRepository.GetItemAsync(vaultId);
-            var userToDel = vault.AllowRead.Single(x => x.Id == vaultUser.Id);
-            vault?.AllowRead?.Remove(userToDel);
-            await _userVaultRepository.UpdateAsync(vault);
+            var userToDel = vault?.AllowRead?.SingleOrDefault(x => x.Id == vaultUser.Id);
+            if (userToDel != null)
+            {
+                vault.AllowRead.Remove(userToDel);
+                await _userVaultRepository.UpdateAsync(vault);
+            }
         }
 
         public async Task RevokeCreateAccess(VaultUser vaultUser, string vaultId)
         {
             var vault = await _userVaultRepository.GetItemAsync(vaultId);
-            var userToDel = vault.AllowCreate.Single(x=>x.Id == vaultUser.Id);
-            vault?.AllowCreate?.Remove(userToDel);
-            await _userVaultRepository.UpdateAsync(vault);
+            var userToDel = vault?.AllowCreate?.SingleOrDefault(x=>x.Id == vaultUser.Id);
+            if (userToDel != null)
+            {
+                vault.AllowCreate.Remove(userToDel);
+                await _userVaultRepository.UpdateAsync(vault);
+            }
         }
     }
 }
