@@ -15,5 +15,6 @@ namespace Vault.Abstract
         Task<IEnumerable<VaultUser>> GetCreateUsers(string id);
         IEnumerable<VaultUser> GetAllUsers(string id);
         Task<IEnumerable<VaultItem>> GetAllItems(string id);
+        Task<string> GetUserAccess(string vaultId, string userId);
     }
 }

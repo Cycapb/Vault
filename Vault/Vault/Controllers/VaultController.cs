@@ -201,13 +201,13 @@ namespace Vault.Controllers
             return RedirectToAction("EditUsers", new {id = vaultId});
         }
 
-        public async Task<ActionResult> Items(string id)
+        public async Task<ActionResult> Items(WebUser user,string id)
         {
             var items = await _vaultManager.GetAllItems(id);
             var editItem = new VaultItemListModel()
             {
                 VaultItems = items,
-                
+                AccessRight = await _vaultManager.GetUserAccess(id, user.Id)
             };
             return View(editItem);
         }
