@@ -11,7 +11,7 @@ using VaultDAL.Models;
 
 namespace Vault.Controllers
 {
-    [Authorize(Roles = "VaultAdmins")]
+    [Authorize(Roles = "VaultAdmins,Users")]
     public class VaultController : Controller
     {
         private readonly IVaultManager _vaultManager;
@@ -30,17 +30,20 @@ namespace Vault.Controllers
             _vaultItemManager = vaultItemManager;
         }
 
+        [Authorize(Roles = "VaultAdmins")]
         public ActionResult Index()
         {
             return RedirectToAction("VaultList");
         }
 
+        [Authorize(Roles = "VaultAdmins")]
         public async Task<ActionResult> VaultList(WebUser user)
         {
             var vaultList = await _vaultManager.GetVaults(user.Id);
             return View(vaultList.ToList());
         }
 
+        [Authorize(Roles = "VaultAdmins")]
         public ActionResult Create(WebUser user)
         {
             var vault = new UserVault()
@@ -51,6 +54,7 @@ namespace Vault.Controllers
             return View(vault);
         }
 
+        [Authorize(Roles = "VaultAdmins")]
         [HttpPost]
         public async Task<ActionResult> Create(WebUser user,UserVault vault)
         {
@@ -70,6 +74,7 @@ namespace Vault.Controllers
             return View(vault);
         }
 
+        [Authorize(Roles = "VaultAdmins")]
         [HttpPost]
         public async Task<ActionResult> Delete(string id)
         {
@@ -84,6 +89,7 @@ namespace Vault.Controllers
             }
         }
 
+        [Authorize(Roles = "VaultAdmins")]
         public async Task<ActionResult> Edit(string id)
         {
             var vault = await _vaultManager.GetVault(id);
@@ -97,6 +103,7 @@ namespace Vault.Controllers
             return View(editModel);
         }
 
+        [Authorize(Roles = "VaultAdmins")]
         [HttpPost]
         public async Task<ActionResult> Edit(EditVaultModel vault)
         {
@@ -113,6 +120,7 @@ namespace Vault.Controllers
             return View(vault);
         }
 
+        [Authorize(Roles = "VaultAdmins")]
         public async Task<ActionResult> EditUsers(string id)
         {
             var vault = await _vaultManager.GetVault(id);
@@ -133,6 +141,7 @@ namespace Vault.Controllers
             }
         }
 
+        [Authorize(Roles = "VaultAdmins")]
         [HttpPost]
         public async Task<ActionResult> EditUsers(UsersModificationModel model)
         {
@@ -157,6 +166,7 @@ namespace Vault.Controllers
             return RedirectToAction("EditUsers");
         }
 
+        [Authorize(Roles = "VaultAdmins")]
         public ActionResult AddUsers(string id)
         {
             var addUserModel = new AddUsersModel()
@@ -167,6 +177,7 @@ namespace Vault.Controllers
             return PartialView(addUserModel);
         }
 
+        [Authorize(Roles = "VaultAdmins")]
         [HttpPost]
         public async Task<ActionResult> AddUsers(UserToAddModel user)
         {
@@ -186,6 +197,7 @@ namespace Vault.Controllers
             return RedirectToAction("EditUsers",new {id = user.VaultId});
         }
 
+        [Authorize(Roles = "VaultAdmins")]
         [ChildActionOnly]
         public ActionResult VaultUsers(string id)
         {
@@ -194,6 +206,7 @@ namespace Vault.Controllers
             return PartialView("VaultUsersPartial",users);
         }
 
+        [Authorize(Roles = "VaultAdmins")]
         [HttpPost]
         public async Task<ActionResult> DeleteUser(string id, string vaultId)
         {
@@ -203,8 +216,15 @@ namespace Vault.Controllers
             return RedirectToAction("EditUsers", new {id = vaultId});
         }
 
+        [Authorize(Roles = "Users,VaultAdmins")]
         public async Task<ActionResult> Items(WebUser user,string id)
         {
+            var accessRight = await _vaultManager.GetUserAccess(id, user.Id);
+            if (accessRight == null)
+            {
+                TempData["message"] = "You don't have enough rights to access this vault";
+                return RedirectToAction("Index", "Home");
+            }
             var items = await _vaultManager.GetAllItems(id);
             var editItem = new VaultItemListModel()
             {
@@ -215,11 +235,13 @@ namespace Vault.Controllers
             return View(editItem);
         }
 
+
+        //---------------------------------------
         public ActionResult AddItem(string id)
         {
             return View(new CreateVaultItemModel() {VaultId = id});
         }
-
+        
         [HttpPost]
         public async Task<ActionResult> AddItem(CreateVaultItemModel model)
         {

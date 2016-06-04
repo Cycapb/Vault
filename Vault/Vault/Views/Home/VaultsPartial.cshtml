@@ -2,17 +2,20 @@
 <div class="panel-body">
     <table class="table table-striped">
         <tr>
-            <th>Name</th><th>Description</th><th>Open hours</th>
+            <th>Name</th><th>Description</th><th>Open hours</th><th>Owner</th>
         </tr>
         @if (Model.Count() != 0)
         {
             foreach (var vault in Model)
             {
                 <tr>
-                    <td>@vault.Name</td>
+                    <td>@Html.ActionLink(@vault.Name,"Items","Vault", new {id = vault.Id}, null)</td>
                     <td>@vault.Description</td>
                     <td>
                         @vault.OpenTime:00 - @vault.CloseTime:00
+                    </td>
+                    <td>
+                        @vault.VaultAdmin.UserName
                     </td>
                 </tr>
             }
@@ -20,7 +23,7 @@
         else
         {
             <tr>
-                <td colspan="3" class="text-center">No available vaults</td>
+                <td colspan="4" class="text-center">No available vaults</td>
             </tr>
         }
     </table>
