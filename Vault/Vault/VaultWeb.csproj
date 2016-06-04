@@ -360,7 +360,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\VaultItem\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\VaultDAL\VaultDAL.csproj">
