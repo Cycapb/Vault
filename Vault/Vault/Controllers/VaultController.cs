@@ -76,10 +76,15 @@ namespace Vault.Controllers
 
         [Authorize(Roles = "VaultAdmins")]
         [HttpPost]
-        public async Task<ActionResult> Delete(string id)
+        public async Task<ActionResult> Delete(WebUser user,string id)
         {
             try
             {
+                var admin = await _vaultManager.GetVaultAdmin(id);
+                if (admin.Id != user.Id)
+                {
+                    return RedirectToAction("Index");
+                }
                 await _vaultManager.DeleteAsync(id);
                 return RedirectToAction("Index");
             }
@@ -90,9 +95,13 @@ namespace Vault.Controllers
         }
 
         [Authorize(Roles = "VaultAdmins")]
-        public async Task<ActionResult> Edit(string id)
+        public async Task<ActionResult> Edit(WebUser user, string id)
         {
             var vault = await _vaultManager.GetVault(id);
+            if (vault.VaultAdmin.Id != user.Id)
+            {
+                return RedirectToAction("Index");
+            }
             var editModel = new EditVaultModel()
             {
                 Name = vault.Name,
@@ -121,11 +130,15 @@ namespace Vault.Controllers
         }
 
         [Authorize(Roles = "VaultAdmins")]
-        public async Task<ActionResult> EditUsers(string id)
+        public async Task<ActionResult> EditUsers(WebUser user, string id)
         {
             var vault = await _vaultManager.GetVault(id);
             if (vault != null)
             {
+                if (vault.VaultAdmin.Id != user.Id)
+                {
+                    return RedirectToAction("Index");
+                }
                 var editModel = new EditUsersModel()
                 {
                     Id = vault.Id,
@@ -167,6 +180,7 @@ namespace Vault.Controllers
         }
 
         [Authorize(Roles = "VaultAdmins")]
+        [ChildActionOnly]
         public ActionResult AddUsers(string id)
         {
             var addUserModel = new AddUsersModel()
@@ -235,10 +249,13 @@ namespace Vault.Controllers
             return View(editItem);
         }
 
-
-        //---------------------------------------
-        public ActionResult AddItem(string id)
+        public async Task<ActionResult> AddItem(WebUser user, string id)
         {
+            var access = await _vaultManager.GetUserAccess(id, user.Id);
+            if (access != "Create")
+            {
+                return RedirectToAction("Items", new {id = id});
+            }
             return View(new CreateVaultItemModel() {VaultId = id});
         }
         
