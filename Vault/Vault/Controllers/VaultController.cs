@@ -136,7 +136,7 @@ namespace Vault.Controllers
         {
             if (model.ReadUsers != null)
             {
-                var accessRights = GetUserAccessRights(model.ReadUsers);
+                var accessRights = model.ReadUsers.Where(accessRight => accessRight.Id != null).ToList();
                 foreach (var user in accessRights)
                 {
                     await _accessManager.RevokeCreateAccess(user, model.VaultId);
@@ -145,7 +145,7 @@ namespace Vault.Controllers
             }
             if (model.CreateUsers != null)
             {
-                var accessRights = GetUserAccessRights(model.CreateUsers);
+                var accessRights = model.CreateUsers.Where(accessRight => accessRight.Id != null).ToList();
                 foreach (var user in accessRights)
                 {
                     await _accessManager.RevokeReadAccess(user, model.VaultId);
@@ -201,15 +201,15 @@ namespace Vault.Controllers
             return RedirectToAction("EditUsers", new {id = vaultId});
         }
 
-        public async Task<ActionResult> Items(string vaultId)
+        public async Task<ActionResult> Items(string id)
         {
-            var items = await _vaultManager.GetAllItems(vaultId);
-            return View(items);
-        }
-
-        private IList<VaultUser> GetUserAccessRights(IList<VaultUser> accessRights)
-        {
-            return accessRights.Where(accessRight => accessRight.Id != null).ToList();
+            var items = await _vaultManager.GetAllItems(id);
+            var editItem = new VaultItemListModel()
+            {
+                VaultItems = items,
+                
+            };
+            return View(editItem);
         }
     }
 }

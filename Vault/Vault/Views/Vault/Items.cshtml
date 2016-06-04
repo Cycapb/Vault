@@ -1,0 +1,18 @@
+﻿@model Vault.Models.VaultItemListModel
+@{
+    ViewBag.Title = "Items";
+    Layout = "~/Views/Shared/_VaultLayout.cshtml";
+}
+<div class="panel panel-primary">
+    <div class="panel-heading">List of items</div>
+    <div class="panel-body">
+        <table class="table table-striped">
+            <tr>
+                <th>Name</th>
+                <th>Content</th>
+                <th>Action</th>
+            </tr>
+            @Html.Partial("VaultItemsPartial",Model)
+        </table>
+    </div>
+</div>

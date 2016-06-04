@@ -1,0 +1,31 @@
+﻿@model Vault.Models.VaultItemListModel
+@if (Model.VaultItems != null && Model.VaultItems.Count() != 0)
+{
+    foreach (var item in Model.VaultItems)
+    {
+        <tr>
+            <td>@item.Name</td>
+            <td>@item.Content</td>
+            <td>
+                @if (Model.AccessRight == "Read")
+                {
+                    @: No actions available
+                }
+                else
+                {
+                    using (Html.BeginForm("Delete", "Vault", new { id = item.Id }))
+                    {
+                        @Html.ActionLink("EditItem", "EditItem", new { id = item.Id }, new { @class = "btn btn-primary btn-xs" })
+                        <input type="submit" value="Delete" class="btn btn-danger btn-xs" />
+                    }
+                }
+            </td>
+        </tr>
+    }
+}
+else
+{
+    <tr>
+        <td colspan="3" class="text-center">No items</td>
+    </tr>
+}

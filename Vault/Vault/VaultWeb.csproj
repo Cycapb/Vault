@@ -346,6 +346,8 @@
     <Content Include="Views\Vault\AllowReadPartial.cshtml" />
     <Content Include="Views\Vault\AllowCreatePartial.cshtml" />
     <Content Include="Views\Vault\VaultUsersPartial.cshtml" />
+    <Content Include="Views\Vault\Items.cshtml" />
+    <Content Include="Views\Vault\VaultItemsPartial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

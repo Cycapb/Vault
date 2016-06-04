@@ -41,6 +41,7 @@ namespace Vault.Infrastructure
             _kernel.Bind<IVaultManager>().To<VaultManager>();
             _kernel.Bind<IUserGetter<VaultUser>>().To<FreeUsersGetter>();
             _kernel.Bind<IAccessManager>().To<AccessManager>();
+            _kernel.Bind<IVaultItemManager>().To<VaultItemManager>();
         }
     }
 }
