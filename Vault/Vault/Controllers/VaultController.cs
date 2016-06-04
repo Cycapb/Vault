@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using System.Web.Services.Protocols;
 using Microsoft.AspNet.Identity.Owin;
 using Vault.Abstract;
 using Vault.Models;
@@ -232,7 +231,7 @@ namespace Vault.Controllers
         }
 
         [Authorize(Roles = "Users,VaultAdmins")]
-        public async Task<ActionResult> Items(WebUser user,string id)
+        public async Task<ActionResult> Items(WebUser user,string id, string returnUrl)
         {
             var accessRight = await _vaultManager.GetUserAccess(id, user.Id);
             if (accessRight == null)
@@ -244,7 +243,7 @@ namespace Vault.Controllers
             var editItem = new VaultItemListModel()
             {
                 VaultId = id,
-                HasUserRole= HttpContext.User.IsInRole("Users") && !HttpContext.User.IsInRole("VaultAdmins"),
+                ReturnUrl = returnUrl,
                 VaultItems = items,
                 AccessRight = await _vaultManager.GetUserAccess(id, user.Id)
             };

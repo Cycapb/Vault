@@ -18,27 +18,12 @@
     <div class="panel-footer">
         @if (Model.AccessRight == "Read")
         {
-            if (Model.HasUserRole)
-            {
-                @Html.ActionLink("Back", "Index","Home", null, new { @class = "btn btn-default" })
-            }
-            else
-            {
-                @Html.ActionLink("Back", "VaultList", null, new { @class = "btn btn-default" })
-            }
+            <a class="btn btn-default" href="@Model.ReturnUrl">Back</a>
         }
         @if (Model.AccessRight == "Create")
         {
-            if (Model.HasUserRole)
-            {
-                @Html.ActionLink("Create", "AddItem", new { id = Model.VaultId }, new { @class = "btn btn-success" })
-                @Html.ActionLink("Back", "Index","Home", null, new { @class = "btn btn-default" })
-            }
-            else
-            {
-                @Html.ActionLink("Create", "AddItem", new { id = Model.VaultId }, new { @class = "btn btn-success" })
-                @Html.ActionLink("Back", "VaultList", null, new { @class = "btn btn-default" })
-            }
+            @Html.ActionLink("Create","AddItem", new {id = Model.VaultId}, new {@class="btn btn-success"})
+            <a class="btn btn-default" href="@Model.ReturnUrl">Back</a>
         }
     </div>
 </div>

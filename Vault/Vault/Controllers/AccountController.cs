@@ -16,7 +16,7 @@ namespace Vault.Controllers
         private IAuthenticationManager AuthMan => HttpContext.GetOwinContext().Authentication;
 
         [AllowAnonymous]
-        public ActionResult Login(string returnUrl  )
+        public ActionResult Login(string returnUrl)
         {
             if (HttpContext.User.Identity.IsAuthenticated)
             {
