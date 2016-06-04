@@ -12,7 +12,11 @@
                 <th>Content</th>
                 <th>Action</th>
             </tr>
-            @Html.Partial("VaultItemsPartial",Model)
+            @Html.Partial("VaultItemsPartial", Model)
         </table>
+    </div>
+    <div class="panel-footer">
+        @Html.ActionLink("Create","AddItem", new {id = Model.VaultId},new {@class="btn btn-success"})
+        @Html.ActionLink("Back","VaultList")
     </div>
 </div>

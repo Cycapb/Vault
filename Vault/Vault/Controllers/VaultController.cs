@@ -15,17 +15,19 @@ namespace Vault.Controllers
     public class VaultController : Controller
     {
         private readonly IVaultManager _vaultManager;
+        private readonly IVaultItemManager _vaultItemManager;
         private readonly IUserGetter<VaultUser> _userGetter;
         private readonly IAccessManager _accessManager;
 
         private AppUserManager UserManager =>
             System.Web.HttpContext.Current.GetOwinContext().GetUserManager<AppUserManager>();
 
-        public VaultController(IVaultManager vaultHelper, IUserGetter<VaultUser> getter, IAccessManager accessManager )
+        public VaultController(IVaultManager vaultHelper, IUserGetter<VaultUser> getter, IAccessManager accessManager, IVaultItemManager vaultItemManager )
         {
             _vaultManager = vaultHelper;
             _userGetter = getter;
             _accessManager = accessManager;
+            _vaultItemManager = vaultItemManager;
         }
 
         public ActionResult Index()
@@ -206,10 +208,40 @@ namespace Vault.Controllers
             var items = await _vaultManager.GetAllItems(id);
             var editItem = new VaultItemListModel()
             {
+                VaultId = id,
                 VaultItems = items,
                 AccessRight = await _vaultManager.GetUserAccess(id, user.Id)
             };
             return View(editItem);
+        }
+
+        public ActionResult AddItem(string id)
+        {
+            return View(new CreateVaultItemModel() {VaultId = id});
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> AddItem(CreateVaultItemModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var vaultItem = await _vaultItemManager.CreateAsync(new VaultItem() {Content = model.Content, Name = model.Name});
+                var vault = await _vaultManager.GetVault(model.VaultId);
+                if (vault.VaultItems == null)
+                {
+                    vault.VaultItems = new List<string>() {vaultItem.Id};
+                }
+                else
+                {
+                    vault.VaultItems.Add(vaultItem.Id);
+                }
+                await _vaultManager.UpdateAsync(vault);
+                return RedirectToAction("Items", new {id = model.VaultId});
+            }
+            else
+            {
+                return View(model);
+            }
         }
     }
 }

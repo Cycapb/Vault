@@ -15,9 +15,9 @@ namespace Vault.Concrete
             _vaultItemRepository = repository;
         }
 
-        public async Task CreateAsync(VaultItem item)
+        public async Task<VaultItem> CreateAsync(VaultItem item)
         {
-            await _vaultItemRepository.CreateAsync(item);
+            return await _vaultItemRepository.CreateAsync(item);
         }
 
         public async Task DeleteAsync(string id)

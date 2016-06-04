@@ -6,7 +6,7 @@ namespace Vault.Abstract
 {
     public interface IVaultItemManager
     {
-        Task CreateAsync(VaultItem item);
+        Task<VaultItem> CreateAsync(VaultItem item);
         Task DeleteAsync(string id);
         Task UpdateAsync(VaultItem item);
     }

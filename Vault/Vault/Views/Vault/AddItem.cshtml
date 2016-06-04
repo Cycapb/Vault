@@ -1,0 +1,30 @@
+﻿@model Vault.Models.CreateVaultItemModel
+@{
+    ViewBag.Title = "AddItem";
+    Layout = "~/Views/Shared/_VaultLayout.cshtml";
+}
+<div class="panel panel-primary">
+    <div class="panel-heading">Add vault item</div>
+
+    @using (Html.BeginForm())
+    {
+        @Html.ValidationSummary()
+        @Html.HiddenFor(x=>x.VaultId)
+        <div class="panel-body">
+            <div class="form-group">
+                <label>Name</label>
+                @Html.TextBoxFor(x => x.Name, new {@class = "form-control", placeholder = "Vault item name"})
+            </div>
+            <div class="form-group">
+                <label>Content</label>
+                @Html.TextAreaFor(x => x.Content, new {@class="form-control"})
+            </div>
+        </div>
+        <div class="panel-footer">
+            <input type="submit" value="Create" class="btn btn-success"/>
+            @Html.ActionLink("Cancel","Items", null, new {@class="btn btn-default"})
+        </div>
+    }
+</div>
+
+

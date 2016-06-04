@@ -46,6 +46,7 @@ namespace Vault.Models
 
     public class VaultItemListModel
     {
+        public string VaultId { get; set; }
         public string AccessRight { get; set; }
         public IEnumerable<VaultItem> VaultItems { get; set; } 
     }
