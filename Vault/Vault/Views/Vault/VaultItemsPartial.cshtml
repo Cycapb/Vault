@@ -13,7 +13,7 @@
                 }
                 else
                 {
-                    using (Html.BeginForm("Delete", "Vault", new { id = item.Id }))
+                    using (Html.BeginForm("DeleteItem", "Vault", new { vaultId = Model.VaultId, itemId = item.Id }))
                     {
                         @Html.ActionLink("Edit", "EditItem", new { id = item.Id }, new { @class = "btn btn-primary btn-xs" })
                         <input type="submit" value="Delete" class="btn btn-danger btn-xs" />

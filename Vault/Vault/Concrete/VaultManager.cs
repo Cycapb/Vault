@@ -130,5 +130,14 @@ namespace Vault.Concrete
                 }
             }
         }
+
+        public async Task DeleteItemAsync(string vaultId, string itemId)
+        {
+            var vault = await _userVaultRepository.GetItemAsync(vaultId);
+            var item = vault.VaultItems.SingleOrDefault(x => x == itemId);
+            vault.VaultItems.Remove(item);
+            await _vaultItemRepository.DeleteAsync(itemId);
+            await _userVaultRepository.UpdateAsync(vault);
+        }
     }
 }

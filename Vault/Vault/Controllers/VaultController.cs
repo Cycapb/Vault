@@ -243,5 +243,12 @@ namespace Vault.Controllers
                 return View(model);
             }
         }
+
+        [HttpPost]
+        public async Task<ActionResult> DeleteItem(string vaultId, string itemId)
+        {
+            await _vaultManager.DeleteItemAsync(vaultId, itemId);
+            return RedirectToAction("Items",new {id = vaultId});
+        }
     }
 }
