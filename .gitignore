@@ -246,3 +246,6 @@ ModelManifest.xml
 
 # Ignore cfg files
 *.config
+
+#Ignore pubxml
+*.pubxml
