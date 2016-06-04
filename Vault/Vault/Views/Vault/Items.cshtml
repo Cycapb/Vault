@@ -4,7 +4,7 @@
     Layout = "~/Views/Shared/_VaultLayout.cshtml";
 }
 <div class="panel panel-primary">
-    <div class="panel-heading">List of items</div>
+    <div class="panel-heading">Welcome to the vault</div>
     <div class="panel-body">
         <table class="table table-striped">
             <tr>
@@ -18,13 +18,27 @@
     <div class="panel-footer">
         @if (Model.AccessRight == "Read")
         {
-           @Html.ActionLink("Back", "VaultList", null, new { @class = "btn btn-default" })
+            if (Model.HasUserRole)
+            {
+                @Html.ActionLink("Back", "Index","Home", null, new { @class = "btn btn-default" })
+            }
+            else
+            {
+                @Html.ActionLink("Back", "VaultList", null, new { @class = "btn btn-default" })
+            }
         }
         @if (Model.AccessRight == "Create")
         {
-            @Html.ActionLink("Create", "AddItem", new { id = Model.VaultId }, new { @class = "btn btn-success" })
-            @Html.ActionLink("Back", "VaultList", null, new { @class = "btn btn-default" })
+            if (Model.HasUserRole)
+            {
+                @Html.ActionLink("Create", "AddItem", new { id = Model.VaultId }, new { @class = "btn btn-success" })
+                @Html.ActionLink("Back", "Index","Home", null, new { @class = "btn btn-default" })
+            }
+            else
+            {
+                @Html.ActionLink("Create", "AddItem", new { id = Model.VaultId }, new { @class = "btn btn-success" })
+                @Html.ActionLink("Back", "VaultList", null, new { @class = "btn btn-default" })
+            }
         }
-
     </div>
 </div>

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Services.Protocols;
 using Microsoft.AspNet.Identity.Owin;
 using Vault.Abstract;
 using Vault.Models;
@@ -243,6 +244,7 @@ namespace Vault.Controllers
             var editItem = new VaultItemListModel()
             {
                 VaultId = id,
+                HasUserRole= HttpContext.User.IsInRole("Users") && !HttpContext.User.IsInRole("VaultAdmins"),
                 VaultItems = items,
                 AccessRight = await _vaultManager.GetUserAccess(id, user.Id)
             };
