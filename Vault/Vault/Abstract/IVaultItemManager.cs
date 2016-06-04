@@ -9,5 +9,7 @@ namespace Vault.Abstract
         Task<VaultItem> CreateAsync(VaultItem item);
         Task DeleteAsync(string id);
         Task UpdateAsync(VaultItem item);
+
+        Task<VaultItem> GetItemAsync(string id);
     }
 }

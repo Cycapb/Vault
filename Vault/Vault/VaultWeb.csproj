@@ -350,6 +350,7 @@
     <Content Include="Views\Vault\Items.cshtml" />
     <Content Include="Views\Vault\VaultItemsPartial.cshtml" />
     <Content Include="Views\Vault\AddItem.cshtml" />
+    <Content Include="Views\Vault\EditItem.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

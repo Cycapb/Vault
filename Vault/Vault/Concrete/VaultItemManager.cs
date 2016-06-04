@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Vault.Abstract;
 using VaultDAL.Abstract;
 using VaultDAL.Models;
@@ -23,6 +24,11 @@ namespace Vault.Concrete
         public async Task DeleteAsync(string id)
         {
             await _vaultItemRepository.DeleteAsync(id);
+        }
+
+        public Task<VaultItem> GetItemAsync(string id)
+        {
+            return _vaultItemRepository.GetItemAsync(id);
         }
 
         public async Task UpdateAsync(VaultItem item)

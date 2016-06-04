@@ -1,0 +1,29 @@
+﻿@model Vault.Models.EditVaultItemModel
+
+@{
+    ViewBag.Title = "EditItem";
+    Layout = "~/Views/Shared/_VaultLayout.cshtml";
+}
+<div class="panel-primary">
+    <div class="panel-heading">Edit vault item</div>
+    @using (Html.BeginForm())
+    {
+        @Html.ValidationSummary()
+        @Html.HiddenFor(x => x.VaultId)
+        @Html.HiddenFor(x => x.VaultItem.Id)
+        <div class="panel-body">
+            <div class="form-group">
+                <label>Name</label>
+                @Html.TextBoxFor(x => x.VaultItem.Name, new {@class = "form-control"})
+            </div>
+            <div class="form-group">
+                <label>Content</label>
+                @Html.TextBoxFor(x => x.VaultItem.Content, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="panel-footer">
+            <input type="submit" class="btn btn-success" value="Save"/>
+            @Html.ActionLink("Cancel","Items", new {id = Model.VaultId}, new {@class="btn btn-default"})
+        </div>
+    }
+</div>

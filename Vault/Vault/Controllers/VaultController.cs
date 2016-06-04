@@ -22,9 +22,9 @@ namespace Vault.Controllers
         private AppUserManager UserManager =>
             System.Web.HttpContext.Current.GetOwinContext().GetUserManager<AppUserManager>();
 
-        public VaultController(IVaultManager vaultHelper, IUserGetter<VaultUser> getter, IAccessManager accessManager, IVaultItemManager vaultItemManager )
+        public VaultController(IVaultManager vaultManager, IUserGetter<VaultUser> getter, IAccessManager accessManager, IVaultItemManager vaultItemManager )
         {
-            _vaultManager = vaultHelper;
+            _vaultManager = vaultManager;
             _userGetter = getter;
             _accessManager = accessManager;
             _vaultItemManager = vaultItemManager;
@@ -249,6 +249,24 @@ namespace Vault.Controllers
         {
             await _vaultManager.DeleteItemAsync(vaultId, itemId);
             return RedirectToAction("Items",new {id = vaultId});
+        }
+
+        public async Task<ActionResult> EditItem(string id, string vaultId)
+        {
+            var vaultItem = await _vaultItemManager.GetItemAsync(id);
+            var editModel = new EditVaultItemModel()
+            {
+                VaultId = vaultId,
+                VaultItem = vaultItem
+            };
+            return View(editModel);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> EditItem(EditVaultItemModel model)
+        {
+            await _vaultItemManager.UpdateAsync(model.VaultItem);
+            return RedirectToAction("Items", new {id = model.VaultId});
         }
     }
 }
