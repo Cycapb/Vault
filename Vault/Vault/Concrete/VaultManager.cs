@@ -23,7 +23,7 @@ namespace Vault.Concrete
         public async Task<IEnumerable<UserVault>> GetVaults(string userId)
         {
             var vaults = await _userVaultRepository.GetListAsync();
-            return vaults.Where(x => x.VaultAdmin.Id == userId).ToList();
+            return vaults?.Where(x => x.VaultAdmin.Id == userId).ToList();
         }
 
         public async Task<UserVault> GetVault(string id)
@@ -49,13 +49,13 @@ namespace Vault.Concrete
         public async Task<IEnumerable<VaultUser>> GetReadUsers(string id)
         {
             var vault = await _userVaultRepository.GetItemAsync(id);
-            return vault.AllowRead?.ToList();
+            return vault?.AllowRead?.ToList();
         }
 
         public async Task<IEnumerable<VaultUser>> GetCreateUsers(string id)
         {
             var vault = await _userVaultRepository.GetItemAsync(id);
-            return vault.AllowCreate?.ToList();
+            return vault?.AllowCreate?.ToList();
         }
 
         public IEnumerable<VaultUser> GetAllUsers(string id)
@@ -138,6 +138,12 @@ namespace Vault.Concrete
             vault.VaultItems.Remove(item);
             await _vaultItemRepository.DeleteAsync(itemId);
             await _userVaultRepository.UpdateAsync(vault);
+        }
+
+        public async Task<VaultUser> GetVaultAdmin(string vaultId)
+        {
+            var vault = await _userVaultRepository.GetItemAsync(vaultId);
+            return vault.VaultAdmin;
         }
     }
 }
