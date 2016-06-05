@@ -287,6 +287,7 @@
     <Compile Include="Abstract\IVaultItemManager.cs" />
     <Compile Include="Abstract\IVaultManager.cs" />
     <Compile Include="Abstract\IWebUser.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />

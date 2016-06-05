@@ -12,6 +12,7 @@ namespace Vault
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             ModelBinders.Binders.Add(typeof(WebUser),new WebUserModelBinder());
+            FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
         }
     }
 }
