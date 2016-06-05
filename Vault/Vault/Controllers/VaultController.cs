@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity.Owin;
 using Vault.Abstract;
+using Vault.Infrastructure;
 using Vault.Models;
 using VaultDAL.Models;
 
@@ -231,13 +232,21 @@ namespace Vault.Controllers
         }
 
         [Authorize(Roles = "Users,VaultAdmins")]
-        public async Task<ActionResult> Items(WebUser user,string id, string returnUrl)
+        public async Task<ActionResult> Items(WebUser user, string id, string returnUrl)
         {
             var accessRight = await _accessManager.GetUserAccess(id, user.Id);
             if (accessRight == null)
             {
                 TempData["message"] = "You don't have enough rights to access this vault";
                 return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                if (!await _accessManager.TimeAccessAsync(id))
+                {
+                    TempData["message"] = "At this this time the vault you want to get access is closed";
+                    return RedirectToAction("Index", "Home");
+                }
             }
             var items = await _vaultManager.GetAllItems(id);
             var editItem = new VaultItemListModel()

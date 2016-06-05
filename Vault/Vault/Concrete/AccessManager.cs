@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Vault.Abstract;
@@ -121,6 +122,20 @@ namespace Vault.Concrete
                     return null;
                 }
             }
+        }
+
+        public async Task<bool> TimeAccessAsync(string vaultId)
+        {
+            var vault = await _userVaultRepository.GetItemAsync(vaultId);
+            var currentTime = DateTime.Now.Hour;
+            return ((currentTime > vault.OpenTime) && (currentTime < vault.CloseTime));
+        }
+
+        public bool TimeAccess(string vaultId)
+        {
+            var vault =  _userVaultRepository.GetItem(vaultId);
+            var currentTime = DateTime.Now.Hour;
+            return ((currentTime > vault.OpenTime) && (currentTime < vault.CloseTime));
         }
     }
 }

@@ -10,5 +10,7 @@ namespace Vault.Abstract
         Task RevokeReadAccess(VaultUser vaultUser, string vaultId);
         Task RevokeCreateAccess(VaultUser vaultUser, string vaultId);
         Task<string> GetUserAccess(string vaultId, string userId);
+        Task<bool> TimeAccessAsync(string vaultId);
+        bool TimeAccess(string vaultId);
     }
 }
