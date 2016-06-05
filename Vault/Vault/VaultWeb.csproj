@@ -281,6 +281,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Abstract\IAccessManager.cs" />
+    <Compile Include="Abstract\ILogger.cs" />
     <Compile Include="Abstract\IUserGetter.cs" />
     <Compile Include="Abstract\IVaultGetter.cs" />
     <Compile Include="Abstract\IVaultItemManager.cs" />
@@ -290,6 +291,7 @@
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Concrete\AccessManager.cs" />
+    <Compile Include="Concrete\FileLogger.cs" />
     <Compile Include="Concrete\IdentityConnectionProvider.cs" />
     <Compile Include="Concrete\FreeUsersGetter.cs" />
     <Compile Include="Concrete\UserVaultGetter.cs" />
