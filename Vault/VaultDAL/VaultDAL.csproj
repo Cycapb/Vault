@@ -98,6 +98,7 @@
     <Compile Include="Concrete\MongoRepository.cs" />
     <Compile Include="Models\CustomTimeComparatorAttribute.cs" />
     <Compile Include="Models\UserVault.cs" />
+    <Compile Include="Models\VaultAccessLog.cs" />
     <Compile Include="Models\VaultItem.cs" />
     <Compile Include="Models\VaultUser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
