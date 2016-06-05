@@ -305,8 +305,15 @@ namespace Vault.Controllers
         [HttpPost]
         public async Task<ActionResult> EditItem(EditVaultItemModel model)
         {
-            await _vaultItemManager.UpdateAsync(model.VaultItem);
-            return RedirectToAction("Items", new {id = model.VaultId});
+            if (ModelState.IsValid)
+            {
+                await _vaultItemManager.UpdateAsync(model.VaultItem);
+                return RedirectToAction("Items", new { id = model.VaultId });
+            }
+            else
+            {
+                return View(model);
+            }
         }
     }
 }
