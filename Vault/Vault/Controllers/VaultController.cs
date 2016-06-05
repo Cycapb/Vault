@@ -243,7 +243,7 @@ namespace Vault.Controllers
             var editItem = new VaultItemListModel()
             {
                 VaultId = id,
-                ReturnUrl = returnUrl,
+                ReturnUrl = returnUrl ?? CreateReturnUrl(),
                 VaultItems = items,
                 AccessRight = await _vaultManager.GetUserAccess(id, user.Id)
             };
@@ -313,6 +313,19 @@ namespace Vault.Controllers
             else
             {
                 return View(model);
+            }
+        }
+
+        private string CreateReturnUrl()
+        {
+            var isUser = HttpContext.User.IsInRole("Users");
+            if (isUser)
+            {
+                return Url.Action("Index", "Home");
+            }
+            else
+            {
+                return Url.Action("Index");
             }
         }
     }
