@@ -137,5 +137,15 @@ namespace Vault.Concrete
             var currentTime = DateTime.Now.Hour;
             return ((currentTime > vault.OpenTime) && (currentTime < vault.CloseTime));
         }
+
+        public async Task ValidateUserAccessRights(string vaultId, string userId)
+        {
+            var vault = await _userVaultRepository.GetItemAsync(vaultId);
+            var user = vault.AllowCreate.SingleOrDefault(u => u.Id == userId);
+            if (user != null)
+            {
+                await this.RevokeReadAccess(new VaultUser() {Id = userId}, vaultId);
+            }
+        }
     }
 }

@@ -6,7 +6,6 @@ using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity.Owin;
 using Vault.Abstract;
-using Vault.Infrastructure;
 using Vault.Models;
 using VaultDAL.Models;
 
@@ -209,6 +208,7 @@ namespace Vault.Controllers
             {
                 await _accessManager.GrantCreateAccess(vaultUser, user.VaultId);
             }
+            await _accessManager.ValidateUserAccessRights(user.VaultId, user.UserId);
             return RedirectToAction("EditUsers",new {id = user.VaultId});
         }
 

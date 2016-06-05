@@ -12,5 +12,7 @@ namespace Vault.Abstract
         Task<string> GetUserAccess(string vaultId, string userId);
         Task<bool> TimeAccessAsync(string vaultId);
         bool TimeAccess(string vaultId);
+
+        Task ValidateUserAccessRights(string vaultId, string userId);
     }
 }
