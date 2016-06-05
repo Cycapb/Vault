@@ -9,5 +9,6 @@ namespace Vault.Abstract
         Task GrantCreateAccess(VaultUser vaultUser, string vaultId);
         Task RevokeReadAccess(VaultUser vaultUser, string vaultId);
         Task RevokeCreateAccess(VaultUser vaultUser, string vaultId);
+        Task<string> GetUserAccess(string vaultId, string userId);
     }
 }

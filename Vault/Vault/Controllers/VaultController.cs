@@ -233,7 +233,7 @@ namespace Vault.Controllers
         [Authorize(Roles = "Users,VaultAdmins")]
         public async Task<ActionResult> Items(WebUser user,string id, string returnUrl)
         {
-            var accessRight = await _vaultManager.GetUserAccess(id, user.Id);
+            var accessRight = await _accessManager.GetUserAccess(id, user.Id);
             if (accessRight == null)
             {
                 TempData["message"] = "You don't have enough rights to access this vault";
@@ -245,14 +245,14 @@ namespace Vault.Controllers
                 VaultId = id,
                 ReturnUrl = returnUrl ?? CreateReturnUrl(),
                 VaultItems = items,
-                AccessRight = await _vaultManager.GetUserAccess(id, user.Id)
+                AccessRight = await _accessManager.GetUserAccess(id, user.Id)
             };
             return View(editItem);
         }
 
         public async Task<ActionResult> AddItem(WebUser user, string id)
         {
-            var access = await _vaultManager.GetUserAccess(id, user.Id);
+            var access = await _accessManager.GetUserAccess(id, user.Id);
             if (access != "Create")
             {
                 return RedirectToAction("Items", new {id = id});

@@ -73,5 +73,54 @@ namespace Vault.Concrete
                 await _userVaultRepository.UpdateAsync(vault);
             }
         }
+
+        public async Task<string> GetUserAccess(string vaultId, string userId)
+        {
+            var vault = await _userVaultRepository.GetItemAsync(vaultId);
+            if (vault.VaultAdmin.Id == userId) { return "Create"; }
+            if (vault.AllowCreate != null)
+            {
+                if (vault.AllowCreate.Any(x => x.Id == userId))
+                {
+                    return "Create";
+                }
+                else
+                {
+                    if (vault.AllowRead != null)
+                    {
+                        if (vault.AllowRead.Any(x => x.Id == userId))
+                        {
+                            return "Read";
+                        }
+                        else
+                        {
+                            return null;
+                        }
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+            }
+            else
+            {
+                if (vault.AllowRead != null)
+                {
+                    if (vault.AllowRead.Any(x => x.Id == userId))
+                    {
+                        return "Read";
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
     }
 }
