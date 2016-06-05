@@ -292,6 +292,7 @@
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Concrete\AccessManager.cs" />
+    <Compile Include="Concrete\DbLogger.cs" />
     <Compile Include="Concrete\FileLogger.cs" />
     <Compile Include="Concrete\IdentityConnectionProvider.cs" />
     <Compile Include="Concrete\FreeUsersGetter.cs" />
@@ -313,6 +314,7 @@
     <Compile Include="Infrastructure\IdentityHelpers.cs" />
     <Compile Include="Infrastructure\NinjectDependencyResolver.cs" />
     <Compile Include="Infrastructure\VaultUserEqualityComparer.cs" />
+    <Compile Include="Models\AccessLogModel.cs" />
     <Compile Include="Models\AppRoleManager.cs" />
     <Compile Include="Models\AppRoleModel.cs" />
     <Compile Include="Models\AppUserManager.cs" />
