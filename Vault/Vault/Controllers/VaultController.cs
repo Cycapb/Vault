@@ -97,6 +97,10 @@ namespace Vault.Controllers
         [Authorize(Roles = "VaultAdmins")]
         public async Task<ActionResult> Edit(WebUser user, string id)
         {
+            if (id == null)
+            {
+                return RedirectToAction("Index");
+            }
             var vault = await _vaultManager.GetVault(id);
             if (vault.VaultAdmin.Id != user.Id)
             {
