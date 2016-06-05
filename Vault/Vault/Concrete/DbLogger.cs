@@ -1,21 +1,23 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Vault.Abstract;
-using Vault.Models;
 using VaultDAL.Abstract;
 using VaultDAL.Models;
 
 namespace Vault.Concrete
 {
-    public class DbLogger:ILogger
+    public class DbLogger:IDbLogger
     {
         private readonly IRepository<VaultAccessLog> _repository;
-        public CreateLogModel LogModel { get; set; }
+
+        public string EventType { get; set; }
+        public string VaultId { get; set; }
 
         public DbLogger(IRepository<VaultAccessLog> repository)
         {
             _repository = repository;
         }
+
         public async Task Log(string message)
         {
             await SaveToDb(message);
@@ -27,8 +29,8 @@ namespace Vault.Concrete
             {
                 DateTime = DateTime.Now,
                 Event = message,
-                EventType = this.LogModel.EventType,
-                VaultId = this.LogModel.VaultId
+                EventType = this.EventType,
+                VaultId = this.VaultId
             };
             await _repository.CreateAsync(logItem);
         }

@@ -18,16 +18,22 @@ namespace Vault.Controllers
         private readonly IVaultItemManager _vaultItemManager;
         private readonly IUserGetter<VaultUser> _userGetter;
         private readonly IAccessManager _accessManager;
+        private readonly IDbLogger _dbLogger;
 
         private AppUserManager UserManager =>
             System.Web.HttpContext.Current.GetOwinContext().GetUserManager<AppUserManager>();
 
-        public VaultController(IVaultManager vaultManager, IUserGetter<VaultUser> getter, IAccessManager accessManager, IVaultItemManager vaultItemManager )
+        public VaultController(IVaultManager vaultManager, 
+            IUserGetter<VaultUser> getter, 
+            IAccessManager accessManager, 
+            IVaultItemManager vaultItemManager,
+            IDbLogger dbLogger)
         {
             _vaultManager = vaultManager;
             _userGetter = getter;
             _accessManager = accessManager;
             _vaultItemManager = vaultItemManager;
+            _dbLogger = dbLogger;
         }
 
         [Authorize(Roles = "VaultAdmins")]
@@ -242,6 +248,8 @@ namespace Vault.Controllers
             if (accessRight == null)
             {
                 TempData["message"] = "You don't have enough rights to access this vault";
+                InitiateDbLogger(id, "Deny");
+                Task.Run(() => _dbLogger.Log($"User {user.UserName} tryied to get access to the vault"));
                 return RedirectToAction("Index", "Home");
             }
             else
@@ -249,6 +257,8 @@ namespace Vault.Controllers
                 if (!await _accessManager.TimeAccessAsync(id))
                 {
                     TempData["message"] = "At this this time the vault you want to get access is closed";
+                    InitiateDbLogger(id, "Deny");
+                    Task.Run(() =>_dbLogger.Log($"User {user.UserName} tryied to get access to the vault when it was closed"));
                     return RedirectToAction("Index", "Home");
                 }
             }
@@ -258,8 +268,10 @@ namespace Vault.Controllers
                 VaultId = id,
                 ReturnUrl = returnUrl ?? CreateReturnUrl(),
                 VaultItems = items,
-                AccessRight = await _accessManager.GetUserAccess(id, user.Id)
+                AccessRight = accessRight
             };
+            InitiateDbLogger(id, "Access");
+            Task.Run(() => _dbLogger.Log($"User {user.UserName} entered the vault"));
             return View(editItem);
         }
 
@@ -340,6 +352,12 @@ namespace Vault.Controllers
             {
                 return Url.Action("Index");
             }
+        }
+
+        private void InitiateDbLogger(string vaultId, string accessType)
+        {
+            _dbLogger.VaultId = vaultId;
+            _dbLogger.EventType = accessType;
         }
     }
 }

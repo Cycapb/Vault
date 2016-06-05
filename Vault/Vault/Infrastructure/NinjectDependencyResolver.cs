@@ -37,11 +37,13 @@ namespace Vault.Infrastructure
             _kernel.Bind<IRepository<UserVault>>().To<MongoRepository<UserVault>>();
             _kernel.Bind<IRepository<VaultItem>>().To<MongoRepository<VaultItem>>();
             _kernel.Bind<IRepository<VaultUser>>().To<MongoRepository<VaultUser>>();
+            _kernel.Bind<IRepository<VaultAccessLog>>().To<MongoRepository<VaultAccessLog>>();
             _kernel.Bind<IVaultGetter>().To<UserVaultGetter>();
             _kernel.Bind<IVaultManager>().To<VaultManager>();
             _kernel.Bind<IUserGetter<VaultUser>>().To<FreeUsersGetter>();
             _kernel.Bind<IAccessManager>().To<AccessManager>();
             _kernel.Bind<IVaultItemManager>().To<VaultItemManager>();
+            _kernel.Bind<IDbLogger>().To<DbLogger>();
         }
     }
 }
