@@ -308,6 +308,7 @@
     </Compile>
     <Compile Include="Infrastructure\AppIdentityDbContext.cs" />
     <Compile Include="Infrastructure\Binders\WebUserModelBinder.cs" />
+    <Compile Include="Infrastructure\Filters\VaultErrorAttribute.cs" />
     <Compile Include="Infrastructure\IdentityHelpers.cs" />
     <Compile Include="Infrastructure\NinjectDependencyResolver.cs" />
     <Compile Include="Infrastructure\VaultUserEqualityComparer.cs" />
@@ -354,6 +355,7 @@
     <Content Include="Views\Vault\VaultItemsPartial.cshtml" />
     <Content Include="Views\Vault\AddItem.cshtml" />
     <Content Include="Views\Vault\EditItem.cshtml" />
+    <Content Include="Views\Shared\ErrorPage.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

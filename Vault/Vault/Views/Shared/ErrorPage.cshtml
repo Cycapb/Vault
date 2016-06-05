@@ -1,0 +1,16 @@
+﻿@{
+    ViewBag.Title = "Error";
+    Layout = "~/Views/Shared/_ErrorLayout.cshtml";
+}
+<div class="alert-danger">
+    <div class="container">
+        <div class="panel panel-danger">
+            <div class="panel-heading text-center">There is an error in application!</div>
+            <div class="panel-body">
+                We apologize for the inconvenience. Description of the error was sent to adminstrator.
+                <p></p>
+                <p>@Html.ActionLink("Back home", "Index", "Home", null, new { @class = "btn btn-primary center-block" })</p>
+            </div>
+        </div>
+    </div> 
+</div>
