@@ -1,0 +1,36 @@
+﻿@model Vault.Models.VaultAccessLogModel
+@{
+    ViewBag.Title = "VaultLog";
+    Layout = "~/Views/Shared/_VaultLayout.cshtml";
+}
+<div class="panel panel-primary">
+    <div class="panel-heading">Access log of the @Model.VaultName vault</div>
+    <div class="panel-body">
+        <table class="table table-bordered">
+            <tr>
+                <th>Time</th>
+                <th>Type</th>
+                <th>Event</th>
+            </tr>
+                @foreach (var item in Model.Events)
+                {
+                    if (item.EventType == "Access")
+                    {
+                        <tr class="success">
+                            <td>@item.DateTime</td>
+                            <td>@item.EventType</td>
+                            <td>@item.Event</td>       
+                        </tr>   
+                    }
+                    else
+                    {
+                        <tr class="danger">
+                            <td>@item.DateTime</td>
+                            <td>@item.EventType</td>
+                            <td>@item.Event</td>
+                        </tr>
+                    }
+                }
+        </table>
+    </div>
+</div>

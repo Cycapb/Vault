@@ -345,10 +345,16 @@ namespace Vault.Controllers
         }
 
         [Authorize(Roles = "VaultAdmins")]
-        public async Task<ActionResult> VaultLog(WebUser user, string vaultId)
+        public async Task<ActionResult> VaultLog(WebUser user, string id)
         {
-            var events = await _logManager.ShowLog(vaultId);
-            return View(events);
+            var vaultName = (await _vaultManager.GetVault(id)).Name;
+            var events = await _logManager.ShowLog(id);
+            var logModel = new VaultAccessLogModel()
+            {
+                Events = events,
+                VaultName = vaultName
+            };
+            return View(logModel);
         }
 
         private string CreateReturnUrl()
