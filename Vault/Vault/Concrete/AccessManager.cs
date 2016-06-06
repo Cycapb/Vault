@@ -141,7 +141,7 @@ namespace Vault.Concrete
         public async Task ValidateUserAccessRights(string vaultId, string userId)
         {
             var vault = await _userVaultRepository.GetItemAsync(vaultId);
-            var user = vault.AllowCreate.SingleOrDefault(u => u.Id == userId);
+            var user = vault.AllowCreate?.SingleOrDefault(u => u.Id == userId);
             if (user != null)
             {
                 await this.RevokeReadAccess(new VaultUser() {Id = userId}, vaultId);

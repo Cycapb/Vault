@@ -55,13 +55,12 @@ namespace Vault.Concrete
             var client = new SmtpClient()
             {
                 Host = _emailSettings.ServerName,
-            Port = _emailSettings.ServerPort,
-            EnableSsl = _emailSettings.UseSsl,
-            Credentials = new NetworkCredential(_emailSettings.UserName, _emailSettings.Password)
-        };
+                Port = _emailSettings.ServerPort,
+                EnableSsl = _emailSettings.UseSsl,
+                Credentials = new NetworkCredential(_emailSettings.UserName, _emailSettings.Password)
+            };
 
-                return client;
-            
+            return client;
         }
     }
 }
