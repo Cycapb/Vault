@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,7 +27,14 @@ namespace Vault.Concrete
             {
                 return;
             }
-             await SendReport(message);
+            try
+            {
+                await SendReport(message);
+            }
+            catch (Exception)
+            {
+                return;
+            }
         }
 
         private async Task SendReport(string message)

@@ -22,8 +22,7 @@ namespace Vault.Controllers
         private readonly ILogManager<VaultAccessLog> _logManager;
         private readonly IMailReporter _mailtReporter;
 
-        private AppUserManager UserManager =>
-            System.Web.HttpContext.Current.GetOwinContext().GetUserManager<AppUserManager>();
+        private AppUserManager UserManager => HttpContext.GetOwinContext().GetUserManager<AppUserManager>();
 
         public VaultController(IVaultManager vaultManager,
             IUserGetter<VaultUser> getter,
@@ -266,8 +265,8 @@ namespace Vault.Controllers
                 TempData["message"] = "You don't have enough rights to access this vault";
                 InitiateDbLogger(id, "Deny");
                 var message = $"User {user.UserName} tryied to get access to the vault";
-                await Task.Run(() => _dbLogger.Log(message));
-                await ReportToAdmin(id, message);
+                Task.Run(() => _dbLogger.Log(message));
+                Task.Run(() => ReportToAdmin(id, message));
                 return RedirectToAction("Index", "Home");
             }
             else
@@ -276,11 +275,7 @@ namespace Vault.Controllers
                 {
                     TempData["message"] = "At this this time the vault you want to get access is closed";
                     InitiateDbLogger(id, "Deny");
-                    await
-                        Task.Run(
-                            () =>
-                                _dbLogger.Log(
-                                    $"User {user.UserName} tryied to get access to the vault when it was closed"));
+                    Task.Run(() =>_dbLogger.Log($"User {user.UserName} tryied to get access to the vault when it was closed"));
                     return RedirectToAction("Index", "Home");
                 }
                 else
@@ -291,7 +286,7 @@ namespace Vault.Controllers
                         var editItem = CreateVaultItemListModel(id, items, returnUrl);
                         editItem.AccessRight = accessRight;
                         InitiateDbLogger(id, "Full Access");
-                        await Task.Run(() => _dbLogger.Log($"User {user.UserName} entered the vault"));
+                        Task.Run(() => _dbLogger.Log($"User {user.UserName} entered the vault"));
                         return View(editItem);
                     }
                     else
@@ -300,7 +295,7 @@ namespace Vault.Controllers
                         var editItem = CreateVaultItemListModel(id, items, returnUrl);
                         editItem.AccessRight = accessRight;
                         InitiateDbLogger(id, "Read Access");
-                        await Task.Run(() => _dbLogger.Log($"User {user.UserName} entered the vault"));
+                        Task.Run(() => _dbLogger.Log($"User {user.UserName} entered the vault"));
                         return View(editItem);
                     }
                 }
