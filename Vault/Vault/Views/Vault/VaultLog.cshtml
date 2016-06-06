@@ -12,15 +12,17 @@
                 <th>Type</th>
                 <th>Event</th>
             </tr>
-                @foreach (var item in Model.Events)
+            @if (Model.Events != null && Model.Events.Count() != 0)
+            {
+                foreach (var item in Model.Events)
                 {
                     if (item.EventType == "Access")
                     {
                         <tr class="success">
                             <td>@item.DateTime</td>
                             <td>@item.EventType</td>
-                            <td>@item.Event</td>       
-                        </tr>   
+                            <td>@item.Event</td>
+                        </tr>
                     }
                     else
                     {
@@ -31,6 +33,12 @@
                         </tr>
                     }
                 }
+            }
+            else
+            {
+                <tr><td colspan="3" class="text-center">No events in log</td></tr>
+            }
+
         </table>
     </div>
 </div>
