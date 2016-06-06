@@ -16,7 +16,7 @@
             {
                 foreach (var item in Model.Events)
                 {
-                    if (item.EventType == "Access")
+                    if (item.EventType != "Deny")
                     {
                         <tr class="success">
                             <td>@item.DateTime</td>

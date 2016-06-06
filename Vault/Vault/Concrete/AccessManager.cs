@@ -128,14 +128,14 @@ namespace Vault.Concrete
         {
             var vault = await _userVaultRepository.GetItemAsync(vaultId);
             var currentTime = DateTime.Now.Hour;
-            return ((currentTime > vault.OpenTime) && (currentTime < vault.CloseTime));
+            return ((currentTime >= vault.OpenTime) && (currentTime <= vault.CloseTime));
         }
 
         public bool TimeAccess(string vaultId)
         {
             var vault =  _userVaultRepository.GetItem(vaultId);
             var currentTime = DateTime.Now.Hour;
-            return ((currentTime > vault.OpenTime) && (currentTime < vault.CloseTime));
+            return ((currentTime >= vault.OpenTime) && (currentTime <= vault.CloseTime));
         }
 
         public async Task ValidateUserAccessRights(string vaultId, string userId)

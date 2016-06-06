@@ -295,7 +295,6 @@ namespace Vault.Controllers
                         return View(editItem);
                     }
                 }
-
             }
 
         }
@@ -311,7 +310,7 @@ namespace Vault.Controllers
         }
         
         [HttpPost]
-        public async Task<ActionResult> AddItem(CreateVaultItemModel model)
+        public async Task<ActionResult> AddItem(WebUser user, CreateVaultItemModel model)
         {
             if (ModelState.IsValid)
             {
@@ -326,6 +325,8 @@ namespace Vault.Controllers
                     vault.VaultItems.Add(vaultItem.Id);
                 }
                 await _vaultManager.UpdateAsync(vault);
+                InitiateDbLogger(model.VaultId,"Create");
+                await _dbLogger.Log($"User {user.UserName} has created new vault item called {model.Name}");
                 return RedirectToAction("Items", new {id = model.VaultId});
             }
             else
@@ -335,9 +336,11 @@ namespace Vault.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> DeleteItem(string vaultId, string itemId)
+        public async Task<ActionResult> DeleteItem(WebUser user, string vaultId, string itemId)
         {
             await _vaultManager.DeleteItemAsync(vaultId, itemId);
+            InitiateDbLogger(vaultId, "Delete");
+            await _dbLogger.Log($"User {user.UserName} has deleted vault item");
             return RedirectToAction("Items",new {id = vaultId});
         }
 
@@ -353,11 +356,13 @@ namespace Vault.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> EditItem(EditVaultItemModel model)
+        public async Task<ActionResult> EditItem(WebUser user, EditVaultItemModel model)
         {
             if (ModelState.IsValid)
             {
                 await _vaultItemManager.UpdateAsync(model.VaultItem);
+                InitiateDbLogger(model.VaultId, "Edit");
+                await _dbLogger.Log($"User {user.UserName} has edited new vault item called {model.VaultItem.Name}");
                 return RedirectToAction("Items", new { id = model.VaultId });
             }
             else
