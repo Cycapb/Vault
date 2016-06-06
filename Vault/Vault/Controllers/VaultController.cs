@@ -19,6 +19,7 @@ namespace Vault.Controllers
         private readonly IUserGetter<VaultUser> _userGetter;
         private readonly IAccessManager _accessManager;
         private readonly IDbLogger _dbLogger;
+        private readonly ILogManager<VaultAccessLog> _logManager; 
 
         private AppUserManager UserManager =>
             System.Web.HttpContext.Current.GetOwinContext().GetUserManager<AppUserManager>();
@@ -27,13 +28,15 @@ namespace Vault.Controllers
             IUserGetter<VaultUser> getter, 
             IAccessManager accessManager, 
             IVaultItemManager vaultItemManager,
-            IDbLogger dbLogger)
+            IDbLogger dbLogger,
+            ILogManager<VaultAccessLog> logManager)
         {
             _vaultManager = vaultManager;
             _userGetter = getter;
             _accessManager = accessManager;
             _vaultItemManager = vaultItemManager;
             _dbLogger = dbLogger;
+            _logManager = logManager;
         }
 
         [Authorize(Roles = "VaultAdmins")]
@@ -339,6 +342,13 @@ namespace Vault.Controllers
             {
                 return View(model);
             }
+        }
+
+        [Authorize(Roles = "VaultAdmins")]
+        public async Task<ActionResult> VaultLog(WebUser user, string vaultId)
+        {
+            var events = await _logManager.ShowLog(vaultId);
+            return View(events);
         }
 
         private string CreateReturnUrl()

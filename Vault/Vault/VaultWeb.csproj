@@ -283,6 +283,7 @@
     <Compile Include="Abstract\IAccessManager.cs" />
     <Compile Include="Abstract\IDbLogger.cs" />
     <Compile Include="Abstract\ILogger.cs" />
+    <Compile Include="Abstract\ILogManager.cs" />
     <Compile Include="Abstract\IUserGetter.cs" />
     <Compile Include="Abstract\IVaultGetter.cs" />
     <Compile Include="Abstract\IVaultItemManager.cs" />
@@ -292,6 +293,7 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Concrete\LogManager.cs" />
     <Compile Include="Concrete\AccessManager.cs" />
     <Compile Include="Concrete\DbLogger.cs" />
     <Compile Include="Concrete\FileLogger.cs" />

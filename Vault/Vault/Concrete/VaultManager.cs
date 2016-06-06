@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Vault.Abstract;
@@ -12,12 +11,16 @@ namespace Vault.Concrete
     public class VaultManager:IVaultManager
     {
         private readonly IRepository<UserVault> _userVaultRepository;
-        private readonly IRepository<VaultItem> _vaultItemRepository; 
+        private readonly IRepository<VaultItem> _vaultItemRepository;
+        private readonly ILogManager<VaultAccessLog> _logManager;
 
-        public VaultManager(IRepository<UserVault> repository, IRepository<VaultItem> vaultItemRepository)
+        public VaultManager(IRepository<UserVault> repository, 
+            IRepository<VaultItem> vaultItemRepository,
+            ILogManager<VaultAccessLog> logManager)
         {
             _userVaultRepository = repository;
             _vaultItemRepository = vaultItemRepository;
+            _logManager = logManager;
         }
 
         public async Task<IEnumerable<UserVault>> GetVaults(string userId)
