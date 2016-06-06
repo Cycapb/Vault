@@ -19,17 +19,19 @@ namespace Vault.Controllers
         private readonly IUserGetter<VaultUser> _userGetter;
         private readonly IAccessManager _accessManager;
         private readonly IDbLogger _dbLogger;
-        private readonly ILogManager<VaultAccessLog> _logManager; 
+        private readonly ILogManager<VaultAccessLog> _logManager;
+        private readonly IMailReporter _mailtReporter;
 
         private AppUserManager UserManager =>
             System.Web.HttpContext.Current.GetOwinContext().GetUserManager<AppUserManager>();
 
-        public VaultController(IVaultManager vaultManager, 
-            IUserGetter<VaultUser> getter, 
-            IAccessManager accessManager, 
+        public VaultController(IVaultManager vaultManager,
+            IUserGetter<VaultUser> getter,
+            IAccessManager accessManager,
             IVaultItemManager vaultItemManager,
             IDbLogger dbLogger,
-            ILogManager<VaultAccessLog> logManager)
+            ILogManager<VaultAccessLog> logManager,
+            IMailReporter mailReporter)
         {
             _vaultManager = vaultManager;
             _userGetter = getter;
@@ -37,6 +39,7 @@ namespace Vault.Controllers
             _vaultItemManager = vaultItemManager;
             _dbLogger = dbLogger;
             _logManager = logManager;
+            _mailtReporter = mailReporter;
         }
 
         [Authorize(Roles = "VaultAdmins")]
@@ -65,9 +68,9 @@ namespace Vault.Controllers
 
         [Authorize(Roles = "VaultAdmins")]
         [HttpPost]
-        public async Task<ActionResult> Create(WebUser user,UserVault vault)
+        public async Task<ActionResult> Create(WebUser user, UserVault vault)
         {
-            vault.VaultAdmin = new VaultUser() {Id = user.Id,UserName = user.UserName};
+            vault.VaultAdmin = new VaultUser() {Id = user.Id, UserName = user.UserName};
             if (ModelState.IsValid)
             {
                 try
@@ -77,7 +80,7 @@ namespace Vault.Controllers
                 }
                 catch (Exception)
                 {
-                   return View("Error",new string[] {"Something went wrong. Please try again."});
+                    return View("Error", new string[] {"Something went wrong. Please try again."});
                 }
             }
             return View(vault);
@@ -85,7 +88,7 @@ namespace Vault.Controllers
 
         [Authorize(Roles = "VaultAdmins")]
         [HttpPost]
-        public async Task<ActionResult> Delete(WebUser user,string id)
+        public async Task<ActionResult> Delete(WebUser user, string id)
         {
             try
             {
@@ -99,7 +102,7 @@ namespace Vault.Controllers
             }
             catch (Exception)
             {
-                return View("Error",new string[] {"Something went wrong. Please try again"});
+                return View("Error", new string[] {"Something went wrong. Please try again"});
             }
         }
 
@@ -158,7 +161,7 @@ namespace Vault.Controllers
                     AllowCreateUsers = vault.AllowCreate,
                     AllowReadUsers = vault.AllowRead
                 };
-                
+
                 return View(editModel);
             }
             else
@@ -222,7 +225,7 @@ namespace Vault.Controllers
                 await _accessManager.GrantCreateAccess(vaultUser, user.VaultId);
             }
             await _accessManager.ValidateUserAccessRights(user.VaultId, user.UserId);
-            return RedirectToAction("EditUsers",new {id = user.VaultId});
+            return RedirectToAction("EditUsers", new {id = user.VaultId});
         }
 
         [Authorize(Roles = "VaultAdmins")]
@@ -231,14 +234,14 @@ namespace Vault.Controllers
         {
             var users = _vaultManager.GetAllUsers(id);
             ViewBag.VaultId = id;
-            return PartialView("VaultUsersPartial",users);
+            return PartialView("VaultUsersPartial", users);
         }
 
         [Authorize(Roles = "VaultAdmins")]
         [HttpPost]
         public async Task<ActionResult> DeleteUser(string id, string vaultId)
         {
-            var userToDel = new VaultUser() { Id = id };
+            var userToDel = new VaultUser() {Id = id};
             await _accessManager.RevokeReadAccess(userToDel, vaultId);
             await _accessManager.RevokeCreateAccess(userToDel, vaultId);
             return RedirectToAction("EditUsers", new {id = vaultId});
@@ -257,12 +260,14 @@ namespace Vault.Controllers
                 editmodel.AccessRight = accessRight;
                 return View(editmodel);
             }
-            
+
             if (accessRight == null)
             {
                 TempData["message"] = "You don't have enough rights to access this vault";
                 InitiateDbLogger(id, "Deny");
-                await Task.Run(() => _dbLogger.Log($"User {user.UserName} tryied to get access to the vault"));
+                var message = $"User {user.UserName} tryied to get access to the vault";
+                await Task.Run(() => _dbLogger.Log(message));
+                await ReportToAdmin(id, message);
                 return RedirectToAction("Index", "Home");
             }
             else
@@ -271,7 +276,11 @@ namespace Vault.Controllers
                 {
                     TempData["message"] = "At this this time the vault you want to get access is closed";
                     InitiateDbLogger(id, "Deny");
-                    await Task.Run(() =>_dbLogger.Log($"User {user.UserName} tryied to get access to the vault when it was closed"));
+                    await
+                        Task.Run(
+                            () =>
+                                _dbLogger.Log(
+                                    $"User {user.UserName} tryied to get access to the vault when it was closed"));
                     return RedirectToAction("Index", "Home");
                 }
                 else
@@ -308,13 +317,14 @@ namespace Vault.Controllers
             }
             return View(new CreateVaultItemModel() {VaultId = id});
         }
-        
+
         [HttpPost]
         public async Task<ActionResult> AddItem(WebUser user, CreateVaultItemModel model)
         {
             if (ModelState.IsValid)
             {
-                var vaultItem = await _vaultItemManager.CreateAsync(new VaultItem() {Content = model.Content, Name = model.Name});
+                var vaultItem =
+                    await _vaultItemManager.CreateAsync(new VaultItem() {Content = model.Content, Name = model.Name});
                 var vault = await _vaultManager.GetVault(model.VaultId);
                 if (vault.VaultItems == null)
                 {
@@ -325,7 +335,7 @@ namespace Vault.Controllers
                     vault.VaultItems.Add(vaultItem.Id);
                 }
                 await _vaultManager.UpdateAsync(vault);
-                InitiateDbLogger(model.VaultId,"Create");
+                InitiateDbLogger(model.VaultId, "Create");
                 await _dbLogger.Log($"User {user.UserName} has created new vault item called {model.Name}");
                 return RedirectToAction("Items", new {id = model.VaultId});
             }
@@ -341,7 +351,7 @@ namespace Vault.Controllers
             await _vaultManager.DeleteItemAsync(vaultId, itemId);
             InitiateDbLogger(vaultId, "Delete");
             await _dbLogger.Log($"User {user.UserName} has deleted vault item");
-            return RedirectToAction("Items",new {id = vaultId});
+            return RedirectToAction("Items", new {id = vaultId});
         }
 
         public async Task<ActionResult> EditItem(string id, string vaultId)
@@ -363,7 +373,7 @@ namespace Vault.Controllers
                 await _vaultItemManager.UpdateAsync(model.VaultItem);
                 InitiateDbLogger(model.VaultId, "Edit");
                 await _dbLogger.Log($"User {user.UserName} has edited new vault item called {model.VaultItem.Name}");
-                return RedirectToAction("Items", new { id = model.VaultId });
+                return RedirectToAction("Items", new {id = model.VaultId});
             }
             else
             {
@@ -411,6 +421,14 @@ namespace Vault.Controllers
                 ReturnUrl = returnUrl ?? CreateReturnUrl(),
                 VaultItems = items
             };
+        }
+
+        private async Task ReportToAdmin(string vaultId, string message)
+        {
+            var vaultAdmin = await _vaultManager.GetVaultAdmin(vaultId);
+            var userEmail = (await UserManager.FindByIdAsync(vaultAdmin.Id)).Email;
+            _mailtReporter.MailTo = userEmail;
+            await _mailtReporter.Report($"{DateTime.Now}: {message}");
         }
     }
 }

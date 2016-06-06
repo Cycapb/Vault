@@ -284,6 +284,7 @@
     <Compile Include="Abstract\IDbLogger.cs" />
     <Compile Include="Abstract\ILogger.cs" />
     <Compile Include="Abstract\ILogManager.cs" />
+    <Compile Include="Abstract\IMailReporter.cs" />
     <Compile Include="Abstract\IUserGetter.cs" />
     <Compile Include="Abstract\IVaultGetter.cs" />
     <Compile Include="Abstract\IVaultItemManager.cs" />
@@ -293,6 +294,7 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Concrete\MailReporter.cs" />
     <Compile Include="Concrete\LogManager.cs" />
     <Compile Include="Concrete\AccessManager.cs" />
     <Compile Include="Concrete\DbLogger.cs" />
@@ -313,6 +315,7 @@
     </Compile>
     <Compile Include="Infrastructure\AppIdentityDbContext.cs" />
     <Compile Include="Infrastructure\Binders\WebUserModelBinder.cs" />
+    <Compile Include="Infrastructure\Filters\MailErrorAttribute.cs" />
     <Compile Include="Infrastructure\Filters\VaultErrorAttribute.cs" />
     <Compile Include="Infrastructure\IdentityHelpers.cs" />
     <Compile Include="Infrastructure\NinjectDependencyResolver.cs" />
@@ -321,6 +324,7 @@
     <Compile Include="Models\AppRoleModel.cs" />
     <Compile Include="Models\AppUserManager.cs" />
     <Compile Include="Models\AppUserModel.cs" />
+    <Compile Include="Models\EmailSettings.cs" />
     <Compile Include="Models\LogViewModels.cs" />
     <Compile Include="Models\UserViewModels.cs" />
     <Compile Include="Models\VaultItemViewModels.cs" />

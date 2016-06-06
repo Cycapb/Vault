@@ -1,9 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Web;
 using System.Web.Mvc;
+using System.Web.Services.Protocols;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
 using Ninject;
 using Vault.Abstract;
 using Vault.Concrete;
+using Vault.Models;
 using VaultDAL.Abstract;
 using VaultDAL.Concrete;
 using VaultDAL.Models;
@@ -14,6 +19,7 @@ namespace Vault.Infrastructure
     public class NinjectDependencyResolver:IDependencyResolver
     {
         private readonly IKernel _kernel;
+        private AppUserManager UserManager => HttpContext.Current.GetOwinContext().GetUserManager<AppUserManager>();
 
         public NinjectDependencyResolver(IKernel kernel)
         {
@@ -45,6 +51,9 @@ namespace Vault.Infrastructure
             _kernel.Bind<IVaultItemManager>().To<VaultItemManager>();
             _kernel.Bind<IDbLogger>().To<DbLogger>();
             _kernel.Bind<ILogManager<VaultAccessLog>>().To<LogManager>();
+
+            EmailSettings eSettings = new EmailSettings();
+            _kernel.Bind<IMailReporter>().To<MailReporter>().WithConstructorArgument("emailSettings", eSettings);
         }
     }
 }
