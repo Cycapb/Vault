@@ -44,6 +44,7 @@ namespace Vault.Infrastructure
             _kernel.Bind<IAccessManager>().To<AccessManager>();
             _kernel.Bind<IVaultItemManager>().To<VaultItemManager>();
             _kernel.Bind<IDbLogger>().To<DbLogger>();
+            _kernel.Bind<ILogManager<VaultAccessLog>>().To<LogManager>();
         }
     }
 }
