@@ -244,17 +244,20 @@ namespace Vault.Controllers
             return RedirectToAction("EditUsers", new {id = vaultId});
         }
 
+        //ToDo Refactor this method
         [Authorize(Roles = "Users,VaultAdmins")]
         public async Task<ActionResult> Items(WebUser user, string id, string returnUrl)
         {
+            var accessRight = await _accessManager.GetUserAccess(id, user.Id);
+
             if ((await _vaultManager.GetVaultAdmin(id)).Id == user.Id)
             {
                 var vaultItems = await _vaultManager.GetAllItems(id);
                 var editmodel = CreateVaultItemListModel(id, vaultItems, returnUrl);
-                editmodel.AccessRight = "Create";
+                editmodel.AccessRight = accessRight;
                 return View(editmodel);
             }
-            var accessRight = await _accessManager.GetUserAccess(id, user.Id);
+            
             if (accessRight == null)
             {
                 TempData["message"] = "You don't have enough rights to access this vault";
@@ -277,7 +280,7 @@ namespace Vault.Controllers
                     {
                         var items = await _vaultManager.GetAllItems(id);
                         var editItem = CreateVaultItemListModel(id, items, returnUrl);
-                        editItem.AccessRight = "Create";
+                        editItem.AccessRight = accessRight;
                         InitiateDbLogger(id, "Full Access");
                         await Task.Run(() => _dbLogger.Log($"User {user.UserName} entered the vault"));
                         return View(editItem);
@@ -286,7 +289,7 @@ namespace Vault.Controllers
                     {
                         var items = await _vaultManager.GetAllItems(id);
                         var editItem = CreateVaultItemListModel(id, items, returnUrl);
-                        editItem.AccessRight = "Read";
+                        editItem.AccessRight = accessRight;
                         InitiateDbLogger(id, "Read Access");
                         await Task.Run(() => _dbLogger.Log($"User {user.UserName} entered the vault"));
                         return View(editItem);
