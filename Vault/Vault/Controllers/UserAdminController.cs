@@ -53,6 +53,7 @@ namespace Vault.Controllers
                 var result = await UserManager.CreateAsync(newUser, userModel.Password);
                 if (result.Succeeded)
                 {
+                    TempData["message"] = $"New user with login {userModel.Name} has been successfully created";
                    return RedirectToAction("Index");
                 }
                 else
@@ -73,6 +74,7 @@ namespace Vault.Controllers
                 if (result.Succeeded)
                 {
                     await _vaultManager.DeleteVaultsByUser(userToDel.Id);
+                    TempData["message"] = $"User with login {userToDel.UserName} has been successfully deleted";
                     return RedirectToAction("Index");
                 }
                 else
@@ -150,6 +152,7 @@ namespace Vault.Controllers
                         var result = await UserManager.UpdateAsync(user);
                         if (result.Succeeded)
                         {
+                            TempData["message"] = $"User with login {user.UserName} has been successfully updated";
                             return RedirectToAction("Index");
                         }
                         else

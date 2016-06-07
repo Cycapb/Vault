@@ -10,6 +10,10 @@
 <body>
 <div class="container">
     @RenderSection("calendarScripts", false)
+    @if (TempData["message"] != null)
+    {
+        <div class="alert alert-success">@TempData["message"]</div>
+    }
     @RenderBody()
 </div>
 </body>

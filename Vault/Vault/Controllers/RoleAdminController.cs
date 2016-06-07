@@ -140,7 +140,7 @@ namespace Vault.Controllers
                     }
                 }
             }
-            TempData["message"] = $"Role {model.RoleName} has been successfully edited";
+            TempData["message"] = $"Role {model.RoleName} has been successfully updated";
             return RedirectToAction("Index");
         }
 

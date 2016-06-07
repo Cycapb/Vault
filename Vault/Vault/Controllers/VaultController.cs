@@ -75,6 +75,7 @@ namespace Vault.Controllers
                 try
                 {
                     await _vaultManager.CreateAsync(vault);
+                    TempData["message"] = $"Vault with name {vault.Name} has been successfully created";
                     return RedirectToAction("Index");
                 }
                 catch (Exception)
@@ -96,6 +97,7 @@ namespace Vault.Controllers
                 {
                     return RedirectToAction("Index");
                 }
+                TempData["message"] = $"Vault has been successfully deleted";
                 await _vaultManager.DeleteAsync(id);
                 return RedirectToAction("Index");
             }
@@ -140,6 +142,7 @@ namespace Vault.Controllers
                 vaultToEdit.OpenTime = vault.OpenTime;
                 vaultToEdit.CloseTime = vault.CloseTime;
                 await _vaultManager.UpdateAsync(vaultToEdit);
+                TempData["message"] = $"Vault with name {vault.Name} has been successfully updated";
                 return RedirectToAction("Index");
             }
             return View(vault);
@@ -268,7 +271,6 @@ namespace Vault.Controllers
                 var message = $"User {user.UserName} tryied to get access to the vault";
                 Task.Run(async () => await _dbLogger.Log(message));
                 await ReportToAdmin(id, message);
-
                 return RedirectToAction("Index", "Home");
             }
             else
@@ -333,6 +335,7 @@ namespace Vault.Controllers
                 await _vaultManager.UpdateAsync(vault);
                 InitiateDbLogger(model.VaultId, "Create");
                 await _dbLogger.Log($"User {user.UserName} has created new vault item called {model.Name}");
+                TempData["message"] = $"Vault item with name {model.Name} has been successfully created";
                 return RedirectToAction("Items", new {id = model.VaultId});
             }
             else
@@ -347,6 +350,7 @@ namespace Vault.Controllers
             await _vaultManager.DeleteItemAsync(vaultId, itemId);
             InitiateDbLogger(vaultId, "Delete");
             await _dbLogger.Log($"User {user.UserName} has deleted vault item");
+            TempData["message"] = $"Vault item has been successfully deleted";
             return RedirectToAction("Items", new {id = vaultId});
         }
 
@@ -369,6 +373,7 @@ namespace Vault.Controllers
                 await _vaultItemManager.UpdateAsync(model.VaultItem);
                 InitiateDbLogger(model.VaultId, "Edit");
                 await _dbLogger.Log($"User {user.UserName} has edited new vault item called {model.VaultItem.Name}");
+                TempData["message"] = $"Vault item with name {model.VaultItem.Name} has been successfully updated";
                 return RedirectToAction("Items", new {id = model.VaultId});
             }
             else
