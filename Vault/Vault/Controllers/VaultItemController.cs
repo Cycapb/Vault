@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Vault.Abstract;
 using Vault.Models;
@@ -92,35 +90,6 @@ namespace Vault.Controllers
             }
         }
 
-        private string CreateReturnUrl()
-        {
-            var isUser = HttpContext.User.IsInRole("Users");
-            if (isUser)
-            {
-                return Url.Action("Index", "Home");
-            }
-            else
-            {
-                return Url.Action("Index");
-            }
-        }
-
-        private void InitiateDbLogger(string vaultId, string accessType)
-        {
-            _dbLogger.VaultId = vaultId;
-            _dbLogger.EventType = accessType;
-        }
-
-        private VaultItemListModel CreateVaultItemListModel(string id, IEnumerable<VaultItem> items, string returnUrl)
-        {
-            return new VaultItemListModel()
-            {
-                VaultId = id,
-                ReturnUrl = returnUrl ?? CreateReturnUrl(),
-                VaultItems = items
-            };
-        }
-
         public async Task<ActionResult> AddItem(WebUser user, string id)
         {
             var access = await _accessManager.GetUserAccess(id, user.Id);
@@ -160,13 +129,13 @@ namespace Vault.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> DeleteItem(WebUser user, string vaultId, string itemId)
+        public async Task<ActionResult> DeleteItem(WebUser user, string id, string itemId)
         {
-            await _vaultManager.DeleteItemAsync(vaultId, itemId);
-            InitiateDbLogger(vaultId, "Delete");
+            await _vaultItemManager.DeleteAsync(id,itemId);
+            InitiateDbLogger(id, "Delete");
             await _dbLogger.Log($"User {user.UserName} has deleted vault item");
             TempData["message"] = $"Vault item has been successfully deleted";
-            return RedirectToAction("Items", new { id = vaultId });
+            return RedirectToAction("Items", new { id = id });
         }
 
         public async Task<ActionResult> EditItem(string id, string vaultId)
@@ -197,6 +166,34 @@ namespace Vault.Controllers
             }
         }
 
+        private string CreateReturnUrl()
+        {
+            var isUser = HttpContext.User.IsInRole("Users");
+            if (isUser)
+            {
+                return Url.Action("Index", "Home");
+            }
+            else
+            {
+                return Url.Action("Index");
+            }
+        }
+
+        private void InitiateDbLogger(string vaultId, string accessType)
+        {
+            _dbLogger.VaultId = vaultId;
+            _dbLogger.EventType = accessType;
+        }
+
+        private VaultItemListModel CreateVaultItemListModel(string id, IEnumerable<VaultItem> items, string returnUrl)
+        {
+            return new VaultItemListModel()
+            {
+                VaultId = id,
+                ReturnUrl = returnUrl ?? CreateReturnUrl(),
+                VaultItems = items
+            };
+        }
         private async Task ReportToAdmin(string vaultId, string message)
         {
             var vaultAdmin = await _vaultManager.GetVaultAdmin(vaultId);

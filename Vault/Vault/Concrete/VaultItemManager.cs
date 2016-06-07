@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Vault.Abstract;
 using VaultDAL.Abstract;
@@ -9,11 +10,12 @@ namespace Vault.Concrete
     public class VaultItemManager:IVaultItemManager
     {
         private readonly IRepository<VaultItem> _vaultItemRepository;
+        private readonly IRepository<UserVault> _userVaultRepository; 
 
-
-        public VaultItemManager(IRepository<VaultItem> repository)
+        public VaultItemManager(IRepository<VaultItem> repository, IRepository<UserVault> userVaultRepository)
         {
             _vaultItemRepository = repository;
+            _userVaultRepository = userVaultRepository;
         }
 
         public async Task<VaultItem> CreateAsync(VaultItem item)
@@ -21,9 +23,13 @@ namespace Vault.Concrete
             return await _vaultItemRepository.CreateAsync(item);
         }
 
-        public async Task DeleteAsync(string id)
+        public async Task DeleteAsync(string id, string itemId)
         {
-            await _vaultItemRepository.DeleteAsync(id);
+            var vault = await _userVaultRepository.GetItemAsync(id);
+            var item = vault.VaultItems.SingleOrDefault(x => x == itemId);
+            vault.VaultItems.Remove(item);
+            await _vaultItemRepository.DeleteAsync(itemId);
+            await _userVaultRepository.UpdateAsync(vault);
         }
 
         public Task<VaultItem> GetItemAsync(string id)
