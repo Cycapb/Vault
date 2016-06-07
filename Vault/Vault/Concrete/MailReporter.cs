@@ -13,12 +13,14 @@ namespace Vault.Concrete
     public class MailReporter:IMailReporter
     {
         private readonly EmailSettings _emailSettings;
+        private readonly ILogger _logger;
 
         public string MailTo { get; set; }
 
-        public MailReporter(EmailSettings emailSettings)
+        public MailReporter(EmailSettings emailSettings, ILogger logger)
         {
             _emailSettings = emailSettings;
+            _logger = logger;
         }
 
         public async Task Report(string message)
@@ -31,9 +33,9 @@ namespace Vault.Concrete
             {
                 await SendReport(message);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return;
+                await _logger.Log($"Date and time: {DateTime.Now}\nError{ex.Message}\n{ex.StackTrace}");
             }
         }
 

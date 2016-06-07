@@ -51,6 +51,7 @@ namespace Vault.Infrastructure
             _kernel.Bind<IVaultItemManager>().To<VaultItemManager>();
             _kernel.Bind<IDbLogger>().To<DbLogger>();
             _kernel.Bind<ILogManager<VaultAccessLog>>().To<LogManager>();
+            _kernel.Bind<ILogger>().To<FileLogger>();
 
             EmailSettings eSettings = new EmailSettings();
             _kernel.Bind<IMailReporter>().To<MailReporter>().WithConstructorArgument("emailSettings", eSettings);
