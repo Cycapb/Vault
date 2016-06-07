@@ -113,6 +113,7 @@ namespace Vault.Controllers
                 return RedirectToAction("Index");
             }
             var vault = await _vaultManager.GetVault(id);
+            if (vault == null){ return RedirectToAction("Index"); }
             if (vault.VaultAdmin.Id != user.Id)
             {
                 return RedirectToAction("Index");
