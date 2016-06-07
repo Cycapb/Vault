@@ -265,8 +265,9 @@ namespace Vault.Controllers
                 TempData["message"] = "You don't have enough rights to access this vault";
                 InitiateDbLogger(id, "Deny");
                 var message = $"User {user.UserName} tryied to get access to the vault";
-                Task.Run(() => _dbLogger.Log(message));
-                Task.Run(() => ReportToAdmin(id, message));
+                Task.Run(async () => await _dbLogger.Log(message));
+                await ReportToAdmin(id, message);
+
                 return RedirectToAction("Index", "Home");
             }
             else
@@ -300,7 +301,6 @@ namespace Vault.Controllers
                     }
                 }
             }
-
         }
 
         public async Task<ActionResult> AddItem(WebUser user, string id)
@@ -423,7 +423,7 @@ namespace Vault.Controllers
             var vaultAdmin = await _vaultManager.GetVaultAdmin(vaultId);
             var userEmail = (await UserManager.FindByIdAsync(vaultAdmin.Id)).Email;
             _mailtReporter.MailTo = userEmail;
-            await _mailtReporter.Report($"{DateTime.Now}: {message}");
+            Task.Run(async () => await _mailtReporter.Report($"{DateTime.Now}: {message}"));
         }
     }
 }
