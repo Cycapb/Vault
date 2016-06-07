@@ -99,5 +99,20 @@ namespace Vault.Concrete
             var vault = await _userVaultRepository.GetItemAsync(vaultId);
             return vault.VaultAdmin;
         }
+
+        public async Task DeleteVaultsByUser(string userId)
+        {
+            var vaults = (await _userVaultRepository.GetListAsync())?
+                .Where(vault => vault.VaultAdmin.Id == userId)
+                .ToList();
+
+            if (vaults != null)
+            {
+                foreach (var vault in vaults)
+                {
+                    await _userVaultRepository.DeleteAsync(vault.Id);
+                }
+            }
+        }
     }
 }

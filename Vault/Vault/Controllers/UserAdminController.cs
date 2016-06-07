@@ -5,6 +5,7 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using MongoDB.Driver;
+using Vault.Abstract;
 using Vault.Infrastructure;
 using Vault.Models;
 
@@ -17,6 +18,13 @@ namespace Vault.Controllers
 
         private AppIdentityDbContext IdentityContext
             => HttpContext.GetOwinContext().GetUserManager<AppIdentityDbContext>();
+
+        private readonly IVaultManager _vaultManager;
+
+        public UserAdminController(IVaultManager vaultManager)
+        {
+            _vaultManager = vaultManager;
+        }
 
         public async Task<ActionResult> Index()
         {
@@ -64,6 +72,7 @@ namespace Vault.Controllers
                 var result = await UserManager.DeleteAsync(userToDel);
                 if (result.Succeeded)
                 {
+                    await _vaultManager.DeleteVaultsByUser(userToDel.Id);
                     return RedirectToAction("Index");
                 }
                 else

@@ -17,5 +17,7 @@ namespace Vault.Abstract
         Task<IEnumerable<VaultItem>> GetAllItems(string id);
         Task DeleteItemAsync(string vaultId, string itemId);
         Task<VaultUser> GetVaultAdmin(string vaultId);
+
+        Task DeleteVaultsByUser(string userId);
     }
 }
