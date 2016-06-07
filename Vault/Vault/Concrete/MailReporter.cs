@@ -35,7 +35,7 @@ namespace Vault.Concrete
             }
             catch (Exception ex)
             {
-                await _logger.Log($"Date and time: {DateTime.Now}\nError{ex.Message}\n{ex.StackTrace}");
+                await _logger.Log($"\r\nDate and time: {DateTime.Now}\r\n Error{ex.Message}\r\n{ex.StackTrace}\n");
             }
         }
 
