@@ -7,6 +7,7 @@ namespace Vault.Models
     public class CreateModel
     {
         [Required(ErrorMessage = "Field Name is empty")]
+        
         public string Name { get; set; }
 
         [Required(ErrorMessage = "Field Email is empty")]

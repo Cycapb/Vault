@@ -8,15 +8,17 @@
     <div class="panel-heading">Edit user</div>
     @using (Html.BeginForm())
     {
-        @Html.ValidationSummary()
+        @Html.ValidationSummary(true)
         <div class="panel-body">
             <div class="form-group">
                 <label>User ID: </label> @Model.Id
             </div>
+            @Html.ValidationMessageFor(x => x.Name)
             <div class="form-group">
-                <label>Name:</label> 
+                <label>Name:</label>
                 @Html.TextBoxFor(x => x.Name, new {@class = "form-control"})
             </div>
+            @Html.ValidationMessageFor(x => x.Email)
             <div class="form-group">
                 <label>Email:</label>
                 @Html.TextBoxFor(x => x.Email, new {@class = "form-control"})

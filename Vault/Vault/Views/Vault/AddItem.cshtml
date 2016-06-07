@@ -8,16 +8,18 @@
 
     @using (Html.BeginForm())
     {
-        @Html.ValidationSummary()
+        @Html.ValidationSummary(true)
         @Html.HiddenFor(x=>x.VaultId)
         <div class="panel-body">
+            @Html.ValidationMessageFor(x => x.Name)
             <div class="form-group">
                 <label>Name</label>
                 @Html.TextBoxFor(x => x.Name, new {@class = "form-control", placeholder = "Vault item name"})
             </div>
+            @Html.ValidationMessageFor(x => x.Content)
             <div class="form-group">
                 <label>Content</label>
-                @Html.TextAreaFor(x => x.Content, new {@class="form-control"})
+                @Html.TextAreaFor(x => x.Content, new {@class = "form-control"})
             </div>
         </div>
         <div class="panel-footer">

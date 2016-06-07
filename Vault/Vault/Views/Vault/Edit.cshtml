@@ -10,7 +10,8 @@
     {
         @Html.HiddenFor(x=>x.Id)
         <div class="panel-body">
-            @Html.ValidationSummary()
+            @Html.ValidationSummary(true)
+            @Html.ValidationMessageFor(x => x.Name)
             <div class="form-group">
                 <label>Name:</label>
                 @Html.TextBoxFor(x => x.Name, new { @class = "form-control" })

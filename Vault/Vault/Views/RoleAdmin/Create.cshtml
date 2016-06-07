@@ -6,8 +6,8 @@
 <div class="panel panel-primary">
     @using (Html.BeginForm())
     {
-        @Html.ValidationSummary()
         <div class="panel-body">
+            @Html.ValidationMessageFor(x => x)
             <div class="form-group">
                 <label>Role name:</label>
                 <input type="text" name="name" class="form-control"/>

@@ -10,15 +10,17 @@
     @using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()
-        @Html.ValidationSummary()
+        @Html.ValidationSummary(true)
         <div class="panel-body">
+            @Html.ValidationMessageFor(x=>x.Name)
             <div class="form-group">
                 <label>Login:</label>
-                @Html.TextBoxFor(x => x.Name, new {@class = "form-control",placeholder="Login"})
+                @Html.TextBoxFor(x => x.Name, new {@class = "form-control", placeholder = "Login"})
             </div>
+            @Html.ValidationMessageFor(x => x.Password)
             <div class="form-group">
                 <label>Password:</label>
-                @Html.PasswordFor(x => x.Password, new {@class = "form-control",placeholder="Password"})
+                @Html.PasswordFor(x => x.Password, new {@class = "form-control", placeholder = "Password"})
             </div>
         </div>
         <div class="panel-footer">

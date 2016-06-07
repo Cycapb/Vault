@@ -7,20 +7,23 @@
         <div class="panel-heading">Create new user</div>
         @using (Html.BeginForm())
         {
-            @Html.ValidationSummary()
+            @Html.ValidationSummary(true)
             <div class="panel-body">
+                @Html.ValidationMessageFor(x => x.Name)
                 <div class="form-group">
                     <label>Name:</label>
-                    @Html.TextBoxFor(x => x.Name, new { @class = "form-control" })
+                    @Html.TextBoxFor(x => x.Name, new {@class = "form-control"})
                 </div>
+                @Html.ValidationMessageFor(x => x.Email)
                 <div class="form-group">
                     <label>Email:</label>
-                    @Html.TextBoxFor(x => x.Email, new { @class = "form-control" })
+                    @Html.TextBoxFor(x => x.Email, new {@class = "form-control"})
                 </div>
+                @Html.ValidationMessageFor(x => x.Password)
                 <div class="form-group">
                     <label>Password:</label>
-                    @Html.TextBoxFor(x => x.Password, new { @class = "form-control" })
-                </div>  
+                    @Html.TextBoxFor(x => x.Password, new {@class = "form-control"})
+                </div>
             </div>
             <div class="panel-footer">
                 <input type="submit" value="Create" class="btn btn-primary"/>
