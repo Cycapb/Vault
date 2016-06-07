@@ -279,7 +279,7 @@ namespace Vault.Controllers
                 {
                     TempData["message"] = "At this this time the vault you want to get access is closed";
                     InitiateDbLogger(id, "Deny");
-                    Task.Run(() =>_dbLogger.Log($"User {user.UserName} tryied to get access to the vault when it was closed"));
+                    Task.Run(() =>_dbLogger.Log($"User {user.UserName} tried to get access to the vault when it was closed"));
                     return RedirectToAction("Index", "Home");
                 }
                 else
