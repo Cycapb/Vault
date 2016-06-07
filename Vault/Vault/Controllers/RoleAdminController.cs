@@ -44,6 +44,7 @@ namespace Vault.Controllers
                 var result = await RoleManager.CreateAsync(new AppRoleModel(name));
                 if (result.Succeeded)
                 {
+                    TempData["message"] = $"Role {name} has been successfully created";
                     return RedirectToAction("Index");
                 }
                 else
@@ -87,6 +88,7 @@ namespace Vault.Controllers
                     return View("Error", result.Errors);
                 }
             }
+            TempData["message"] = $"Role {roleName} has been successfully deleted";
             return RedirectToAction("Index");
         }
 
@@ -138,6 +140,7 @@ namespace Vault.Controllers
                     }
                 }
             }
+            TempData["message"] = $"Role {model.RoleName} has been successfully edited";
             return RedirectToAction("Index");
         }
 
