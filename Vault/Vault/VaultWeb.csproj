@@ -304,6 +304,7 @@
     <Compile Include="Abstract\IMailReporter.cs" />
     <Compile Include="Abstract\IUserGetter.cs" />
     <Compile Include="Abstract\IVaultGetter.cs" />
+    <Compile Include="Abstract\IVaultItemHelper.cs" />
     <Compile Include="Abstract\IVaultItemManager.cs" />
     <Compile Include="Abstract\IVaultManager.cs" />
     <Compile Include="Abstract\IWebUser.cs" />
@@ -320,6 +321,7 @@
     <Compile Include="Concrete\IdentityConnectionProvider.cs" />
     <Compile Include="Concrete\FreeUsersGetter.cs" />
     <Compile Include="Concrete\UserVaultGetter.cs" />
+    <Compile Include="Concrete\VaultItemHelper.cs" />
     <Compile Include="Concrete\VaultItemManager.cs" />
     <Compile Include="Concrete\VaultManager.cs" />
     <Compile Include="Controllers\AccountController.cs" />

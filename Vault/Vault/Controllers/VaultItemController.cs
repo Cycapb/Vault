@@ -16,18 +16,18 @@ namespace Vault.Controllers
         private readonly IVaultItemManager _vaultItemManager;
         private readonly IMailReporter _mailtReporter;
         private readonly IAccessManager _accessManager;
-        private readonly IDbLogger _dbLogger;
         private readonly IVaultManager _vaultManager;
+        private readonly IVaultItemHelper _vaultItemHelper;
 
         private AppUserManager UserManager => HttpContext.GetOwinContext().GetUserManager<AppUserManager>();
         public VaultItemController(IVaultItemManager vaultItemManager, IMailReporter mailReporter, 
-            IAccessManager accessManager, IDbLogger dbLogger, IVaultManager vaultManager)
+            IAccessManager accessManager, IVaultManager vaultManager, IVaultItemHelper vaultItemHelper)
         {
             _vaultItemManager = vaultItemManager;
             _mailtReporter = mailReporter;
             _accessManager = accessManager;
-            _dbLogger = dbLogger;
             _vaultManager = vaultManager;
+            _vaultItemHelper = vaultItemHelper;
         }
 
         public ActionResult Index()
@@ -39,21 +39,18 @@ namespace Vault.Controllers
         public async Task<ActionResult> Items(WebUser user, string id, string returnUrl)
         {
             var accessRight = await _accessManager.GetUserAccess(id, user.Id);
-
             if ((await _vaultManager.GetVaultAdmin(id)).Id == user.Id)
             {
                 var vaultItems = await _vaultManager.GetAllItems(id);
-                var editmodel = CreateVaultItemListModel(id, vaultItems, returnUrl);
-                editmodel.AccessRight = accessRight;
+                var editmodel = CreateVaultItemListModel(id, vaultItems, accessRight, returnUrl);
                 return View(editmodel);
             }
 
             if (accessRight == null)
             {
                 TempData["message"] = "You don't have enough rights to access this vault";
-                InitiateDbLogger(id, "Deny");
                 var message = $"User {user.UserName} tryied to get access to the vault";
-                Task.Run(async () => await _dbLogger.Log(message));
+                await _vaultItemHelper.Log(id, "Deny", message);
                 await ReportToAdmin(id, message);
                 return RedirectToAction("Index", "Home");
             }
@@ -62,8 +59,9 @@ namespace Vault.Controllers
                 if (!await _accessManager.TimeAccessAsync(id))
                 {
                     TempData["message"] = "At this this time the vault you want to get access is closed";
-                    InitiateDbLogger(id, "Deny");
-                    Task.Run(() => _dbLogger.Log($"User {user.UserName} tried to get access to the vault when it was closed"));
+                    var message = $"User {user.UserName} tried to get access to the vault when it was closed";
+                    await _vaultItemHelper.Log(id, "Deny", message);
+                    await ReportToAdmin(id, message);
                     return RedirectToAction("Index", "Home");
                 }
                 else
@@ -71,19 +69,15 @@ namespace Vault.Controllers
                     if (accessRight == "Create")
                     {
                         var items = await _vaultManager.GetAllItems(id);
-                        var editItem = CreateVaultItemListModel(id, items, returnUrl);
-                        editItem.AccessRight = accessRight;
-                        InitiateDbLogger(id, "Full Access");
-                        Task.Run(() => _dbLogger.Log($"User {user.UserName} entered the vault"));
+                        var editItem = CreateVaultItemListModel(id, items, accessRight, returnUrl);
+                        await _vaultItemHelper.Log(id, "Full Access", $"User {user.UserName} entered the vault");
                         return View(editItem);
                     }
                     else
                     {
                         var items = await _vaultManager.GetAllItems(id);
-                        var editItem = CreateVaultItemListModel(id, items, returnUrl);
-                        editItem.AccessRight = accessRight;
-                        InitiateDbLogger(id, "Read Access");
-                        Task.Run(() => _dbLogger.Log($"User {user.UserName} entered the vault"));
+                        var editItem = CreateVaultItemListModel(id, items, accessRight, returnUrl);
+                        await _vaultItemHelper.Log(id, "Read Access", $"User {user.UserName} entered the vault");
                         return View(editItem);
                     }
                 }
@@ -116,8 +110,7 @@ namespace Vault.Controllers
                     vault.VaultItems.Add(vaultItem.Id);
                 }
                 await _vaultManager.UpdateAsync(vault);
-                InitiateDbLogger(model.VaultId, "Create");
-                await _dbLogger.Log($"User {user.UserName} has created new vault item called {model.Name}");
+                await _vaultItemHelper.Log(model.VaultId, "Create", $"User {user.UserName} has created new vault item called {model.Name}");
                 TempData["message"] = $"Vault item with name {model.Name} has been successfully created";
                 return RedirectToAction("Items", new { id = model.VaultId });
             }
@@ -131,8 +124,7 @@ namespace Vault.Controllers
         public async Task<ActionResult> DeleteItem(WebUser user, string id, string itemId)
         {
             await _vaultItemManager.DeleteAsync(id,itemId);
-            InitiateDbLogger(id, "Delete");
-            await _dbLogger.Log($"User {user.UserName} has deleted vault item");
+            await _vaultItemHelper.Log(id, "Delete", $"User {user.UserName} has deleted vault item");
             TempData["message"] = $"Vault item has been successfully deleted";
             return RedirectToAction("Items", new { id = id });
         }
@@ -154,8 +146,7 @@ namespace Vault.Controllers
             if (ModelState.IsValid)
             {
                 await _vaultItemManager.UpdateAsync(model.VaultItem);
-                InitiateDbLogger(model.VaultId, "Edit");
-                await _dbLogger.Log($"User {user.UserName} has edited new vault item called {model.VaultItem.Name}");
+                await _vaultItemHelper.Log(model.VaultId, "Edit", $"User {user.UserName} has edited new vault item called {model.VaultItem.Name}");
                 TempData["message"] = $"Vault item with name {model.VaultItem.Name} has been successfully updated";
                 return RedirectToAction("Items", new { id = model.VaultId });
             }
@@ -178,19 +169,14 @@ namespace Vault.Controllers
             }
         }
 
-        private void InitiateDbLogger(string vaultId, string accessType)
-        {
-            _dbLogger.VaultId = vaultId;
-            _dbLogger.EventType = accessType;
-        }
-
-        private VaultItemListModel CreateVaultItemListModel(string id, IEnumerable<VaultItem> items, string returnUrl)
+        private VaultItemListModel CreateVaultItemListModel(string id, IEnumerable<VaultItem> items, string accessRight,string returnUrl)
         {
             return new VaultItemListModel()
             {
                 VaultId = id,
                 ReturnUrl = returnUrl ?? CreateReturnUrl(),
-                VaultItems = items
+                VaultItems = items,
+                AccessRight = accessRight
             };
         }
         private async Task ReportToAdmin(string vaultId, string message)
