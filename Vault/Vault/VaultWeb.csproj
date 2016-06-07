@@ -328,6 +328,7 @@
     <Compile Include="Controllers\RoleAdminController.cs" />
     <Compile Include="Controllers\UserAdminController.cs" />
     <Compile Include="Controllers\VaultController.cs" />
+    <Compile Include="Controllers\VaultItemController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -379,10 +380,10 @@
     <Content Include="Views\Vault\AllowReadPartial.cshtml" />
     <Content Include="Views\Vault\AllowCreatePartial.cshtml" />
     <Content Include="Views\Vault\VaultUsersPartial.cshtml" />
-    <Content Include="Views\Vault\Items.cshtml" />
-    <Content Include="Views\Vault\VaultItemsPartial.cshtml" />
-    <Content Include="Views\Vault\AddItem.cshtml" />
-    <Content Include="Views\Vault\EditItem.cshtml" />
+    <Content Include="Views\VaultItem\Items.cshtml" />
+    <Content Include="Views\VaultItem\VaultItemsPartial.cshtml" />
+    <Content Include="Views\VaultItem\AddItem.cshtml" />
+    <Content Include="Views\VaultItem\EditItem.cshtml" />
     <Content Include="Views\Shared\ErrorPage.cshtml" />
     <Content Include="Views\Vault\VaultLog.cshtml" />
     <None Include="Web.Debug.config">

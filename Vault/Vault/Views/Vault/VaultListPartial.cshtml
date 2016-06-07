@@ -14,7 +14,7 @@
                     {
                         @Html.ActionLink("Edit", "Edit", new { id = vault.Id }, new { @class = "btn btn-primary btn-xs" })
                         @Html.ActionLink("Manage users","EditUsers",new {id=vault.Id}, new {@class="btn btn-primary btn-xs"})
-                        @Html.ActionLink("Content","Items",new { id = vault.Id, returnUrl = Request.Url?.PathAndQuery}, new {@class="btn btn-primary btn-xs"})
+                        @Html.ActionLink("Content","Items", "VaultItem",new { id = vault.Id, returnUrl = Request.Url?.PathAndQuery}, new {@class="btn btn-primary btn-xs"})
                         if (HttpContext.Current.User.IsInRole("VaultAdmins"))
                         {
                             @Html.ActionLink("Log","VaultLog", new {id = vault.Id}, new {@class="btn btn-primary btn-xs"})

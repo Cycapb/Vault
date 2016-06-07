@@ -9,7 +9,7 @@
             foreach (var vault in Model)
             {
                 <tr>
-                    <td>@Html.ActionLink(@vault.Name,"Items","Vault", new {id = vault.Id, returnUrl = Request?.Url?.PathAndQuery}, null)</td>
+                    <td>@Html.ActionLink(@vault.Name,"Items","VaultItem", new {id = vault.Id, returnUrl = Request?.Url?.PathAndQuery}, null)</td>
                     <td>@vault.Description</td>
                     <td>
                         @vault.OpenTime:00 - @vault.CloseTime:00
