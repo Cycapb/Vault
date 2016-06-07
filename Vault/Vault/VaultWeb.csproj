@@ -325,6 +325,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LogController.cs" />
     <Compile Include="Controllers\RoleAdminController.cs" />
     <Compile Include="Controllers\UserAdminController.cs" />
     <Compile Include="Controllers\VaultController.cs" />
@@ -385,7 +386,7 @@
     <Content Include="Views\VaultItem\AddItem.cshtml" />
     <Content Include="Views\VaultItem\EditItem.cshtml" />
     <Content Include="Views\Shared\ErrorPage.cshtml" />
-    <Content Include="Views\Vault\VaultLog.cshtml" />
+    <Content Include="Views\Log\VaultLog.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

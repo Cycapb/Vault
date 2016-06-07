@@ -17,20 +17,16 @@ namespace Vault.Controllers
         private readonly IVaultManager _vaultManager;
         private readonly IUserGetter<VaultUser> _userGetter;
         private readonly IAccessManager _accessManager;
-        private readonly ILogManager<VaultAccessLog> _logManager;
-
 
         private AppUserManager UserManager => HttpContext.GetOwinContext().GetUserManager<AppUserManager>();
 
         public VaultController(IVaultManager vaultManager,
             IUserGetter<VaultUser> getter,
-            IAccessManager accessManager,
-            ILogManager<VaultAccessLog> logManager)
+            IAccessManager accessManager)
         {
             _vaultManager = vaultManager;
             _userGetter = getter;
             _accessManager = accessManager;
-            _logManager = logManager;
         }
 
         [Authorize(Roles = "VaultAdmins")]
@@ -240,19 +236,6 @@ namespace Vault.Controllers
             await _accessManager.RevokeReadAccess(userToDel, vaultId);
             await _accessManager.RevokeCreateAccess(userToDel, vaultId);
             return RedirectToAction("EditUsers", new {id = vaultId});
-        }
-
-        [Authorize(Roles = "VaultAdmins")]
-        public async Task<ActionResult> VaultLog(WebUser user, string id)
-        {
-            var vaultName = (await _vaultManager.GetVault(id)).Name;
-            var events = await _logManager.ShowLog(id);
-            var logModel = new VaultAccessLogModel()
-            {
-                Events = events,
-                VaultName = vaultName
-            };
-            return View(logModel);
         }
     }
 }
