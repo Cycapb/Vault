@@ -105,8 +105,7 @@ namespace Vault.Controllers
         {
             if (ModelState.IsValid)
             {
-                var vaultItem =
-                    await _vaultItemManager.CreateAsync(new VaultItem() { Content = model.Content, Name = model.Name });
+                var vaultItem = await _vaultItemManager.CreateAsync(new VaultItem() { Content = model.Content, Name = model.Name });
                 var vault = await _vaultManager.GetVault(model.VaultId);
                 if (vault.VaultItems == null)
                 {
