@@ -1,4 +1,5 @@
 ﻿using System.Web.Mvc;
+using System.Web.Optimization;
 using System.Web.Routing;
 using Vault.Infrastructure.Binders;
 using Vault.Models;
@@ -11,8 +12,9 @@ namespace Vault
         {
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
-            ModelBinders.Binders.Add(typeof(WebUser),new WebUserModelBinder());
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
+            BundleConfig.RegisterBundles(BundleTable.Bundles);
+            ModelBinders.Binders.Add(typeof(WebUser), new WebUserModelBinder());
         }
     }
 }
