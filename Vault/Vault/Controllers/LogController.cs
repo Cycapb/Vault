@@ -27,7 +27,7 @@ namespace Vault.Controllers
 
         public async Task<ActionResult> VaultLog(WebUser user, string id, string name)
         {
-            var vaultName = name;//(await _vaultManager.GetVault(id)).Name;
+            var vaultName = name;
             var events = await _logManager.ShowLog(id);
             var logModel = new VaultAccessLogModel()
             {
