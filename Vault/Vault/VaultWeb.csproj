@@ -345,6 +345,7 @@
     <Compile Include="Models\AppRoleModel.cs" />
     <Compile Include="Models\AppUserManager.cs" />
     <Compile Include="Models\AppUserModel.cs" />
+    <Compile Include="Models\EditTimeComparatorAttribute.cs" />
     <Compile Include="Models\EmailSettings.cs" />
     <Compile Include="Models\LogViewModels.cs" />
     <Compile Include="Models\PagingInfo.cs" />

@@ -13,6 +13,7 @@ namespace Vault.Models
         public IList<VaultUser> AllowCreateUsers { get; set; } 
     }
 
+    [EditTimeComparator]
     public class EditVaultModel
     {
         public string Id { get; set; }

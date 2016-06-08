@@ -1,21 +1,21 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.Reflection;
 
-namespace VaultDAL.Models
+namespace Vault.Models
 {
-    public class CustomTimeComparatorAttribute:ValidationAttribute
+    public class EditTimeComparatorAttribute : ValidationAttribute
     {
         private string _errorMessage;
 
         public override bool IsValid(object value)
         {
-            var vault = (UserVault) value;
+            var vault = (EditVaultModel)value;
             var valid = false;
             if (vault.OpenTime > vault.CloseTime)
             {
                 _errorMessage = "Closing time can't be less then opening";
                 valid = false;
-            } else if (vault.OpenTime == vault.CloseTime)
+            }
+            else if (vault.OpenTime == vault.CloseTime)
             {
                 _errorMessage = "Time of closing and time of opening can't be the same";
                 valid = false;
