@@ -12,7 +12,7 @@ namespace VaultService.Models
 
         public VaultHelper()
         {
-            _userVault = new MongoRepository<UserVault>(new DbConnectionProvider());
+            _userVault = new MongoRepository<UserVault>(new MongoConnectionProvider());
         }
 
         public async Task<IEnumerable<UserVault>> GetVaults()

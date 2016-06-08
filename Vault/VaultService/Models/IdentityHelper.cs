@@ -1,14 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MongoDB.Driver;
 using VaultDAL.Abstract;
 
 namespace VaultService.Models
 {
     public class IdentityHelper
     {
-        private readonly IRepository<> 
+        public IMongoCollection<AppUser> Users; 
+        public IdentityHelper()
+        {
+            Initiat();
+        }
+
+        private void Initiat()
+        {
+            IConnectionProvider provider = new IdentityConnectionProvider();
+            var client = new MongoClient(provider.GetServer());
+            var database = client.GetDatabase(provider.GetDatabase());
+            this.Users = database.GetCollection<AppUser>("users");
+        }
     }
 }
