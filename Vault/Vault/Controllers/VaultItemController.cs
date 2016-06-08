@@ -49,7 +49,7 @@ namespace Vault.Controllers
             if (accessRight == null)
             {
                 TempData["message"] = "You don't have enough rights to access this vault";
-                var message = $"User {user.UserName} tryied to get access to the vault";
+                var message = $"User {user.UserName} tried to get access to the vault";
                 await _vaultItemHelper.Log(id, "Deny", message);
                 await ReportToAdmin(id, message);
                 return RedirectToAction("Index", "Home");
