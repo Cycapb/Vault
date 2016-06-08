@@ -7,16 +7,8 @@ using VaultDAL.Abstract;
 
 namespace VaultService.Models
 {
-    public class UserHelper
+    public class IdentityHelper
     {
-        private readonly VaultHelper _vaultHelper;
-
-        public UserHelper()
-        {
-            _vaultHelper = new VaultHelper();
-
-        }
-
-
+        private readonly IRepository<> 
     }
 }
