@@ -12,15 +12,15 @@ namespace Vault.Concrete
     {
         private readonly IRepository<UserVault> _userVaultRepository;
         private readonly IRepository<VaultItem> _vaultItemRepository;
-        private readonly ILogManager<VaultAccessLog> _logManager;
+        private readonly IRepository<VaultAccessLog> _vaultAccessLogRepository; 
 
         public VaultManager(IRepository<UserVault> repository, 
             IRepository<VaultItem> vaultItemRepository,
-            ILogManager<VaultAccessLog> logManager)
+            IRepository<VaultAccessLog> vaultAccessLogRepository)
         {
             _userVaultRepository = repository;
             _vaultItemRepository = vaultItemRepository;
-            _logManager = logManager;
+            _vaultAccessLogRepository = vaultAccessLogRepository;
         }
 
         public async Task<IEnumerable<UserVault>> GetVaults(string userId)
@@ -41,6 +41,13 @@ namespace Vault.Concrete
 
         public async Task DeleteAsync(string id)
         {
+            var vaultItems = (await _userVaultRepository.GetItemAsync(id))?.VaultItems?.ToList();
+            var logItems = (await _vaultAccessLogRepository.GetListAsync())?.Where(x => x.VaultId == id).ToList();
+
+            Task vItems = DeleteVaultItems(vaultItems);
+            Task lItems = DeleteLogItems(logItems);
+
+            await Task.WhenAll(vItems, lItems);
             await _userVaultRepository.DeleteAsync(id);
         }
 
@@ -102,6 +109,28 @@ namespace Vault.Concrete
                 foreach (var vault in vaults)
                 {
                     await _userVaultRepository.DeleteAsync(vault.Id);
+                }
+            }
+        }
+
+        private async Task DeleteVaultItems(IEnumerable<string> vaultItems)
+        {
+            if (vaultItems != null)
+            {
+                foreach (var itemId in vaultItems)
+                {
+                    await _vaultItemRepository.DeleteAsync(itemId);
+                }
+            }
+        }
+
+        private async Task DeleteLogItems(IEnumerable<VaultAccessLog> logItems)
+        {
+            if (logItems != null)
+            {
+                foreach (var item in logItems)
+                {
+                    await _vaultAccessLogRepository.DeleteAsync(item.Id);
                 }
             }
         }
