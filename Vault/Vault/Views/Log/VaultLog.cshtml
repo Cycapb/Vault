@@ -42,5 +42,8 @@
 
         </table>
     </div>
+    <div class="panel-footer text-center">
+        @Html.Partial("PageLinksPartial",Model.PagingInfo)
+    </div>
 </div>
 @Html.ActionLink("Back", "VaultList", "Vault",null, new { @class = "btn btn-default pull-right" })

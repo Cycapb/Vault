@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 using Vault.Abstract;
 using Vault.Models;
@@ -10,6 +11,7 @@ namespace Vault.Controllers
     public class LogController : Controller
     {
         private readonly ILogManager<VaultAccessLog> _logManager;
+        private readonly int _itemsPerPage = 15;
 
         public LogController(ILogManager<VaultAccessLog> logManager)
         {
@@ -21,14 +23,23 @@ namespace Vault.Controllers
             return View();
         }
 
-        public async Task<ActionResult> VaultLog(WebUser user, string id, string name)
+        public async Task<ActionResult> VaultLog(WebUser user, string id, string name, int page = 1)
         {
             var vaultName = name;
-            var events = await _logManager.ShowLog(id);
+            var events = (await _logManager.ShowLog(id)).ToList();
             var logModel = new VaultAccessLogModel()
             {
-                Events = events,
-                VaultName = vaultName
+                Events = events.Skip((page - 1) * _itemsPerPage)
+                    .Take(_itemsPerPage)
+                    .Reverse()
+                    .ToList(),
+                VaultName = vaultName,
+                PagingInfo = new PagingInfo()
+                {
+                    CurrentPage = page,
+                    ItemsPerPage = _itemsPerPage,
+                    TotalItems = events.Count()
+                }
             };
             return View(logModel);
         }

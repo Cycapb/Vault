@@ -348,6 +348,7 @@
     <Compile Include="Models\AppUserModel.cs" />
     <Compile Include="Models\EmailSettings.cs" />
     <Compile Include="Models\LogViewModels.cs" />
+    <Compile Include="Models\PagingInfo.cs" />
     <Compile Include="Models\UserViewModels.cs" />
     <Compile Include="Models\VaultItemViewModels.cs" />
     <Compile Include="Models\VaultViewModels.cs" />
@@ -389,6 +390,7 @@
     <Content Include="Views\VaultItem\EditItem.cshtml" />
     <Content Include="Views\Shared\ErrorPage.cshtml" />
     <Content Include="Views\Log\VaultLog.cshtml" />
+    <Content Include="Views\Log\PageLinksPartial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -7,5 +7,7 @@ namespace Vault.Models
     {
         public string VaultName { get; set; }
         public IEnumerable<VaultAccessLog> Events { get; set; }
+
+        public PagingInfo PagingInfo;
     }
 }
