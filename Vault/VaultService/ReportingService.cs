@@ -49,7 +49,7 @@ namespace VaultService
             SetServiceStatus(this.ServiceHandle, ref serviceStatus);
 
             _timer = new System.Timers.Timer();
-            _timer.Interval = 60000; 
+            _timer.Interval = 600000; 
             _timer.Elapsed += new System.Timers.ElapsedEventHandler(this.OnTimer);
             _timer.Start();
 
@@ -65,7 +65,7 @@ namespace VaultService
         {
             //_timer.Stop();
             var hourOfTheDay = DateTime.Now.Hour;
-            if (hourOfTheDay == 23)
+            if (hourOfTheDay == 0)
             {
                 var serviceHelper = new ServiceHelper();
                 await serviceHelper.StartNotification(DateTime.Now.AddDays(-1));
