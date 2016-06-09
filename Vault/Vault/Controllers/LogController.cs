@@ -31,7 +31,6 @@ namespace Vault.Controllers
             {
                 Events = events.Skip((page - 1) * _itemsPerPage)
                     .Take(_itemsPerPage)
-                    .Reverse()
                     .ToList(),
                 VaultName = vaultName,
                 PagingInfo = new PagingInfo()
