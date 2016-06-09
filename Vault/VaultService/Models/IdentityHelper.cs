@@ -8,10 +8,10 @@ namespace VaultService.Models
         public IMongoCollection<AppUser> Users; 
         public IdentityHelper()
         {
-            Initiat();
+            Initiate();
         }
 
-        private void Initiat()
+        private void Initiate()
         {
             IConnectionProvider provider = new IdentityConnectionProvider();
             var client = new MongoClient(provider.GetServer());
