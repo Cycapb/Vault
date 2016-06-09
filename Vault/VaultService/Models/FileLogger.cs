@@ -26,7 +26,7 @@ namespace VaultService.Models
                 {
                     var logMessage = new StringBuilder();
                     logMessage.Append("");
-                    logMessage.Append($"Date: {DateTime.Today.ToShortDateString()}\r\n");
+                    logMessage.Append($"Date: {DateTime.Today.AddDays(-1).ToShortDateString()}\r\n");
                     logMessage.Append($"Name of the vault: {vaultName}\r\n");
                     foreach (var item in logItems)
                     {
