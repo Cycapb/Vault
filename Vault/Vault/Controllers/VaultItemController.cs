@@ -111,7 +111,7 @@ namespace Vault.Controllers
                 }
                 await _vaultManager.UpdateAsync(vault);
                 await _vaultItemHelper.Log(model.VaultId, "Create", $"User {user.UserName} has created new vault item called {model.Name}");
-                TempData["message"] = $"Vault item with name {model.Name} has been successfully created";
+                TempData["success"] = $"Vault item with name {model.Name} has been successfully created";
                 return RedirectToAction("Items", new { id = model.VaultId });
             }
             else
@@ -147,7 +147,7 @@ namespace Vault.Controllers
             {
                 await _vaultItemManager.UpdateAsync(model.VaultItem);
                 await _vaultItemHelper.Log(model.VaultId, "Edit", $"User {user.UserName} has edited new vault item called {model.VaultItem.Name}");
-                TempData["message"] = $"Vault item with name {model.VaultItem.Name} has been successfully updated";
+                TempData["success"] = $"Vault item with name {model.VaultItem.Name} has been successfully updated";
                 return RedirectToAction("Items", new { id = model.VaultId });
             }
             else

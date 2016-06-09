@@ -32,14 +32,14 @@ namespace Vault.Controllers
         [Authorize(Roles = "VaultAdmins")]
         public ActionResult Index()
         {
-            return RedirectToAction("VaultList");
+            return RedirectToAction("Index","Home");
         }
 
         [Authorize(Roles = "VaultAdmins")]
-        public async Task<ActionResult> VaultList(WebUser user)
+        public ActionResult VaultList(WebUser user)
         {
-            var vaultList = await _vaultManager.GetVaults(user.Id);
-            return View(vaultList.ToList());
+            var vaultList = _vaultManager.GetVaults(user.Id);
+            return PartialView(vaultList.ToList());
         }
 
         [Authorize(Roles = "VaultAdmins")]
@@ -63,7 +63,7 @@ namespace Vault.Controllers
                 try
                 {
                     await _vaultManager.CreateAsync(vault);
-                    TempData["message"] = $"Vault with name {vault.Name} has been successfully created";
+                    TempData["success"] = $"Vault with name {vault.Name} has been successfully created";
                     return RedirectToAction("Index");
                 }
                 catch (Exception)
@@ -100,7 +100,7 @@ namespace Vault.Controllers
         {
             if (id == null)
             {
-                return RedirectToAction("Index");
+                return RedirectToAction("Index","Home");
             }
             var vault = await _vaultManager.GetVault(id);
             if (vault == null){ return RedirectToAction("Index"); }
@@ -130,7 +130,7 @@ namespace Vault.Controllers
                 vaultToEdit.OpenTime = vault.OpenTime;
                 vaultToEdit.CloseTime = vault.CloseTime;
                 await _vaultManager.UpdateAsync(vaultToEdit);
-                TempData["message"] = $"Vault with name {vault.Name} has been successfully updated";
+                TempData["success"] = $"Vault with name {vault.Name} has been successfully updated";
                 return RedirectToAction("Index");
             }
             return View(vault);

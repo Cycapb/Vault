@@ -1,9 +1,4 @@
 ﻿@model IEnumerable<VaultDAL.Models.UserVault>
-@{
-    ViewBag.Title = "VaultList";
-    Layout = "~/Views/Shared/_VaultLayout.cshtml";
-}
-<div class="panel panel-primary">
     <div class="panel-heading">My vaults</div>
     <div class="panel-body">
         <div class="table table-striped">
@@ -18,8 +13,6 @@
             </table>
         </div>
         <div class="panel-footer">
-            @Html.ActionLink("Create","Create",null,new {@class="btn btn-primary"})
-            @Html.ActionLink("Back", "Index", "Home", null, new {@class = "btn btn-default"})
+            @Html.ActionLink("Create","Create",null,new {@class="btn btn-primary btn-xs"})
         </div>
     </div>
-</div>

@@ -23,9 +23,15 @@ namespace Vault.Concrete
             _vaultAccessLogRepository = vaultAccessLogRepository;
         }
 
-        public async Task<IEnumerable<UserVault>> GetVaults(string userId)
+        public async Task<IEnumerable<UserVault>> GetVaultsAsync(string userId)
         {
             var vaults = await _userVaultRepository.GetListAsync();
+            return vaults?.Where(x => x.VaultAdmin.Id == userId).ToList();
+        }
+
+        public IEnumerable<UserVault> GetVaults(string userId)
+        {
+            var vaults = _userVaultRepository.GetList();
             return vaults?.Where(x => x.VaultAdmin.Id == userId).ToList();
         }
 

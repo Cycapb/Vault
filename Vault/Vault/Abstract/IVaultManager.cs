@@ -6,7 +6,8 @@ namespace Vault.Abstract
 {
     public interface IVaultManager
     {
-        Task<IEnumerable<UserVault>> GetVaults(string userId);
+        Task<IEnumerable<UserVault>> GetVaultsAsync(string userId);
+        IEnumerable<UserVault> GetVaults(string userId);
         Task<UserVault> GetVault(string id);
         Task<UserVault> CreateAsync(UserVault vault);
         Task DeleteAsync(string id);

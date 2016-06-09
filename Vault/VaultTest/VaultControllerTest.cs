@@ -16,15 +16,15 @@ namespace VaultTest
     public class VaultControllerTest
     {
         [TestMethod]
-        public async Task VaultListInputWebUserReturnsView()
+        public void VaultListInputWebUserReturnsView()
         {
             Mock<IVaultManager> mockVaultManager = new Mock<IVaultManager>();
             var target = new VaultController(mockVaultManager.Object, null, null);
 
-            var result = await target.VaultList(new WebUser());
+            var result = target.VaultList(new WebUser());
 
             mockVaultManager.Verify(x=>x.GetVaults(It.IsAny<string>()),Times.Once);
-            Assert.IsInstanceOfType(result, typeof(ViewResult));
+            Assert.IsInstanceOfType(result, typeof(PartialViewResult));
         }
 
         [TestMethod]

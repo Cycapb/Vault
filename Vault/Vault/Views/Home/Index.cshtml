@@ -14,16 +14,17 @@
         {
             <form class="form form-horizontal">
                 <div class="panel panel-info">
+                    @if (HttpContext.Current.User.IsInRole("VaultAdmins"))
+                    {
+                        @Html.Action("VaultList", "Vault")
+                    }
                     @Html.Action("UserVaults")
-                    @Html.Action("AllVaults") 
+                    @Html.Action("AllVaults")
                 </div>
             </form>
         }
     </div>
 </div>
-@if (HttpContext.Current.User.IsInRole("VaultAdmins"))
-{
-    @Html.ActionLink("My vaults", "Index", "Vault", new { id = HttpContext.Current.User.Identity.GetUserId() }, new { @class = "btn btn-success" })
-}
+
 
 
