@@ -97,8 +97,8 @@ namespace Vault.Controllers
             var role = await RoleManager.FindByIdAsync(id);
             if (role != null)
             {
-                var usersInRole = await IdentityContext.Users.Find(x => x.Roles.Contains(role.Name)).ToListAsync();
-                var usersNotInRole = await IdentityContext.Users.Find(x => !x.Roles.Contains(role.Name)).ToListAsync();
+                var usersInRole = await IdentityContext.Users.Find(x => x.Roles.Contains(role.Name) && x.UserName != "Admin").ToListAsync();
+                var usersNotInRole = await IdentityContext.Users.Find(x => !x.Roles.Contains(role.Name) && x.UserName != "Admin").ToListAsync();
                 var editModel = new EditRolemodel()
                 {
                     Role = role,
