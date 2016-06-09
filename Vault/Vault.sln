@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VaultMigrations", "VaultMig
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VaultService", "VaultService\VaultService.csproj", "{E1F6C653-DB9E-4C93-BCA3-495BBC7AA78D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VaultTests", "VaultTest\VaultTests.csproj", "{39E794CE-06AD-4868-A5EF-80CF68B50875}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{E1F6C653-DB9E-4C93-BCA3-495BBC7AA78D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E1F6C653-DB9E-4C93-BCA3-495BBC7AA78D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E1F6C653-DB9E-4C93-BCA3-495BBC7AA78D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{39E794CE-06AD-4868-A5EF-80CF68B50875}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{39E794CE-06AD-4868-A5EF-80CF68B50875}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{39E794CE-06AD-4868-A5EF-80CF68B50875}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{39E794CE-06AD-4868-A5EF-80CF68B50875}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
