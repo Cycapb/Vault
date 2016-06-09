@@ -15,30 +15,32 @@ namespace VaultService.Models
         public async Task StartNotification(DateTime date)
         {
             var notifications = await GetNotificationModels();
+            if (notifications == null)
+            {
+                return;
+            }
             await SendLogs(notifications, date);
         }
 
         private async Task<List<NotificationModel>> GetNotificationModels()
         {
             var helper = new VaultHelper(new MongoRepository<UserVault>(new MongoConnectionProvider()));
-            var vaults = (await helper.GetVaults())?.ToList();
-            if (vaults == null)
+            var identityUsers = new IdentityHelper().Users;
+            var vaultAdmins = (await identityUsers.FindAsync(x => x.Roles.Contains("VaultAdmins")))?.ToList();
+            if (vaultAdmins == null)
             {
                 return null;
             }
-            var vaultAdmins = vaults.Select(vault => vault.VaultAdmin).Distinct(new VaultUserEqualityComparer()).ToList();
-            var identUsers = await new IdentityHelper().Users.Find(x => true).ToListAsync();
             var notificationModels = new List<NotificationModel>();
             foreach (var admin in vaultAdmins)
             {
-                foreach (var user in identUsers)
+                var userVaults = (await helper.GetVaults())?.ToList().Where(x => x.VaultAdmin.Id == admin.Id).ToList();
+                notificationModels.Add(new NotificationModel()
                 {
-                    if (admin.Id == user.Id)
-                    {
-                        var userVaults = vaults.Where(x => x.VaultAdmin.Id == admin.Id).ToList();
-                        notificationModels.Add(new NotificationModel() { VaultAdminId = user.Id, Email = user.Email, Vaults = userVaults });
-                    }
-                }
+                    VaultAdminId = admin.Id,
+                    Email = admin.Email,
+                    Vaults = userVaults
+                });
             }
             return notificationModels;
         }
@@ -50,6 +52,10 @@ namespace VaultService.Models
             foreach (var user in users)
             {
                 var fileName = "";
+                if (user.Vaults == null)
+                {
+                    continue;
+                }
                 foreach (var vault in user.Vaults)
                 {
                     var logItems = await logManager.ShowByDateLog(vault.Id, date);

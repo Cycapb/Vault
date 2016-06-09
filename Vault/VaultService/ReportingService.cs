@@ -63,7 +63,7 @@ namespace VaultService
 
         private async void OnTimer(object sender, EventArgs e)
         {
-            //_timer.Stop();
+            _timer.Stop();
             var hourOfTheDay = DateTime.Now.Hour;
             if (hourOfTheDay == 0)
             {
