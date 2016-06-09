@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MongoDB.Driver;
+using VaultDAL.Concrete;
+using VaultDAL.Models;
 using VaultService.Models.Mail;
 
 namespace VaultService.Models
@@ -43,7 +45,7 @@ namespace VaultService.Models
 
         private async Task SendLogs(List<NotificationModel> users, DateTime date)
         {
-            var logManager = new LogManager();
+            var logManager = new LogManager(new MongoRepository<VaultAccessLog>(new MongoConnectionProvider()));
             var logger = new FileLogger();
             foreach (var user in users)
             {

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using VaultDAL.Abstract;
-using VaultDAL.Concrete;
 using VaultDAL.Models;
 
 namespace VaultService.Models
@@ -12,9 +11,9 @@ namespace VaultService.Models
     {
         private readonly IRepository<VaultAccessLog> _accessLogRepository;
 
-        public LogManager()
+        public LogManager(IRepository<VaultAccessLog> accessLogRepository)
         {
-            _accessLogRepository = new MongoRepository<VaultAccessLog>(new MongoConnectionProvider());
+            _accessLogRepository = accessLogRepository;
         }
 
         public async Task<IEnumerable<VaultAccessLog>> ShowByDateLog(string vaultId, DateTime date)
