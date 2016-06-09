@@ -25,14 +25,17 @@ namespace Vault.Controllers
 
         public async Task<ActionResult> VaultLog(WebUser user, string id, string name, int page = 1)
         {
-            var vaultName = name;
-            var events = (await _logManager.ShowLog(id)).ToList();
+            if (id == null)
+            {
+                return RedirectToAction("Index");
+            }
+            var events = (await _logManager.ShowLog(id))?.ToList();
             var logModel = new VaultAccessLogModel()
             {
-                Events = events.Skip((page - 1) * _itemsPerPage)
+                Events = events?.Skip((page - 1) * _itemsPerPage)
                     .Take(_itemsPerPage)
                     .ToList(),
-                VaultName = vaultName,
+                VaultName = name,
                 PagingInfo = new PagingInfo()
                 {
                     CurrentPage = page,

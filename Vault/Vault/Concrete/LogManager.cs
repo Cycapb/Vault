@@ -25,8 +25,12 @@ namespace Vault.Concrete
 
         public async Task<IEnumerable<VaultAccessLog>> ShowLog(string vaultId)
         {
+            if (vaultId == null)
+            {
+                return null;
+            }
             var logs = await _accessLogRepository.GetListAsync();
-            return logs.Where(x => x.VaultId == vaultId).ToList();
+            return logs?.Where(x => x.VaultId == vaultId).ToList();
         }
     }
 }
