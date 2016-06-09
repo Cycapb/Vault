@@ -1,23 +1,22 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using VaultDAL.Abstract;
-using VaultDAL.Concrete;
 using VaultDAL.Models;
 
 namespace VaultService.Models
 {
     public class VaultHelper
     {
-        private readonly IRepository<UserVault> _userVault;
+        private readonly IRepository<UserVault> _userVaultRepository;
 
-        public VaultHelper()
+        public VaultHelper(IRepository<UserVault> userVaultrepository)
         {
-            _userVault = new MongoRepository<UserVault>(new MongoConnectionProvider());
+            _userVaultRepository = userVaultrepository;
         }
 
         public async Task<IEnumerable<UserVault>> GetVaults()
         {
-            return await _userVault.GetListAsync();
+            return await _userVaultRepository.GetListAsync();
         }
     }
 }

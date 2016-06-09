@@ -20,7 +20,7 @@ namespace VaultService.Models
 
         private async Task<List<NotificationModel>> GetNotificationModels()
         {
-            var helper = new VaultHelper();
+            var helper = new VaultHelper(new MongoRepository<UserVault>(new MongoConnectionProvider()));
             var vaults = (await helper.GetVaults())?.ToList();
             if (vaults == null)
             {
