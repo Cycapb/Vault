@@ -32,10 +32,14 @@
                             }
                         </td>
                         <td>
+
                             @using (Html.BeginForm("Delete", "RoleAdmin", new {id = role.Id}))
                             {
-                                @Html.ActionLink("Edit", "Edit", new {id = role.Id}, new {@class="btn btn-success btn-xs"})
-                                <input type="submit" value="Delete" class="btn btn-danger btn-xs"/>
+                                @Html.ActionLink("Edit", "Edit", new {id = role.Id}, new {@class = "btn btn-success btn-xs"})
+                                if (role.Name != "Administrators")
+                                {
+                                    <input type="submit" value="Delete" class="btn btn-danger btn-xs"/>
+                                }
                             }
                         </td>
                     </tr>

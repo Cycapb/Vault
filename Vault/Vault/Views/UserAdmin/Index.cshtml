@@ -9,7 +9,7 @@
         User Accounts
     </div>
     <table class="table table-striped">
-        <tr><th>ID</th><th>Name</th><th>Email</th><th>Action</th></tr>
+        <tr><th>Name</th><th>Email</th><th>Action</th></tr>
         @if (Model.Count() == 0)
         {
             <tr><td colspan="3" class="text-center">No User Accounts</td></tr>
@@ -19,14 +19,16 @@
             foreach (AppUserModel user in Model)
             {
                 <tr>
-                    <td>@user.Id</td>
                     <td>@user.UserName</td>
                     <td>@user.Email</td>
                     <td>
-                        @using (Html.BeginForm("Delete","UserAdmin", new {id = user.Id}))
+                        @if (user.UserName != "Admin")
                         {
-                            @Html.ActionLink("Edit","Edit", new {id = user.Id}, new {@class="btn btn-success btn-xs"})
-                            <input type="submit" value="Delete" class="btn btn-danger btn-xs"/>
+                            using (Html.BeginForm("Delete", "UserAdmin", new { id = user.Id }))
+                            {
+                                @Html.ActionLink("Edit", "Edit", new { id = user.Id }, new { @class = "btn btn-success btn-xs" })
+                                <input type="submit" value="Delete" class="btn btn-danger btn-xs" />
+                            }
                         }
                     </td>
                 </tr>
