@@ -3,7 +3,6 @@ using System.Net;
 using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
-using VaultService.Models.Mail;
 
 namespace VaultService.Models.Mail
 {
@@ -42,13 +41,14 @@ namespace VaultService.Models.Mail
             _emailSettings.MailTo = this.MailTo;
 
             StringBuilder messageBody = new StringBuilder();
-            messageBody.Append("Log is in attache");
+            messageBody.Append("Log is in attachement");
 
             MailMessage mailMessage = new MailMessage(_emailSettings.MailFrom, _emailSettings.MailTo,
                 "Daily access report", messageBody.ToString());
             mailMessage.Attachments.Add(new Attachment(fileName));
 
             await smtpClient.SendMailAsync(mailMessage);
+            smtpClient.Dispose();
         }
 
         private SmtpClient CreateSmtpClient()

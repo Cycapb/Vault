@@ -20,7 +20,7 @@ namespace VaultService.Models
         private async Task<string> SaveToLogFile(IEnumerable<VaultAccessLog> logItems, string userId, string vaultName)
         {
             var fileName = $"{userId}-{DateTime.Today.Date.ToShortDateString()}.txt";
-            using (Stream stream = new FileStream(FilePath + fileName, FileMode.Append))
+            using (Stream stream = new FileStream(FilePath + fileName, FileMode.Append,FileAccess.Write))
             {
                 using (TextWriter writer = new StreamWriter(stream))
                 {
@@ -34,8 +34,8 @@ namespace VaultService.Models
                     }
                     await writer.WriteAsync(logMessage.ToString()).ConfigureAwait(false);
                 }
-                return FilePath + fileName;
             }
+            return FilePath + fileName;
         }
 
         private Task CreateLogDir()

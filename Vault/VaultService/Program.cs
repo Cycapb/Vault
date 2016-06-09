@@ -1,13 +1,9 @@
-﻿using System;
-using System.ServiceProcess;
+﻿using System.ServiceProcess;
 
 namespace VaultService
 {
     static class Program
     {
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
         static void Main()
         {
             ServiceBase[] ServicesToRun;
@@ -27,7 +23,6 @@ namespace VaultService
         //    }
         //    else
         //    {
-        //        // Put the body of your old Main method here.
         //        ServiceBase[] ServicesToRun;
         //        ServicesToRun = new ServiceBase[]
         //        {
