@@ -8,7 +8,6 @@
                 <input type="checkbox" name="CreateUsers[@i].Id" value="@Model.AllowReadUsers[i].Id"/>
                 <input type="hidden" name="CreateUsers[@i].UserName" value="@Model.AllowReadUsers[i].UserName"/>
             </td>
-            <td>@Model.AllowReadUsers[i].Id</td>
             <td>@Model.AllowReadUsers[i].UserName</td>
         </tr>
     }
@@ -16,6 +15,6 @@
 else
 {
     <tr>
-        <td colspan="3" class="text-center">No users</td>
+        <td colspan="2" class="text-center">No users</td>
     </tr>
 }
