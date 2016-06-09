@@ -34,7 +34,7 @@ namespace VaultService.Models
             var notificationModels = new List<NotificationModel>();
             foreach (var admin in vaultAdmins)
             {
-                var userVaults = (await helper.GetVaults())?.ToList().Where(x => x.VaultAdmin.Id == admin.Id).ToList();
+                var userVaults = (await helper.GetVaults())?.Where(x => x.VaultAdmin.Id == admin.Id).ToList();
                 notificationModels.Add(new NotificationModel()
                 {
                     VaultAdminId = admin.Id,
