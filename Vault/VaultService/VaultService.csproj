@@ -73,7 +73,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\AppUser.cs" />
-    <Compile Include="Models\DbConnectionProvider.cs" />
     <Compile Include="Models\FileLogger.cs" />
     <Compile Include="Models\IdentityConnectionProvider.cs" />
     <Compile Include="Models\IdentityHelper.cs" />

@@ -14,19 +14,13 @@ namespace VaultService.Models
 
         public LogManager()
         {
-            _accessLogRepository = new MongoRepository<VaultAccessLog>(new DbConnectionProvider());
+            _accessLogRepository = new MongoRepository<VaultAccessLog>(new MongoConnectionProvider());
         }
 
         public async Task<IEnumerable<VaultAccessLog>> ShowByDateLog(string vaultId, DateTime date)
         {
             var logs = await _accessLogRepository.GetListAsync();
             return logs.Where(x => x.VaultId == vaultId && x.DateTime.Date == date.Date).ToList();
-        }
-
-        public async Task<IEnumerable<VaultAccessLog>> ShowLog(string vaultId)
-        {
-            var logs = await _accessLogRepository.GetListAsync();
-            return logs.Where(x => x.VaultId == vaultId).ToList();
         }
     }
 }

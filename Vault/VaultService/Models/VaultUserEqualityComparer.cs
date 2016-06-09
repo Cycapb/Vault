@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using VaultDAL.Models;
 
-namespace Vault.Infrastructure
+namespace VaultService.Models
 {
     public class VaultUserEqualityComparer:IEqualityComparer<VaultUser>
     {
