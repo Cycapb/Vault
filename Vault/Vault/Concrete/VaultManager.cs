@@ -73,7 +73,14 @@ namespace Vault.Concrete
             var vault = _userVaultRepository.GetItem(id);
             if (vault.AllowCreate != null)
             {
-                return vault.AllowRead?.Union(vault.AllowCreate).Distinct(new VaultUserEqualityComparer()).ToList();
+                if (vault.AllowRead == null)
+                {
+                    return vault.AllowCreate.ToList();
+                }
+                else
+                {
+                    return vault.AllowRead?.Union(vault.AllowCreate).Distinct(new VaultUserEqualityComparer()).ToList();
+                }
             }
             else
             {
