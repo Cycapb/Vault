@@ -22,18 +22,18 @@
         </div>
     </div>
     <div class="panel-body">
-        <form class="form form-horizontal">
-            <div class="panel panel-info">
-                @if (HttpContext.Current.User.IsInRole("VaultAdmins"))
-                {
-                    @VaultAdmins();
-                }
-                @if (HttpContext.Current.User.IsInRole("Users"))
-                {
-                    @Users();
-                }
-            </div>
-        </form>
+        <div class="panel panel-info">
+            @if (HttpContext.Current.User.IsInRole("VaultAdmins"))
+            {
+                @VaultAdmins()
+                ;
+            }
+            @if (HttpContext.Current.User.IsInRole("Users"))
+            {
+                @Users()
+                ;
+            }
+        </div>
     </div>
 </div>
 
