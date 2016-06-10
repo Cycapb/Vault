@@ -70,7 +70,7 @@ namespace VaultTest
             mockVaultManager.Verify(x => x.CreateAsync(It.IsAny<UserVault>()),Times.Once);
             Assert.IsInstanceOfType(result,typeof(RedirectToRouteResult));
             Assert.AreEqual(model.RouteValues["action"],"Index");
-            Assert.AreEqual(target.TempData["message"], "Vault with name TestVault has been successfully created");
+            Assert.AreEqual(target.TempData["success"], "Vault with name TestVault has been successfully created");
         }
 
         [TestMethod]
