@@ -69,7 +69,6 @@ namespace Vault.Controllers
                 try
                 {
                     await _vaultManager.CreateAsync(vault);
-                    TempData["message"] = $"Vault with name {vault.Name} has been successfully created";
                     return RedirectToAction("Index");
                 }
                 catch (Exception)
@@ -155,7 +154,6 @@ namespace Vault.Controllers
                 vaultToEdit.OpenTime = vault.OpenTime;
                 vaultToEdit.CloseTime = vault.CloseTime;
                 await _vaultManager.UpdateAsync(vaultToEdit);
-                TempData["message"] = $"Vault with name {vault.Name} has been successfully updated";
                 return RedirectToAction("Index");
             }
             return View(vault);
