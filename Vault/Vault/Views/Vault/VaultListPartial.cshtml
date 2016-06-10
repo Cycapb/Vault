@@ -19,7 +19,10 @@
                     @using (Ajax.BeginForm("Delete",new {id = vault.Id}, new AjaxOptions()
                     {
                         Url = Url.Action("DeleteAjax", new {id = vault.Id}),
-                        UpdateTargetId = "vaultList"
+                        HttpMethod = "POST",
+                        UpdateTargetId = "vaultList",
+                        LoadingElementId = "vaultDel",
+                        LoadingElementDuration = 1000
                     }))
                     {
                         @Html.ActionLink("Edit", "Edit", new { id = vault.Id }, new { @class = "btn btn-primary btn-xs" })
