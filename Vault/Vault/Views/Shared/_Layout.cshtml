@@ -11,13 +11,9 @@
 <div class="homeContainer">
     @if (TempData["message"] != null)
     {
-        <div class="alert alert-danger">@TempData["message"]</div>
+        <div class="alert alert-success">@TempData["message"]</div>
     }
-    @if (TempData["success"] != null)
-    {
-        <div class="alert alert-success">@TempData["success"]</div>
-    }
-    <div class="alert alert-danger" style="display: none" id="vaultDel">Vault has been successfully deleted</div>
+    <div class="alert alert-success" style="display: none" id="vaultDel">Vault has been successfully deleted</div>
     @RenderBody()
 </div>
 

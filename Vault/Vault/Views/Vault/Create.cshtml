@@ -21,11 +21,11 @@
                 @Html.TextAreaFor(x => x.Description, new {@class = "form-control"})
             </div>
             <div class="form-group">
-                <label>Opened hours:</label>
+                <label>Openning hour:</label>
                 @Html.TextBox("OpenTime", new {Value = DateTime.Today.Date.ToShortTimeString()}, new {@class = "form-control"})
             </div>
             <div class="form-group">
-                <label>Closed hours</label>
+                <label>Closing hour</label>
                 @Html.TextBox("CloseTime", new {Value = DateTime.Today.Date.ToShortTimeString()}, new {@class = "form-control"})
             </div>
         </div>
