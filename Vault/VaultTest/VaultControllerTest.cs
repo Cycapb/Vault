@@ -86,5 +86,45 @@ namespace VaultTest
             Assert.IsInstanceOfType(result, typeof(ViewResult));
             Assert.AreEqual(((ViewResult)result).ViewName,"Error");
         }
+
+        [TestMethod]
+        public async Task DeleteEqualUserIdsRedirectNoSuccess()
+        {
+            Mock<IVaultManager> mockVaultManager = new Mock<IVaultManager>();
+            var vault = new UserVault() {Id = "1", VaultAdmin = new VaultUser() {Id = "1"}};
+            mockVaultManager.Setup(x => x.GetVaultAdmin(vault.Id)).ReturnsAsync(vault.VaultAdmin);
+            var target = new VaultController(mockVaultManager.Object, null ,null);
+
+            var result = await target.Delete(new WebUser() {Id = "2"}, vault.Id);
+            
+            Assert.AreEqual(((RedirectToRouteResult)result).RouteValues["action"], "Index");
+        }
+
+        [TestMethod]
+        public async Task DeleteNonequalUserIdsReturnRedirectSuccess()
+        {
+            Mock<IVaultManager> mockVaultManager = new Mock<IVaultManager>();
+            var vault = new UserVault() { Id = "1", VaultAdmin = new VaultUser() { Id = "1" } };
+            mockVaultManager.Setup(x => x.GetVaultAdmin(vault.Id)).ReturnsAsync(vault.VaultAdmin);
+            var target = new VaultController(mockVaultManager.Object, null, null);
+
+            var result = await target.Delete(new WebUser() {Id = "1"}, vault.Id);
+
+            mockVaultManager.Verify(x => x.DeleteAsync(It.IsAny<string>()), Times.Once);
+            Assert.IsNotNull(target.TempData["message"]);
+            Assert.AreEqual(((RedirectToRouteResult)result).RouteValues["action"], "Index");
+        }
+
+        [TestMethod]
+        public async Task DeleteGeneratesExceptionReturnView()
+        {
+            Mock<IVaultManager> mockVaultManager = new Mock<IVaultManager>();
+            mockVaultManager.Setup(x => x.DeleteAsync(It.IsAny<string>())).Throws<SystemException>();
+            var target = new VaultController(mockVaultManager.Object, null, null);
+
+            var result = await target.Delete(new WebUser(), "1");
+
+            Assert.IsInstanceOfType(result,typeof(ViewResult));
+        }
     }
 }
