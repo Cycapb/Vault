@@ -17,11 +17,11 @@
     @RenderSection("calendarScripts", false)
     @if (TempData["message"] != null)
     {
-        <div class="alert alert-danger">@TempData["message"]</div>
+        <div class="alert alert-danger" id="message">@TempData["message"]</div>
     }
     @if (TempData["success"] != null)
     {
-        <div class="alert alert-success">@TempData["success"]</div>
+        <div class="alert alert-success" id="sucess">@TempData["success"]</div>
     }
     @RenderBody()
 </div>

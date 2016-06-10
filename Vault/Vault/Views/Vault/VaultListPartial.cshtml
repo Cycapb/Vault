@@ -10,16 +10,13 @@
                     @vault.OpenTime:00 - @vault.CloseTime:00  
                 </td>
                 <td>
-                    @using (Html.BeginForm("Delete", "Vault",new {id=vault.Id}))
+                    @using (Html.BeginForm("Delete", "Vault", new {id = vault.Id}))
                     {
                         @Html.ActionLink("Edit", "Edit", new { id = vault.Id }, new { @class = "btn btn-primary btn-xs" })
-                        @Html.ActionLink("Manage users","EditUsers",new {id=vault.Id}, new {@class="btn btn-primary btn-xs"})
-                        @Html.ActionLink("Content","Items", "VaultItem",new { id = vault.Id, returnUrl = Request.Url?.PathAndQuery}, new {@class="btn btn-primary btn-xs"})
-                        if (HttpContext.Current.User.IsInRole("VaultAdmins"))
-                        {
-                            @Html.ActionLink("Log","VaultLog", "Log",new {id = vault.Id, name = vault.Name}, new {@class="btn btn-primary btn-xs"})
-                        }
-                        <input type="submit" value="Delete" class="btn btn-danger btn-xs pull-right"/>
+                        @Html.ActionLink("Manage users", "EditUsers", new { id = vault.Id }, new { @class = "btn btn-primary btn-xs" })
+                        @Html.ActionLink("Content", "Items", "VaultItem", new { id = vault.Id, returnUrl = Request.Url?.PathAndQuery }, new { @class = "btn btn-primary btn-xs" })
+                        @Html.ActionLink("Log", "VaultLog", "Log", new { id = vault.Id, name = vault.Name }, new { @class = "btn btn-primary btn-xs" })
+                        <input type="submit" value="Delete" class="btn btn-danger btn-xs pull-right" />
                     }
                 </td>
             </tr>
