@@ -3,6 +3,18 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+@helper VaultAdmins()
+{
+    @Html.Action("VaultList", "Vault")
+}
+
+@helper Users()
+{
+    @Html.Action("UserVaults")
+    @Html.Action("AllVaults")
+}
+
 <div class="panel panel-primary">
     <div class="panel-heading">
         <div class="form">
@@ -10,19 +22,18 @@
         </div>
     </div>
     <div class="panel-body">
-        @if (HttpContext.Current.User.IsInRole("Users"))
-        {
-            <form class="form form-horizontal">
-                <div class="panel panel-info">
-                    @if (HttpContext.Current.User.IsInRole("VaultAdmins"))
-                    {
-                        @Html.Action("VaultList", "Vault")
-                    }
-                    @Html.Action("UserVaults")
-                    @Html.Action("AllVaults")
-                </div>
-            </form>
-        }
+        <form class="form form-horizontal">
+            <div class="panel panel-info">
+                @if (HttpContext.Current.User.IsInRole("VaultAdmins"))
+                {
+                    @VaultAdmins();
+                }
+                @if (HttpContext.Current.User.IsInRole("Users"))
+                {
+                    @Users();
+                }
+            </div>
+        </form>
     </div>
 </div>
 
