@@ -41,13 +41,7 @@ namespace Vault.Controllers
             var vaultList = _vaultManager.GetVaults(user.Id);
             return PartialView(vaultList.ToList());
         }
-
-        public async Task<ActionResult> VaultListAjax(WebUser user)
-        {
-            var vaultList = await _vaultManager.GetVaultsAsync(user.Id);
-            return PartialView("VaultListPartial",vaultList.ToList());
-        }
-
+        
         [Authorize(Roles = "VaultAdmins")]
         public ActionResult Create(WebUser user)
         {
