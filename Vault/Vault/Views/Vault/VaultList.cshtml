@@ -1,17 +1,9 @@
 ﻿@model IEnumerable<VaultDAL.Models.UserVault>
     <div class="panel-heading">My vaults</div>
     <div class="panel-body">
-        <div class="table table-striped">
-            <table class="table table-striped">
-                <tr>
-                    <th>Name</th>
-                    <th>Description</th>
-                    <th>Open hours</th>
-                    <th>Actions</th>
-                </tr>
-                    @Html.Partial("VaultListPartial", Model)
+        <table class="table table-striped" id="vaultList">
+                @Html.Partial("VaultListPartial", Model)
             </table>
-        </div>
         <div class="panel-footer">
             @Html.ActionLink("Create","Create",null,new {@class="btn btn-primary btn-xs"})
         </div>
