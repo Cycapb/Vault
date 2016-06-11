@@ -2,11 +2,10 @@
     ViewBag.Title = "Administration";
     Layout = "~/Views/Shared/_RoleAdminLayout.cshtml";
 }
-<div class="panel panel-primary">
-    <div class="panel-heading">Administration section</div>
+<div class="panel panel-primary well">
+    <div class="panel-heading">Administration section <span class="pull-right">@Html.ActionLink("Log out", "Logout", "Account", null, new { @class = "btn btn-danger btn-xs pull-right" })</span></div>
     <div class="panel-body">
         <p class="text-center">@Html.ActionLink("Roles management", "Index", "RoleAdmin", null, new {@class = "btn btn-success"})</p>
         <p class="text-center">@Html.ActionLink("Users management", "Index", "UserAdmin", null, new {@class = "btn btn-success"})</p>
     </div>
 </div>
-@Html.ActionLink("Log out","Logout","Account", null, new {@class="btn btn-danger btn-xs pull-right"})
