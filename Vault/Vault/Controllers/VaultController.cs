@@ -41,7 +41,13 @@ namespace Vault.Controllers
             var vaultList = _vaultManager.GetVaults(user.Id);
             return PartialView(vaultList.ToList());
         }
-        
+
+        public async Task<ActionResult> VaultListAjax(WebUser user)
+        {
+            var vaultList = await _vaultManager.GetVaultsAsync(user.Id);
+            return PartialView("VaultListPartial", vaultList.ToList());
+        }
+
         [Authorize(Roles = "VaultAdmins")]
         public ActionResult Create(WebUser user)
         {
@@ -93,7 +99,26 @@ namespace Vault.Controllers
                 return View("Error", new string[] {"Something went wrong. Please try again"});
             }
         }
-        
+
+        public async Task<ActionResult> DeleteAjax(WebUser user, string id)
+        {
+            try
+            {
+                var admin = await _vaultManager.GetVaultAdmin(id);
+                if (admin.Id != user.Id)
+                {
+                    return RedirectToAction("VaultListAjax");
+                }
+
+                await _vaultManager.DeleteAsync(id);
+                return RedirectToAction("VaultListAjax");
+            }
+            catch (Exception)
+            {
+                return View("Error", new string[] { "Something went wrong. Please try again" });
+            }
+        }
+
         [Authorize(Roles = "VaultAdmins")]
         public async Task<ActionResult> Edit(WebUser user, string id)
         {
