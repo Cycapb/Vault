@@ -393,6 +393,7 @@
     <Content Include="Views\Shared\ErrorPage.cshtml" />
     <Content Include="Views\Log\VaultLog.cshtml" />
     <Content Include="Views\Log\PageLinksPartial.cshtml" />
+    <Content Include="Views\Shared\_AccountLayout.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

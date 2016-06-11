@@ -2,29 +2,29 @@
 
 @{
     ViewBag.Title = "Login";
-    Layout = "~/Views/Shared/_UserAdminLayout.cshtml";
+    Layout = "~/Views/Shared/_AccountLayout.cshtml";
 }
 
 <div class="panel panel-info well">
-    @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
-        @Html.ValidationSummary(true)
-        <div class="panel-body">
-            @Html.ValidationMessageFor(x=>x.Name)
-            <div class="form-group">
-                <label>Login:</label>
-                @Html.TextBoxFor(x => x.Name, new {@class = "form-control", placeholder = "Login"})
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+            <div class="panel-body">
+                @Html.ValidationMessageFor(x => x.Name)
+                <div class="form-group">
+                    <label>Login:</label>
+                    @Html.TextBoxFor(x => x.Name, new {@class = "form-control"})
+                </div>
+                @Html.ValidationMessageFor(x => x.Password)
+                <div class="form-group">
+                    <label>Password:</label>
+                    @Html.PasswordFor(x => x.Password, new {@class = "form-control"})
+                </div>
             </div>
-            @Html.ValidationMessageFor(x => x.Password)
-            <div class="form-group">
-                <label>Password:</label>
-                @Html.PasswordFor(x => x.Password, new {@class = "form-control", placeholder = "Password"})
+            <div class="panel-footer">
+            <input type="submit" value="Log in" class="btn btn-success" />
             </div>
-        </div>
-        <div class="panel-footer">
-            <input type="submit" value="Log in" class="btn btn-success"/>
-        </div>
-    }
+        }
 </div>
 

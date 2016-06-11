@@ -1,0 +1,15 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/bundles/bootstrap/css", "~/bundles/sitestyles/css")
+    @Scripts.Render("~/bundles/validation")
+</head>
+<body>
+    <div class="accountContainer">
+        @RenderBody()
+    </div>
+</body>
+</html>

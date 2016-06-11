@@ -17,15 +17,25 @@ textarea {
 }
 
 /*Default container*/
+
 .container {
-            width: 800px;
-            padding-top: 30px;
+    width: 800px;
+    padding-top: 30px;
     position: relative;
-        }
+}
+
 /*Container for Home view*/
+
 .homeContainer {
-                width: 1000px;
-            padding-top: 20px;
+    width: 1000px;
+    padding-top: 20px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.accountContainer {
+    width: 300px;
+    padding-top: 20px;
     margin-right: auto;
     margin-left: auto;
 }
