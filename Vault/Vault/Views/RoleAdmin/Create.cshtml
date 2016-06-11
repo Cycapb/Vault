@@ -3,7 +3,7 @@
     ViewBag.Title = "Create";
     Layout = "~/Views/Shared/_RoleAdminLayout.cshtml";
 }
-<div class="panel panel-primary">
+<div class="panel panel-primary well">
     @using (Html.BeginForm())
     {
         <div class="panel-body">
@@ -15,6 +15,7 @@
         </div>
         <div class="panel-footer">
             <input type="submit" value="Save" class="btn btn-success"/>
+            @Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-default" })
         </div>
     }
 </div>
