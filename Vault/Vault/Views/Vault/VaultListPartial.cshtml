@@ -1,4 +1,10 @@
 ﻿@model IEnumerable<VaultDAL.Models.UserVault>
+<tr>
+    <th>Name</th>
+    <th>Description</th>
+    <th>Open hours</th>
+    <th>Actions</th>
+</tr>
     @if (Model != null && Model.Count() != 0)
     {
         foreach (var vault in Model)
@@ -10,7 +16,14 @@
                     @vault.OpenTime:00 - @vault.CloseTime:00  
                 </td>
                 <td>
-                    @using (Html.BeginForm("Delete", "Vault", new {id = vault.Id}))
+                    @using (Ajax.BeginForm("Delete",new {id = vault.Id}, new AjaxOptions()
+                    {
+                        Url = Url.Action("DeleteAjax", new {id = vault.Id}),
+                        HttpMethod = "POST",
+                        UpdateTargetId = "vaultList",
+                        LoadingElementId = "vaultDel",
+                        LoadingElementDuration = 1000
+                    }))
                     {
                         @Html.ActionLink("Edit", "Edit", new { id = vault.Id }, new { @class = "btn btn-primary btn-xs" })
                         @Html.ActionLink("Manage users", "EditUsers", new { id = vault.Id }, new { @class = "btn btn-primary btn-xs" })

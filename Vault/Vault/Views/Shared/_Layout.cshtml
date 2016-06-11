@@ -5,17 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title</title>
     @Styles.Render("~/bundles/bootstrap/css", "~/bundles/sitestyles/css")
+    @Scripts.Render("~/bundles/jquery-ajax")
 </head>
 <body>
 <div class="homeContainer">
     @if (TempData["message"] != null)
     {
-        <div class="alert alert-danger">@TempData["message"]</div>
+        <div class="alert alert-success">@TempData["message"]</div>
     }
-    @if (TempData["success"] != null)
-    {
-        <div class="alert alert-success">@TempData["success"]</div>
-    }
+    <div class="alert alert-success" style="display: none" id="vaultDel">Vault has been successfully deleted</div>
     @RenderBody()
 </div>
 

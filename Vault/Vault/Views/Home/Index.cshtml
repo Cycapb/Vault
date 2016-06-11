@@ -25,13 +25,11 @@
         <div class="panel panel-info">
             @if (HttpContext.Current.User.IsInRole("VaultAdmins"))
             {
-                @VaultAdmins()
-                ;
+                @VaultAdmins();
             }
             @if (HttpContext.Current.User.IsInRole("Users"))
             {
-                @Users()
-                ;
+                @Users();
             }
         </div>
     </div>
