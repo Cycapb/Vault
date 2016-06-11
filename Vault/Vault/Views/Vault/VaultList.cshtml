@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<VaultDAL.Models.UserVault>
     <div class="panel-heading">My vaults</div>
     <div class="panel-body">
-        <table class="table table-striped" id="vaultList">
+        <table class="table table-hover" id="vaultList">
                 @Html.Partial("VaultListPartial", Model)
             </table>
         <div class="panel-footer">

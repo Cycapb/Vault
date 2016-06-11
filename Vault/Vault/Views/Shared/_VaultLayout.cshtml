@@ -14,12 +14,12 @@
 </head>
 <body>
 <div class="container">
-    @RenderSection("calendarScripts", false)
-    @if (TempData["message"] != null)
-    {
-        <div class="alert alert-success" id="message">@TempData["message"]</div>
-    }
-    @RenderBody()
+        @RenderSection("calendarScripts", false)
+        @if (TempData["message"] != null)
+        {
+            <div class="alert alert-success" id="message">@TempData["message"]</div>
+        }
+        @RenderBody()
 </div>
 </body>
 </html>

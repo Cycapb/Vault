@@ -4,7 +4,7 @@
     ViewBag.Title = "Edit rights";
     Layout = "~/Views/Shared/_VaultLayout.cshtml";
 }
-   <div class="panel panel-primary">
+   <div class="panel panel-primary well">
     <div class="panel-heading">Managing access rights of current users in the vault</div>
        <div class="panel-body">
                @using (Html.BeginForm())
@@ -13,10 +13,10 @@
                    <div class="panel panel-primary">
                        <div class="panel-heading">Grant full access</div>
                        <div class="panel-body">
-                           <table class="table table-striped">
+                           <table class="table table-hover">
                                <tr>
-                                   <td></td>
-                                   <td>Name</td>
+                                   <th></th>
+                                   <th>Name</th>
                                </tr>
                                @Html.Partial("AllowReadPartial", Model)
                            </table>
@@ -26,10 +26,10 @@
                    <div class="panel panel-primary">
                        <div class="panel-heading">Grant read access</div>
                        <div class="panel-body">
-                           <table class="table table-striped">
+                           <table class="table table-hover">
                                <tr>
-                                   <td></td>
-                                   <td>Name</td>
+                                   <th></th>
+                                   <th>Name</th>
                                </tr>
                                @Html.Partial("AllowCreatePartial", Model)
                            </table>

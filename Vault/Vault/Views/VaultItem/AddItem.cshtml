@@ -3,7 +3,7 @@
     ViewBag.Title = "AddItem";
     Layout = "~/Views/Shared/_VaultLayout.cshtml";
 }
-<div class="panel panel-primary">
+<div class="panel panel-primary well">
     <div class="panel-heading">Add vault item</div>
 
     @using (Html.BeginForm())
@@ -24,7 +24,7 @@
         </div>
         <div class="panel-footer">
             <input type="submit" value="Create" class="btn btn-success"/>
-            @Html.ActionLink("Cancel","Items", null, new {@class="btn btn-default"})
+            @Html.ActionLink("Cancel","Items", new {id = Model.VaultId}, new {@class="btn btn-default"})
         </div>
     }
 </div>
