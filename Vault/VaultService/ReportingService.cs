@@ -49,7 +49,7 @@ namespace VaultService
             SetServiceStatus(this.ServiceHandle, ref serviceStatus);
 
             _timer = new System.Timers.Timer();
-            _timer.Interval = 360000; 
+            _timer.Interval = 3600000; 
             _timer.Elapsed += new System.Timers.ElapsedEventHandler(this.OnTimer);
             _timer.Start();
 

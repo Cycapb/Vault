@@ -6,17 +6,26 @@ namespace Vault
     {
         public static void RegisterBundles(BundleCollection bundles)
         {
-            bundles.Add(new ScriptBundle("~/bundles/datetimepicker").Include(
+            bundles.Add(new ScriptBundle("~/bundles/datetime").Include(
+                "~/Scripts/jquery-2.2.3.js",
+                "~/Scripts/moment-with-locales.js",
+                "~/Scripts/bootstrap-datetimepicker.js"));
+            bundles.Add(new ScriptBundle("~/bundles/datetime-without-jquery").Include(
                 "~/Scripts/moment-with-locales.js",
                 "~/Scripts/bootstrap-datetimepicker.js"));
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                "~/Scripts/jquery-{version}.js"));
+                "~/Scripts/jquery-2.2.3.js"));
             bundles.Add(new ScriptBundle("~/bundles/validation").Include(
-                "~/Scripts/jquery-{version}.js",
+                "~/Scripts/jquery-2.2.3.js",
+                "~/Scripts/jquery.validate.js",
+                "~/Scripts/jquery.validate.unobtrusive.js"));
+            bundles.Add(new ScriptBundle("~/bundles/validation-without-jquery").Include(
                 "~/Scripts/jquery.validate.js",
                 "~/Scripts/jquery.validate.unobtrusive.js"));
             bundles.Add(new ScriptBundle("~/bundles/jquery-ajax").Include(
-                "~/Scripts/jquery-{version}.js",
+                "~/Scripts/jquery-2.2.3.js",
+                "~/Scripts/jquery.unobtrusive-ajax.js"));
+            bundles.Add(new ScriptBundle("~/bundles/jquery-ajax-without-jquery").Include(
                 "~/Scripts/jquery.unobtrusive-ajax.js"));
 
             bundles.Add(new StyleBundle("~/bundles/bootstrap/css").Include(
