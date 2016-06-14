@@ -7,6 +7,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Vault.Abstract;
 using Vault.Models;
 using VaultDAL.Models;
+using System.Threading;
 
 namespace Vault.Controllers
 {
@@ -184,7 +185,7 @@ namespace Vault.Controllers
             var vaultAdmin = await _vaultManager.GetVaultAdmin(vaultId);
             var userEmail = (await UserManager.FindByIdAsync(vaultAdmin.Id)).Email;
             _mailtReporter.MailTo = userEmail;
-            Task.Run(async () => await _mailtReporter.Report($"{DateTime.Now}: {message}"));
+            new Thread(async () => await _mailtReporter.Report($"{DateTime.Now}: {message}")).Start();
         }
     }
 }
