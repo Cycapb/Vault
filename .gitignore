@@ -244,8 +244,5 @@ ModelManifest.xml
 # FAKE - F# Make
 .fake/
 
-# Ignore cfg files
-*.config
-
 #Ignore pubxml
 *.pubxml
