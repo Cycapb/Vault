@@ -4,46 +4,12 @@
     Layout = "~/Views/Shared/_VaultLayout.cshtml";
 }
 <div class="panel panel-primary well">
-    <div class="panel-heading">Access log of the @Model.VaultName vault</div>
+    <div class="panel-heading">Access log of the vault</div>
     <div class="panel-body">
-        <table class="table table-bordered">
-            <tr>
-                <th>Time</th>
-                <th>Type</th>
-                <th>Event</th>
-            </tr>
-            @if (Model.Events != null && Model.Events.Count() != 0)
-            {
-                foreach (var item in Model.Events)
-                {
-                    if (item.EventType == "Deny" || item.EventType == "Delete")
-                    {
-                        <tr class="danger">
-                            <td>@item.DateTime</td>
-                            <td>@item.EventType</td>
-                            <td>@item.Event</td>
-                        </tr>
-                    }
-                    else
-                    {
-                        <tr class="success">
-                            <td>@item.DateTime</td>
-                            <td>@item.EventType</td>
-                            <td>@item.Event</td>
-                        </tr>
-
-                    }
-                }
-            }
-            else
-            {
-                <tr><td colspan="3" class="text-center">No events in log</td></tr>
-            }
-
-        </table>
+           @Html.Partial("VaultLogPartial",Model.Events)
     </div>
     <div class="panel-footer text-center">
-        @Html.Partial("PageLinksPartial",Model.PagingInfo)
+        @Html.Partial("PageLinksAjaxPartial",Model)
     </div>
 </div>
 @Html.ActionLink("Back", "Index", "Vault",null, new { @class = "btn btn-default pull-right" })

@@ -1,5 +1,5 @@
 ﻿@model Vault.Models.PagingInfo
 @for (var i = 1; i <= Model.TotalPages; i++)
 {
-    @Html.ActionLink(i.ToString(),"VaultLog",new {page = i}, new {@class=(i == Model.CurrentPage)?"btn btn-primary" : "btn btn-default"})
+    @Html.ActionLink(i.ToString(), "VaultLog", new {page = i}, new {@class = (i == Model.CurrentPage) ? "btn btn-primary" : "btn btn-default"})   
 }

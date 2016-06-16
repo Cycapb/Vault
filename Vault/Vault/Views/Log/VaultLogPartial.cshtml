@@ -1,0 +1,35 @@
+﻿@model IEnumerable<VaultDAL.Models.VaultAccessLog>
+<table class="table table-bordered" id="logTable">
+    <tr>
+        <th>Time</th>
+        <th>Type</th>
+        <th>Event</th>
+    </tr>
+    @if (Model != null && Model.Count() != 0)
+            {
+                foreach (var item in Model)
+                {
+                    if (item.EventType == "Deny" || item.EventType == "Delete")
+                    {
+                <tr class="danger">
+                    <td>@item.DateTime</td>
+                    <td>@item.EventType</td>
+                    <td>@item.Event</td>
+                </tr>
+            }
+            else
+            {
+                <tr class="success">
+                    <td>@item.DateTime</td>
+                    <td>@item.EventType</td>
+                    <td>@item.Event</td>
+                </tr>
+
+            }
+        }
+    }
+    else
+    {
+        <tr><td colspan="3" class="text-center">No events in log</td></tr>
+    }
+</table>

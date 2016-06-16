@@ -18,24 +18,19 @@ namespace Vault.Controllers
             _logManager = logManager;
         }
 
-        public ActionResult Index()
-        {
-            return View();
-        }
-
-        public async Task<ActionResult> VaultLog(WebUser user, string id, string name, int page = 1)
+        public async Task<ActionResult> VaultLog(WebUser user, string id, int page = 1)
         {
             if (id == null)
             {
-                return RedirectToAction("Index");
+                return RedirectToAction("VaultLog");
             }
             var events = (await _logManager.ShowLog(id))?.ToList();
             var logModel = new VaultAccessLogModel()
             {
-                Events = events?.Skip((page - 1) * _itemsPerPage)
+                Events = events?.Skip((page - 1)*_itemsPerPage)
                     .Take(_itemsPerPage)
                     .ToList(),
-                VaultName = name,
+                VaultId = id,
                 PagingInfo = new PagingInfo()
                 {
                     CurrentPage = page,
@@ -45,5 +40,19 @@ namespace Vault.Controllers
             };
             return View(logModel);
         }
+
+        public async Task<ActionResult> VaultLogAjax(WebUser user, string id, int page = 1)
+        {
+            if (id == null)
+            {
+                return RedirectToAction("VaultLog");
+            }
+            var events = (await _logManager.ShowLog(id))?
+                .Skip((page - 1)*_itemsPerPage)
+                .Take(_itemsPerPage)
+                .ToList();
+            return PartialView("VaultLogPartial", events);
+        }
     }
 }
+
