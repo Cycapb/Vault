@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Vault.Abstract;
+using VaultServices.Abstract;
 
 namespace Vault.Concrete
 {

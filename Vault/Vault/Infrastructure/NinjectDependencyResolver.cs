@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Web;
 using System.Web.Mvc;
-using System.Web.Services.Protocols;
-using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Ninject;
 using Vault.Abstract;
@@ -12,6 +10,8 @@ using Vault.Models;
 using VaultDAL.Abstract;
 using VaultDAL.Concrete;
 using VaultDAL.Models;
+using VaultServices.Abstract;
+using VaultServices.Concrete;
 
 
 namespace Vault.Infrastructure

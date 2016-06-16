@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Vault.Abstract;
 using VaultDAL.Abstract;
 using VaultDAL.Models;
+using VaultServices.Abstract;
 
-namespace Vault.Concrete
+namespace VaultServices.Concrete
 {
     public class DbLogger:IDbLogger
     {

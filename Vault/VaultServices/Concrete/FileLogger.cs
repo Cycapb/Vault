@@ -1,9 +1,9 @@
 ﻿using System.IO;
 using System.Threading.Tasks;
 using System.Web.Mvc;
-using ILogger = Vault.Abstract.ILogger;
+using ILogger = VaultServices.Abstract.ILogger;
 
-namespace Vault.Concrete
+namespace VaultServices.Concrete
 {
     public class FileLogger:ILogger
     {

@@ -5,12 +5,14 @@ using System.Threading.Tasks;
 using System.Web.Mvc;
 using Vault.Concrete;
 using Vault.Models;
+using VaultServices.Concrete;
+using VaultServices.Abstract;
 
 namespace Vault.Infrastructure.Filters
 {
     public class VaultErrorAttribute:FilterAttribute,IExceptionFilter
     {
-        private Vault.Abstract.ILogger _logger;
+        private ILogger _logger;
 
         public void OnException(ExceptionContext filterContext)
         {

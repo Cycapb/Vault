@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace Vault.Abstract
+namespace VaultServices.Abstract
 {
     public interface ILogger
     {

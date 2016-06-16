@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Vault.Abstract;
 using Vault.Infrastructure.Filters;
 using Vault.Models;
+using ILogger = VaultServices.Abstract.ILogger;
 
 namespace Vault.Concrete
 {

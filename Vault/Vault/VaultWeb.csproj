@@ -299,8 +299,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Abstract\IAccessManager.cs" />
-    <Compile Include="Abstract\IDbLogger.cs" />
-    <Compile Include="Abstract\ILogger.cs" />
     <Compile Include="Abstract\ILogManager.cs" />
     <Compile Include="Abstract\IMailReporter.cs" />
     <Compile Include="Abstract\IUserGetter.cs" />
@@ -317,8 +315,6 @@
     <Compile Include="Concrete\MailReporter.cs" />
     <Compile Include="Concrete\LogManager.cs" />
     <Compile Include="Concrete\AccessManager.cs" />
-    <Compile Include="Concrete\DbLogger.cs" />
-    <Compile Include="Concrete\FileLogger.cs" />
     <Compile Include="Concrete\IdentityConnectionProvider.cs" />
     <Compile Include="Concrete\FreeUsersGetter.cs" />
     <Compile Include="Concrete\UserVaultGetter.cs" />
@@ -408,6 +404,10 @@
     <ProjectReference Include="..\VaultDAL\VaultDAL.csproj">
       <Project>{c152e679-6e9b-48d8-8b3a-2a54e3a481b0}</Project>
       <Name>VaultDAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VaultServices\VaultServices.csproj">
+      <Project>{be9faa97-ffa0-4efc-b805-7c6433e285de}</Project>
+      <Name>VaultServices</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

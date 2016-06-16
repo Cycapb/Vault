@@ -1,4 +1,4 @@
-﻿namespace Vault.Abstract
+﻿namespace VaultServices.Abstract
 {
     public interface IDbLogger:ILogger
     {
