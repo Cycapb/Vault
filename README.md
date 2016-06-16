@@ -3,6 +3,7 @@ It is a kind of access control system for several online informational vaults. E
 vault open hours, allow or deny user access, view access/deny log for the vault.
 
 Features of the system:
+
 •	Global admins manage users and their roles
 
 •	Vault admins manage vault open hours and user rights for the vault
