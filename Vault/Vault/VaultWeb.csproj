@@ -390,6 +390,8 @@
     <Content Include="Views\Log\VaultLog.cshtml" />
     <Content Include="Views\Log\PageLinksPartial.cshtml" />
     <Content Include="Views\Shared\_AccountLayout.cshtml" />
+    <Content Include="Views\Log\VaultLogPartial.cshtml" />
+    <Content Include="Views\Log\PageLinksAjaxPartial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

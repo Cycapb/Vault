@@ -23,16 +23,6 @@ namespace VaultTest
             new VaultAccessLog(){ DateTime = DateTime.Today, Event = "E4", EventType = "Full access", Id = "4", VaultId = "V2" },
         };
 
-        [TestMethod]
-        public void Index_ViewResultReturns()
-        {
-            Mock<ILogManager<VaultAccessLog>> repoMock = new Mock<ILogManager<VaultAccessLog>>();
-            var target = new LogController(repoMock.Object);
-
-            var result = target.Index();
-
-            Assert.IsInstanceOfType(result, typeof(ViewResult));
-        }
 
         [TestMethod]
         public async Task VaultLogInputUserNullNamePageReturnsView()
@@ -41,7 +31,7 @@ namespace VaultTest
             repoMock.Setup(x => x.ShowLog(It.IsAny<string>())).ReturnsAsync(_fakeLog);
             var target = new LogController(repoMock.Object);
 
-            var result = await target.VaultLog(new WebUser(), null, "V2");
+            var result = await target.VaultLog(new WebUser(), null);
 
             Assert.IsInstanceOfType(result,typeof(RedirectToRouteResult));
         }
@@ -53,10 +43,9 @@ namespace VaultTest
             repoMock.Setup(x => x.ShowLog(It.IsAny<string>())).ReturnsAsync(_fakeLog);
             var target = new LogController(repoMock.Object);
 
-            var result = await target.VaultLog(new WebUser(), "E1", "V2");
+            var result = await target.VaultLog(new WebUser(), "E1");
             var model = ((ViewResult) result).ViewData.Model as VaultAccessLogModel;
             
-            Assert.AreEqual(model.VaultName, "V2");
             Assert.AreEqual(model.Events.Count(), 4);
             Assert.AreEqual(model.PagingInfo.CurrentPage,1);
             Assert.AreEqual(model.PagingInfo.TotalPages,1);

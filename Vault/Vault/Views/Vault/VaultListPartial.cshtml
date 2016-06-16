@@ -28,7 +28,7 @@
                         @Html.ActionLink("Edit", "Edit", new { id = vault.Id }, new { @class = "btn btn-primary btn-xs" })
                         @Html.ActionLink("Manage users", "EditUsers", new { id = vault.Id }, new { @class = "btn btn-primary btn-xs" })
                         @Html.ActionLink("Content", "Items", "VaultItem", new { id = vault.Id, returnUrl = Request.Url?.PathAndQuery }, new { @class = "btn btn-primary btn-xs" })
-                        @Html.ActionLink("Log", "VaultLog", "Log", new { id = vault.Id, name = vault.Name }, new { @class = "btn btn-primary btn-xs" })
+                        @Html.ActionLink("Log", "VaultLog", "Log", new { id = vault.Id}, new { @class = "btn btn-primary btn-xs" })
                         <input type="submit" value="Delete" class="btn btn-danger btn-xs pull-right" />
                     }
                 </td>

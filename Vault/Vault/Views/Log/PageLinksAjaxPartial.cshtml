@@ -1,0 +1,10 @@
+﻿@model Vault.Models.VaultAccessLogModel
+@for (var i = 1; i <= Model.PagingInfo.TotalPages; i++)
+{
+    @Ajax.ActionLink(i.ToString(), "VaultLog", new { id = Model.VaultId,page = i }, new AjaxOptions()
+{
+    Url = Url.Action("VaultLogAjax", new { id = Model.VaultId, page = i }),
+    UpdateTargetId = "logTable"
+}, new { @class = "btn btn-default", id = i.ToString(), onclick = "onButtonClick(this.id)" })
+}
+

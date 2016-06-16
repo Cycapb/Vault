@@ -34,5 +34,11 @@
         });
     });
 </script>
+<script type="text/javascript">
+    function onButtonClick(id) {
+        $('#' + id).addClass("btn btn-primary").siblings().removeClass("btn-primary");
+        return false;
+    }
+</script>
 </body>
 </html>
