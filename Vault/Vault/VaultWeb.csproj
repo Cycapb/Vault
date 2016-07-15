@@ -338,6 +338,7 @@
     <Compile Include="Infrastructure\Filters\VaultErrorAttribute.cs" />
     <Compile Include="Infrastructure\IdentityHelpers.cs" />
     <Compile Include="Infrastructure\NinjectDependencyResolver.cs" />
+    <Compile Include="Infrastructure\RedirectModule.cs" />
     <Compile Include="Infrastructure\VaultUserEqualityComparer.cs" />
     <Compile Include="Models\AppRoleManager.cs" />
     <Compile Include="Models\AppRoleModel.cs" />
